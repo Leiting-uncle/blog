@@ -92,14 +92,12 @@
 <meta property="og:image" content="http://example.com/2022/08/24/typora%E5%85%AC%E5%BC%8F/image-20220824190713543.png">
 <meta property="og:image" content="http://example.com/2022/08/24/typora%E5%85%AC%E5%BC%8F/image-20220824190720271.png">
 <meta property="og:image" content="http://example.com/2022/08/24/typora%E5%85%AC%E5%BC%8F/image-20220824190729413.png">
-<meta property="og:image" content="http://example.com/2022/08/24/typora%E5%85%AC%E5%BC%8F/typora%E5%85%AC%E5%BC%8F/image-20220824190737732.png">
-<meta property="og:image" content="http://example.com/2022/08/24/typora%E5%85%AC%E5%BC%8F/image-20220824190751478.png">
 <meta property="og:image" content="http://example.com/2022/08/24/typora%E5%85%AC%E5%BC%8F/image-20220824190801129.png">
 <meta property="og:image" content="http://example.com/2022/08/24/typora%E5%85%AC%E5%BC%8F/image-20220824190807817.png">
 <meta property="og:image" content="http://example.com/2022/08/24/typora%E5%85%AC%E5%BC%8F/image-20220824190813676.png">
 <meta property="og:image" content="http://example.com/2022/08/24/typora%E5%85%AC%E5%BC%8F/image-20220824190823959.png">
 <meta property="article:published_time" content="2022-08-24T09:48:05.744Z">
-<meta property="article:modified_time" content="2022-08-24T11:09:53.281Z">
+<meta property="article:modified_time" content="2022-08-24T14:56:23.274Z">
 <meta property="article:author" content="lei ting">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2022/08/24/typora%E5%85%AC%E5%BC%8F/image-20220824190701327.png">
@@ -385,12 +383,17 @@ id="带左右括号的矩阵大中小括号"><strong>2.带左右括号的矩阵(
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$$</span><br><span class="line"> \begin&#123;bmatrix&#125;</span><br><span class="line">   1 &amp; 2 &amp; 3 \\</span><br><span class="line">   4 &amp; 5 &amp; 6 \\</span><br><span class="line">   7 &amp; 8 &amp; 9</span><br><span class="line">  \end&#123;bmatrix&#125; \tag&#123;6&#125;</span><br><span class="line">$$</span><br></pre></td></tr></table></figure>
 <h3
 id="包含希腊字母与省略号"><strong>3.包含希腊字母与省略号</strong></h3>
-<p>行省略号<code>\cdots</code>，列省略号<code>\vdots</code>，斜向省略号（左上至右下）<code>\ddots</code>。</p>
-<figure>
-<img src="typora%E5%85%AC%E5%BC%8F/image-20220824190737732.png"
-alt="[公式]" />
-<figcaption aria-hidden="true">[公式]</figcaption>
-</figure>
+<p>行省略号<code>\cdots</code>，列省略号<code>\vdots</code>，斜向省略号（左上至右下）<code>\ddots</code>。
+<span class="math display">\[
+\left\{
+\begin{matrix}
+1      &amp; 2        &amp; \cdots &amp; 5        \\
+6      &amp; 7        &amp; \cdots &amp; 10       \\
+\vdots &amp; \vdots   &amp; \ddots &amp; \vdots   \\
+\alpha &amp; \alpha+1 &amp; \cdots &amp; \alpha+4
+\end{matrix}
+\right\}
+\]</span></p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$$</span><br><span class="line"> \left\&#123;</span><br><span class="line"> \begin&#123;matrix&#125;</span><br><span class="line"> 1      &amp; 2        &amp; \cdots &amp; 5        \\</span><br><span class="line"> 6      &amp; 7        &amp; \cdots &amp; 10       \\</span><br><span class="line"> \vdots &amp; \vdots   &amp; \ddots &amp; \vdots   \\</span><br><span class="line"> \alpha &amp; \alpha+1 &amp; \cdots &amp; \alpha+4 </span><br><span class="line"> \end&#123;matrix&#125;</span><br><span class="line"> \right\&#125;</span><br><span class="line">$$</span><br></pre></td></tr></table></figure>
 <hr />
 <h2 id="公式序号">公式序号</h2>
@@ -409,7 +412,14 @@ alt="[公式]" />
 <hr />
 <h2 id="表格">表格</h2>
 <h3 id="简易表格"><strong>1.简易表格</strong></h3>
-<img src="/2022/08/24/typora%E5%85%AC%E5%BC%8F/image-20220824190751478.png" class="" title="image-20220824190751478">
+<p><span class="math display">\[
+\begin{array}{|c|c|c|}
+    \hline 2&amp;9&amp;4\\
+    \hline 7&amp;5&amp;3\\
+    \hline 6&amp;1&amp;8\\
+    \hline
+\end{array}
+\]</span></p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$$</span><br><span class="line">\begin&#123;array&#125;&#123;|c|c|c|&#125;</span><br><span class="line">	\hline 2&amp;9&amp;4\\</span><br><span class="line">	\hline 7&amp;5&amp;3\\</span><br><span class="line">	\hline 6&amp;1&amp;8\\</span><br><span class="line">	\hline</span><br><span class="line">\end&#123;array&#125;</span><br><span class="line">$$</span><br></pre></td></tr></table></figure>
 <p><strong>开头结尾</strong>： <code>\begin&#123;array&#125;</code> ，
 <code>\end&#123;array&#125;</code></p>
@@ -566,7 +576,7 @@ id="step3在输出区得到需要的latex数学表达式"><strong>step3：在输
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/%7C%7Carchive">
+                <a href="/archives/%7C%7C%20archive">
               
                   <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">posts</span>

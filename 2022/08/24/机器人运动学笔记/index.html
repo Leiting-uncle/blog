@@ -86,12 +86,13 @@
 <meta property="og:site_name" content="小博客">
 <meta property="og:description" content="一、机器人学 1.POE （1） （2） （3）刚体运动 3.1旋转与角速度 1.旋转矩阵 \[ R&#x3D;Rot(\hat{\omega},\theta) \] 满足以下条件  正则条件 正交条件 坐标系三个坐标轴遵循右手定则  3*3旋转矩阵组成的集合被称为特殊正交群SO(3) 特性  封闭性 结合律 幺元性 可逆性  用途  表示姿态 进行坐标">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/leiting2020/imagebed/raw/master/images/202203051901311.jpg">
+<meta property="og:image" content="http://example.com/2022/08/24/%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%BF%90%E5%8A%A8%E5%AD%A6%E7%AC%94%E8%AE%B0/E9B35D92825145DD7A275F895DBD70F0.jpg">
+<meta property="og:image" content="http://example.com/2022/08/24/%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%BF%90%E5%8A%A8%E5%AD%A6%E7%AC%94%E8%AE%B0/970C64AC3887162C3074A0375214A803.jpg">
 <meta property="article:published_time" content="2022-08-24T09:48:05.761Z">
-<meta property="article:modified_time" content="2022-08-24T11:09:21.102Z">
+<meta property="article:modified_time" content="2022-08-24T14:53:45.990Z">
 <meta property="article:author" content="lei ting">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/leiting2020/imagebed/raw/master/images/202203051901311.jpg">
+<meta name="twitter:image" content="http://example.com/2022/08/24/%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%BF%90%E5%8A%A8%E5%AD%A6%E7%AC%94%E8%AE%B0/E9B35D92825145DD7A275F895DBD70F0.jpg">
 
 
 
@@ -555,127 +556,30 @@ q6 =[2020, 0, 960,1]
 \]</span> 首先，使用几何法求解前三个关节。</p>
 <p>通常情况下，库卡机器人前三轴具有四组逆运动学逆解，分别如图所示，左图对应的是左向位置（肘部向上和向下）,右图对应的是右向位置
 （肘部向上和向下）</p>
-<figure>
-<img
-src="https://gitee.com/leiting2020/imagebed/raw/master/images/202203051854731.png"
-alt="image-20220305185457224" />
-<figcaption aria-hidden="true">image-20220305185457224</figcaption>
-</figure>
 <p>对于关节1，运动学逆解有两个，如图所示。</p>
-<p><img
-src="https://gitee.com/leiting2020/imagebed/raw/master/images/202203051856658.jpg"
-alt="img" /> <span class="math display">\[
+<p><span class="math display">\[
 \theta_{11} = atan2d(-py,px)；
 \theta_{12} = atan2d(-py,px) + 180
 \]</span> 对于关节2和3有两组解</p>
 <p>情况一、</p>
-<p><img src="https://gitee.com/leiting2020/imagebed/raw/master/images/202203051901311.jpg" alt="img" style="zoom:67%;" /></p>
-<figure>
-<img
-src="file:///E:\qq记录\760088941\Image\C2C\E9B35D92825145DD7A275F895DBD70F0.jpg"
-alt="img" />
-<figcaption aria-hidden="true">img</figcaption>
-</figure>
+<img src="/2022/08/24/%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%BF%90%E5%8A%A8%E5%AD%A6%E7%AC%94%E8%AE%B0/E9B35D92825145DD7A275F895DBD70F0.jpg" class="" title="img">
 <p>情况二、</p>
-<figure>
-<img
-src="file:///E:\qq记录\760088941\Image\C2C\970C64AC3887162C3074A0375214A803.jpg"
-alt="img" />
-<figcaption aria-hidden="true">img</figcaption>
-</figure>
-<figure>
-<img
-src="https://gitee.com/leiting2020/imagebed/raw/master/images/202203051903391.jpg"
-alt="img" />
-<figcaption aria-hidden="true">img</figcaption>
-</figure>
+<img src="/2022/08/24/%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%BF%90%E5%8A%A8%E5%AD%A6%E7%AC%94%E8%AE%B0/970C64AC3887162C3074A0375214A803.jpg" class="" title="img">
 <p>由此，机器人前三关节的四组逆解就可以求出来了。</p>
 <p>接下来使用POE正运动学公式，求出后三个关节的运动学逆解。</p>
 <p>将机器人运动学模型式两边同右乘初始位姿，可得</p>
-<figure>
-<img
-src="https://gitee.com/leiting2020/imagebed/raw/master/images/202203051906784.png"
-alt="image-20220305190640702" />
-<figcaption aria-hidden="true">image-20220305190640702</figcaption>
-</figure>
 <p>根据螺旋理论，位于转轴上的 q 点，无论旋转多少角度，q
 点的位置保持不变，即</p>
-<figure>
-<img
-src="https://gitee.com/leiting2020/imagebed/raw/master/images/202203051907522.png"
-alt="image-20220305190718446" />
-<figcaption aria-hidden="true">image-20220305190718446</figcaption>
-</figure>
 <p>因此将式（22）两边同时右乘关节 4、5、6 的共同 交点 q6，得</p>
-<figure>
-<img
-src="https://gitee.com/leiting2020/imagebed/raw/master/images/202203051908182.png"
-alt="image-20220305190804100" />
-<figcaption aria-hidden="true">image-20220305190804100</figcaption>
-</figure>
 <p>点P的坐标(A,B,C)即机器人腕部中心在相应姿态下的坐标，求出前三轴坐标后，带入公式</p>
-<figure>
-<img
-src="https://gitee.com/leiting2020/imagebed/raw/master/images/202203051911006.png"
-alt="image-20220305191108924" />
-<figcaption aria-hidden="true">image-20220305191108924</figcaption>
-</figure>
 <p>然后在转轴 ω6 上取一点 <span class="math inline">\(p_6 =
 [0;0;960;1]\)</span>，并且该点不在 ω4、ω5 上， 于是得</p>
-<figure>
-<img
-src="https://gitee.com/leiting2020/imagebed/raw/master/images/202203051911170.png"
-alt="image-20220305191147083" />
-<figcaption aria-hidden="true">image-20220305191147083</figcaption>
-</figure>
 <p>由POE正运动学公式可得</p>
-<figure>
-<img
-src="https://gitee.com/leiting2020/imagebed/raw/master/images/202203051912112.png"
-alt="image-20220305191258029" />
-<figcaption aria-hidden="true">image-20220305191258029</figcaption>
-</figure>
-<figure>
-<img
-src="https://gitee.com/leiting2020/imagebed/raw/master/images/202203051913317.png"
-alt="image-20220305191307219" />
-<figcaption aria-hidden="true">image-20220305191307219</figcaption>
-</figure>
-<figure>
-<img
-src="https://gitee.com/leiting2020/imagebed/raw/master/images/202203051913130.png"
-alt="image-20220305191319051" />
-<figcaption aria-hidden="true">image-20220305191319051</figcaption>
-</figure>
 <p>T4*T5为</p>
-<figure>
-<img
-src="https://gitee.com/leiting2020/imagebed/raw/master/images/202203051915325.png"
-alt="image-20220305191531245" />
-<figcaption aria-hidden="true">image-20220305191531245</figcaption>
-</figure>
 <p>T4XT5XP6为</p>
-<figure>
-<img
-src="https://gitee.com/leiting2020/imagebed/raw/master/images/202203051920132.png"
-alt="image-20220305192042032" />
-<figcaption aria-hidden="true">image-20220305192042032</figcaption>
-</figure>
 <p>等式两边一一而对应，即可求出<span
 class="math display">\[\theta_4,\theta_5\]</span></p>
 <p>求得 θ4、θ5。又将 θ4、θ5代入正运动学公式并整理得</p>
-<figure>
-<img
-src="https://gitee.com/leiting2020/imagebed/raw/master/images/202203051924463.png"
-alt="image-20220305192405383" />
-<figcaption aria-hidden="true">image-20220305192405383</figcaption>
-</figure>
-<figure>
-<img
-src="https://gitee.com/leiting2020/imagebed/raw/master/images/202203051924930.png"
-alt="image-20220305192435842" />
-<figcaption aria-hidden="true">image-20220305192435842</figcaption>
-</figure>
 <p><span
 class="math inline">\(利用等式两边一一对应即可求出\theta_6\)</span></p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line">clc;clear;</span><br><span class="line">X=[     <span class="number">0.995869</span>,    <span class="number">-0.025686</span>,    <span class="number">-0.087090</span>,  <span class="number">1480.441492</span> ;</span><br><span class="line">      <span class="number">0.024499</span>,     <span class="number">0.999592</span>,    <span class="number">-0.014667</span>,    <span class="number">60.437411</span> ;</span><br><span class="line">      <span class="number">0.087431</span>,     <span class="number">0.012473</span>,     <span class="number">0.996092</span>,  <span class="number">2212.432130</span> ;</span><br><span class="line">      <span class="number">0.000000</span>,     <span class="number">0.000000</span>,     <span class="number">0.000000</span>,     <span class="number">1.000000</span> ];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">% X=[    -0.000000,    -0.000000,     1.000000,  1340.000000 ;</span></span><br><span class="line"><span class="comment">%      -0.000000,     1.000000,     0.000000,    -0.000000 ;</span></span><br><span class="line"><span class="comment">%      -1.000000,    -0.000000,    -0.000000,  1810.000000 ;</span></span><br><span class="line"><span class="comment">%       0.000000,     0.000000,     0.000000,     1.000000 ];</span></span><br><span class="line"></span><br><span class="line">M=[<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">2190</span>;</span><br><span class="line">   <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>;</span><br><span class="line">  <span class="number">-1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">960</span>;</span><br><span class="line">   <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>   ]</span><br><span class="line"></span><br><span class="line"><span class="comment">%前三轴旋转轴</span></span><br><span class="line">s1=[<span class="number">0</span>;<span class="number">0</span>;<span class="number">-1</span>;<span class="number">0</span>;<span class="number">0</span>;<span class="number">0</span>]</span><br><span class="line">s2=[<span class="number">0</span>;<span class="number">1</span>;<span class="number">0</span>;<span class="number">-815</span>;<span class="number">0</span>;<span class="number">350</span>]</span><br><span class="line">s3=[<span class="number">0</span>;<span class="number">1</span>;<span class="number">0</span>;<span class="number">-815</span>;<span class="number">0</span>;<span class="number">1200</span>]</span><br><span class="line">s4=[<span class="number">-1</span>;<span class="number">0</span>;<span class="number">0</span>;<span class="number">0</span>;<span class="number">-960</span>;<span class="number">0</span>]</span><br><span class="line">s5=[<span class="number">0</span>;<span class="number">1</span>;<span class="number">0</span>;<span class="number">-960</span>;<span class="number">0</span>;<span class="number">2020</span>]</span><br><span class="line">s6=[<span class="number">-1</span>;<span class="number">0</span>;<span class="number">0</span>;<span class="number">0</span>;<span class="number">-960</span>;<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">%轴上任意一点</span></span><br><span class="line">q1 = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]&#x27;</span><br><span class="line">q2 = [<span class="number">350</span>, <span class="number">0</span>, <span class="number">815</span>]&#x27;</span><br><span class="line">q3 =[<span class="number">1200</span>, <span class="number">0</span>, <span class="number">815</span>]&#x27;</span><br><span class="line">q4 = [<span class="number">2020</span>, <span class="number">0</span>, <span class="number">960</span>]&#x27;</span><br><span class="line">q5 = [<span class="number">2020</span>, <span class="number">0</span>, <span class="number">960</span>]&#x27;</span><br><span class="line">q6 =[<span class="number">2020</span>, <span class="number">0</span>, <span class="number">960</span>]&#x27;</span><br><span class="line">q6_1 = [q6;<span class="number">1</span>]</span><br><span class="line">p = X  / M  *[q6;<span class="number">1</span>]</span><br><span class="line">px =p(<span class="number">1</span>)</span><br><span class="line">py =p(<span class="number">2</span>)</span><br><span class="line">pz =p(<span class="number">3</span>)</span><br><span class="line"><span class="comment">% px=1399.48736528</span></span><br><span class="line"><span class="comment">% py=58.90058846400001</span></span><br><span class="line"><span class="comment">% pz=942.73081665274</span></span><br><span class="line"><span class="comment">% px=1528.692;</span></span><br><span class="line"><span class="comment">% py=133.743;</span></span><br><span class="line"><span class="comment">% pz=931.186;</span></span><br><span class="line">o2a=<span class="number">850</span>;</span><br><span class="line">ab=<span class="number">145</span>;</span><br><span class="line">bp=<span class="number">820</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">theta1_1 = atan2d(-py,px)</span><br><span class="line">theta1_2 = atan2d(-py,px) + <span class="number">180</span></span><br><span class="line"></span><br><span class="line">ap=<span class="built_in">sqrt</span>(<span class="number">145</span>^<span class="number">2</span>+<span class="number">820</span>^<span class="number">2</span>);</span><br><span class="line">o2w=<span class="built_in">sqrt</span>(px^<span class="number">2</span>+py^<span class="number">2</span>)<span class="number">-350</span>;</span><br><span class="line">pw=pz<span class="number">-815</span>;</span><br><span class="line">o2p=<span class="built_in">sqrt</span>(o2w^<span class="number">2</span>+pw^<span class="number">2</span>);</span><br><span class="line">angle_ao2p=<span class="built_in">acosd</span>((o2a^<span class="number">2</span>+o2p^<span class="number">2</span>-ap^<span class="number">2</span>)/(<span class="number">2</span>*o2a*o2p));</span><br><span class="line">angle_po2w=<span class="built_in">acosd</span>((o2p^<span class="number">2</span>+o2w^<span class="number">2</span>-pw^<span class="number">2</span>)/(<span class="number">2</span>*o2p*o2w));</span><br><span class="line">theta2_1=-(angle_ao2p+angle_po2w)</span><br><span class="line"></span><br><span class="line">angle_PO2W = <span class="built_in">acosd</span>((o2p^<span class="number">2</span>+o2w^<span class="number">2</span>-pw^<span class="number">2</span>)/(<span class="number">2</span>*o2p*o2w));</span><br><span class="line">angle_PO2A = <span class="built_in">acosd</span>((o2p^<span class="number">2</span>+o2a^<span class="number">2</span>-ap^<span class="number">2</span>)/(<span class="number">2</span>*o2p*o2a));</span><br><span class="line">theta2_2 = angle_PO2A - angle_PO2W</span><br><span class="line"></span><br><span class="line"><span class="comment">%</span></span><br><span class="line">angle_bap = atan2d(bp,ab);</span><br><span class="line">angle_o2ap=<span class="built_in">acosd</span>((o2a^<span class="number">2</span>+ap^<span class="number">2</span>-o2p^<span class="number">2</span>)/(<span class="number">2</span>*o2a*ap));</span><br><span class="line">theta3_1 = <span class="number">270</span>- angle_bap-angle_o2ap</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">o2c = o2w/<span class="built_in">cosd</span>(-theta2_2);</span><br><span class="line">wc = o2w*<span class="built_in">tand</span>(-theta2_2);</span><br><span class="line">ac=o2c-o2a;</span><br><span class="line">pc = pw-wc;</span><br><span class="line">pw;</span><br><span class="line">ap;</span><br><span class="line"></span><br><span class="line">angle_PAC = <span class="built_in">acosd</span>((ap^<span class="number">2</span>+ac^<span class="number">2</span>-pc^<span class="number">2</span>)/(<span class="number">2</span>*ap*ac));</span><br><span class="line">angle_BAP = atan2d(bp,ab);</span><br><span class="line">theta3_2 = <span class="number">90</span>-(angle_PAC + angle_BAP)</span><br><span class="line"></span><br><span class="line"><span class="comment">%后三轴计算</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">% theta4=-0.78</span></span><br><span class="line"><span class="comment">% theta5=-54.89</span></span><br><span class="line"><span class="comment">% theta6=1.44</span></span><br><span class="line"></span><br><span class="line">T1=trans(s1,theta1_1)</span><br><span class="line">T2=trans(s2,theta2_1)</span><br><span class="line">T3=trans(s3,theta3_1)</span><br><span class="line"><span class="comment">% T4=trans(s4,theta4)</span></span><br><span class="line"><span class="comment">% T5=trans(s5,theta5)</span></span><br><span class="line"><span class="comment">% T6=trans(s6,theta6)</span></span><br><span class="line"></span><br><span class="line">T_0 = inv(T3)*inv(T2)*inv(T1)*X*inv(M)*[<span class="number">0</span>;<span class="number">0</span>;<span class="number">960</span>;<span class="number">1</span>]</span><br><span class="line">costheta5 = <span class="number">1</span>-T_0(<span class="number">1</span>)/<span class="number">2020</span></span><br><span class="line">theta5=atan2d(-<span class="built_in">sqrt</span>(<span class="number">1</span>-costheta5^<span class="number">2</span>),costheta5)</span><br><span class="line">T5=trans(s5,theta5)</span><br><span class="line"></span><br><span class="line">costheta4 = (T_0(<span class="number">3</span>) - <span class="number">960</span>)/(<span class="number">2020</span>*<span class="built_in">sind</span>(theta5))</span><br><span class="line">theta4=atan2d(-<span class="built_in">sqrt</span>(<span class="number">1</span>-costheta4^<span class="number">2</span>),costheta4)</span><br><span class="line">T4=trans(s4,theta4)</span><br><span class="line"></span><br><span class="line">T_1 = inv(T5)*inv(T4)*inv(T3)*inv(T2)*inv(T1)*X*inv(M)</span><br><span class="line">theta6=<span class="built_in">acosd</span>(T_1(<span class="number">2</span>,<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">T</span>=<span class="title">trans</span><span class="params">(s,theta)</span></span></span><br><span class="line">    se3mat = VecTose3(s);</span><br><span class="line">    theta = theta /180 * <span class="built_in">pi</span>;</span><br><span class="line">    se3mat = se3mat * theta;</span><br><span class="line">    T = MatrixExp6(se3mat);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -1219,7 +1123,7 @@ href="https://link.zhihu.com/?target=https%3A//mirrors.aliyun.com/pypi/simple/">
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/%7C%7Carchive">
+                <a href="/archives/%7C%7C%20archive">
               
                   <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">posts</span>
