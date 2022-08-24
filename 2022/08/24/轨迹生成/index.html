@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、加工前处理 1.选择模板 使用软件打开模型，进入到加工界面，选择多轴加工模板  2.设置机床坐标系以及安全平面。 右键点击工序导航器空白处切换到几何视图，双击MCS_MILL结点   点击确定，再定义安全平面，选择自动平面，安全距离为10.  3.设置几何体 双击如下所示WORKPIECE结点，选择部件几何体   点击确定后弹出如下对话框，点击如下指定毛坯按钮">
+<meta property="og:type" content="article">
+<meta property="og:title" content="轨迹生成">
+<meta property="og:url" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/index.html">
+<meta property="og:site_name" content="小博客">
+<meta property="og:description" content="一、加工前处理 1.选择模板 使用软件打开模型，进入到加工界面，选择多轴加工模板  2.设置机床坐标系以及安全平面。 右键点击工序导航器空白处切换到几何视图，双击MCS_MILL结点   点击确定，再定义安全平面，选择自动平面，安全距离为10.  3.设置几何体 双击如下所示WORKPIECE结点，选择部件几何体   点击确定后弹出如下对话框，点击如下指定毛坯按钮">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352741749409.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342071663647.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342072167570.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352744533127.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342075332981.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315113735427.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315113818697.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315113808133.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342081781160.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352747908537.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315114124484.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315114201859.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352759483932.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342093646955.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342098144760.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342098387492.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315114652207.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315114725330.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315114841403.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315110346007.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342098387492-164731619499113.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315115034297.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315115140634.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315115320124.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352768746542.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352770378816.png">
+<meta property="article:published_time" content="2022-08-24T07:53:58.000Z">
+<meta property="article:modified_time" content="2022-08-24T11:09:18.293Z">
+<meta property="article:author" content="lei ting">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352741749409.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2022/08/24/轨迹生成/"/>
+
+
+
+
+
+  <title>轨迹生成 | 小博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Leiting的茶会厅</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">轨迹生成</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-08-24T15:53:58+08:00">
+                2022-08-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一加工前处理">一、加工前处理</h1>
+<h2 id="选择模板">1.选择模板</h2>
+<p>使用软件打开模型，进入到加工界面，选择<strong>多轴加工模板</strong></p>
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352741749409.png" class="" title="undefined">
+<h2
+id="设置机床坐标系以及安全平面"><strong>2.设置机床坐标系以及安全平面。</strong></h2>
+<p>右键点击工序导航器空白处切换到几何视图，双击MCS_MILL结点</p>
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342071663647.png" class="" title="undefined">
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342072167570.png" class="" title="undefined">
+<p>点击确定，再定义安全平面，<strong>选择自动平面，安全距离为10.</strong></p>
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352744533127.png" class="" title="undefined">
+<h2 id="设置几何体"><strong>3.设置几何体</strong></h2>
+<p>双击如下所示<strong>WORKPIECE</strong>结点，选择部件几何体</p>
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342075332981.png" class="" title="undefined">
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315113735427.png" class="" title="image-20220315113735427">
+<p>点击确定后弹出如下对话框，点击如下<strong>指定毛坯</strong>按钮</p>
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315113818697.png" class="" title="image-20220315113818697">
+<p>系统弹出选择毛坯对话框，选择<strong>包容块</strong>，
+参数设置如下：</p>
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315113808133.png" class="" title="image-20220315113808133">
+<p>点击确定后退回到工件对话框，观察到如图所示图案高亮，就可以点击确定按钮完成几何体的设置。</p>
+<h2 id="设置铣削区域几何体">4.设置铣削区域几何体</h2>
+<p>右键点击WORKPIECE结点，在弹出的选项中选择插入子选项下的几何体按钮。</p>
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342081781160.png" class="" title="undefined">
+<p>弹出对话框，<strong>设置几何体为WORKPIECE</strong>，点击<strong>铣削几何体</strong>按钮，名称为<strong>MILL_AREA_1</strong>如下所示：</p>
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352747908537.png" class="" title="undefined">
+<p>弹出铣削边界对话框，点击<strong>指定切削区域按钮</strong>按钮</p>
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315114124484.png" class="" title="image-20220315114124484">
+<p>观察工序导航器可以发现多了<strong>铣削几何体1</strong>节点做为WORKPIECE结点的<strong>子节点</strong>出现：</p>
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315114201859.png" class="" title="image-20220315114201859">
+<h2 id="设置刀具">5.设置刀具</h2>
+<p>右键点击工序导航器切换至机床视图，右键单击未用项下的刀具按钮</p>
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352759483932.png" class="" title="undefined">
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342093646955.png" class="" title="undefined">
+<p>添加两把刀具，一把用于粗加工的平头铣刀，一把球头铣刀。</p>
+<h1 id="二添加粗加工工序">二、添加粗加工工序</h1>
+<p>1.添加平面铣加工工序</p>
+<p>将工序导航器切换至程序视图，右键点击插入工序：</p>
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342098144760.png" class="" title="undefined">
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342098387492.png" class="" title="undefined">
+<p>弹出对话框，选择平面铣（planar Mill）参数设置如下：</p>
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315114652207.png" class="" title="image-20220315114652207">
+<p>弹出平面铣对话框，设置切削层参数，可以修改相应的切削参数</p>
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315114725330.png" class="" title="image-20220315114725330">
+<p>点击生成，出现刀轨效果如下：</p>
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315114841403.png" class="" title="image-20220315114841403">
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315110346007.png" class="" title="image-20220315110346007">
+<h1 id="三精加工工序">三、精加工工序</h1>
+<p>将工序导航器切换至程序视图，右键点击插入工序：</p>
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342098387492-164731619499113.png" class="" title="undefined">
+<p>弹出对话框，选择<strong>可变轴轮廓铣（VARIABLE_CONTOUR）</strong>，选择之前创建的<strong>铣削几何体（MILL_AREA）</strong>，参数设置如下</p>
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315115034297.png" class="" title="image-20220315115034297">
+<p>弹出<strong>可变轮廓铣</strong>对话框，设置驱动方法为曲面，</p>
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315115140634.png" class="" title="image-20220315115140634">
+<p>弹出对话框，点击指定驱动几何体按钮，如下：</p>
+<p>通过修改驱动设置可以改变铣削参数</p>
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315115320124.png" class="" title="image-20220315115320124">
+<p>点击确定，系统回退至曲面区域驱动方法对话框，选择切削方向如下:</p>
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352768746542.png" class="" title="undefined">
+<p>选择完成后系统有回退至之前对话框，设置材料侧方向，点击如下按钮，</p>
+<img src="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352770378816.png" class="" title="undefined">
+<p>点击生成刀轨</p>
+<p>刀轨生成后可以在3d动态中查看铣削状态。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/08/24/QT/" rel="prev" title="QT">
+                QT <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7Carchive">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E5%8A%A0%E5%B7%A5%E5%89%8D%E5%A4%84%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">一、加工前处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.1.</span> <span class="nav-text">1.选择模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E6%9C%BA%E5%BA%8A%E5%9D%90%E6%A0%87%E7%B3%BB%E4%BB%A5%E5%8F%8A%E5%AE%89%E5%85%A8%E5%B9%B3%E9%9D%A2"><span class="nav-number">1.2.</span> <span class="nav-text">2.设置机床坐标系以及安全平面。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%87%A0%E4%BD%95%E4%BD%93"><span class="nav-number">1.3.</span> <span class="nav-text">3.设置几何体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E9%93%A3%E5%89%8A%E5%8C%BA%E5%9F%9F%E5%87%A0%E4%BD%95%E4%BD%93"><span class="nav-number">1.4.</span> <span class="nav-text">4.设置铣削区域几何体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%88%80%E5%85%B7"><span class="nav-number">1.5.</span> <span class="nav-text">5.设置刀具</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E6%B7%BB%E5%8A%A0%E7%B2%97%E5%8A%A0%E5%B7%A5%E5%B7%A5%E5%BA%8F"><span class="nav-number">2.</span> <span class="nav-text">二、添加粗加工工序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E7%B2%BE%E5%8A%A0%E5%B7%A5%E5%B7%A5%E5%BA%8F"><span class="nav-number">3.</span> <span class="nav-text">三、精加工工序</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lei ting</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

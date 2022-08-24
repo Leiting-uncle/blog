@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、PyQt5 应用开发基础 第1章 开发环境搭建 在pycharm中进行GUI程序开发，搭建pyqt5的开发环境 1.pyqt5模块 1pip install pyqt5 pyqt5不再提供QtDesigner等工具，需要再安装pyqt5-tools 1pip install pyqt5-tools 2.配置QtDesigner  需要填写的说明：  Name：QtDe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="QT">
+<meta property="og:url" content="http://example.com/2022/08/24/QT/index.html">
+<meta property="og:site_name" content="小博客">
+<meta property="og:description" content="一、PyQt5 应用开发基础 第1章 开发环境搭建 在pycharm中进行GUI程序开发，搭建pyqt5的开发环境 1.pyqt5模块 1pip install pyqt5 pyqt5不再提供QtDesigner等工具，需要再安装pyqt5-tools 1pip install pyqt5-tools 2.配置QtDesigner  需要填写的说明：  Name：QtDe">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/08/24/QT/image-20220529155947171.png">
+<meta property="og:image" content="http://example.com/2022/08/24/QT/image-20220529160224239.png">
+<meta property="article:published_time" content="2022-08-24T07:53:58.000Z">
+<meta property="article:modified_time" content="2022-08-24T11:09:47.980Z">
+<meta property="article:author" content="lei ting">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/08/24/QT/image-20220529155947171.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2022/08/24/QT/"/>
+
+
+
+
+
+  <title>QT | 小博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Leiting的茶会厅</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/24/QT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">QT</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-08-24T15:53:58+08:00">
+                2022-08-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="section"></h1>
+<h3 id="一pyqt5-应用开发基础">一、PyQt5 应用开发基础</h3>
+<h4 id="第1章-开发环境搭建">第1章 开发环境搭建</h4>
+<p>在pycharm中进行GUI程序开发，搭建pyqt5的开发环境</p>
+<p>1.pyqt5模块</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pyqt5</span><br></pre></td></tr></table></figure>
+<p>pyqt5不再提供QtDesigner等工具，需要再安装pyqt5-tools</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pyqt5-tools</span><br></pre></td></tr></table></figure>
+<p>2.配置QtDesigner</p>
+<img src="/2022/08/24/QT/image-20220529155947171.png" class="" title="image-20220529155947171">
+<p>需要填写的说明：</p>
+<blockquote>
+<p>Name：QtDesinger</p>
+<p>Program：...-packages\qt5_applications.exe</p>
+<p>Working directory：$ProjectFileDir$</p>
+<p>意思是该外部工具定义名称为QtDesinger，外部工具的地址需要自己手动选择，一般为在Python的安装路径中，最后的Working
+directory设置为当前项目工作目录即可，即创建的UI文件会存储在目录下。</p>
+</blockquote>
+<p>3.配置PyUIC</p>
+<img src="/2022/08/24/QT/image-20220529160224239.png" class="" title="image-20220529160224239">
+<blockquote>
+<p>Name：PyUIC</p>
+<p>Program：E:.exe</p>
+<p>Arguments：-m PyQt5.uic.pyuic $FileName$ -o
+$FileNameWithoutExtension$.py</p>
+<p>Working directory：$ProjectFileDir$</p>
+<p>意思是该外部工具定义名称为PyUIC，外部工具的地址需要自己手动选择，一般为在Python的安装路径中，Arguments的意思是会把UI文件转成同名的py文件，最后的Working
+directory设置为当前项目工作目录即可。</p>
+</blockquote>
+<h4 id="第2章-pyqt5-gui-程序框架">第2章 PyQt5 GUI 程序框架</h4>
+<h5 id="pyqt5-gui程序的基本框架">2.1 pyqt5 GUI程序的基本框架</h5>
+<h5 id="可视化设计窗体gui程序">2.2可视化设计窗体GUI程序</h5>
+<ol type="1">
+<li><p>在QT Designer中可视化设计窗体</p></li>
+<li><p>使用pyUIC将窗体文件转换为python程序文件</p></li>
+<li><p>使用转换后的窗体python类构建GUI应用程序</p></li>
+<li><p>界面与逻辑分离的GUI程序框架</p>
+<ul>
+<li><p>多继承方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## appMain2.py 多继承方法 </span></span><br><span class="line"><span class="keyword">import</span> sys <span class="keyword">from</span> PyQt5.QtWidgets </span><br><span class="line"><span class="keyword">import</span> QWidget, QApplication </span><br><span class="line"><span class="keyword">from</span> ui_FormHello <span class="keyword">import</span> Ui_FormHello</span><br><span class="line">	</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">QmyWidget</span>(QWidget,Ui_FormHello): </span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, parent=<span class="literal">None</span></span>): </span><br><span class="line">		<span class="built_in">super</span>().__init__(parent) <span class="comment">#调用父类构造函数，创建QWidget窗体 </span></span><br><span class="line">		self.Lab=<span class="string">&quot;多重继承的QmyWidget&quot;</span> <span class="comment">#新定义的一个 变量 </span></span><br><span class="line">        self.setupUi(self) <span class="comment">#self是QWidget窗体，可作 为参数传给setupUi() 		</span></span><br><span class="line">        self.LabHello.setText(self.Lab) </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>: </span><br><span class="line">    app = QApplication(sys.argv) <span class="comment">#创建app </span></span><br><span class="line">    myWidget=QmyWidget() </span><br><span class="line">    myWidget.show() </span><br><span class="line">    myWidget.btnClose.setText(<span class="string">&quot;不关闭了&quot;</span>) </span><br><span class="line">    sys.exit(app.exec_())</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>采用多继承的方式定义了一个类QmyWidget，
+称这个类为窗体的业务逻辑类，它的父类是QWidget和 Ui_FormHello。</p></li>
+<li><p>在这个类的构造函数中，首先用函数super()
+获取父类，并执行父类的构造函数</p></li>
+<li><p>调用setupUi()函数创建UI窗体</p>
+<p>优点是访问方便，缺点是过于开放，不符合面向对象严格封装的设计思想，不利于界面与业务逻辑分离的。</p></li>
+</ul></li>
+<li><p>单继承与界面独立封装方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## appMain.py 单继承方法，能更好地进行界面与逻辑的分离 </span></span><br><span class="line"><span class="keyword">import</span> sys <span class="keyword">from</span> PyQt5.QtWidgets </span><br><span class="line"><span class="keyword">import</span> QWidget, QApplication </span><br><span class="line"><span class="keyword">from</span> ui_FormHello <span class="keyword">import</span> Ui_FormHello </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">QmyWidget</span>(<span class="title class_ inherited__">QWidget</span>): </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, parent=<span class="literal">None</span></span>): </span><br><span class="line">        <span class="built_in">super</span>().__init__(parent) <span class="comment">#调用父类构造函 数，创建QWidget窗体 </span></span><br><span class="line">        self.__ui=Ui_FormHello() <span class="comment">#创建UI对象 </span></span><br><span class="line">        self.__ui.setupUi(self) <span class="comment">#构造UI </span></span><br><span class="line">        self.Lab=<span class="string">&quot;单继承的QmyWidget&quot;</span> </span><br><span class="line">        self.__ui.LabHello.setText(self.Lab) </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">setBtnText</span>(<span class="params">self, aText</span>):</span><br><span class="line">        self.__ui.btnClose.setText(aText) </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>: </span><br><span class="line">    app = QApplication(sys.argv) <span class="comment">#创建app，用 QApplication类 </span></span><br><span class="line">    myWidget=QmyWidget() </span><br><span class="line">    myWidget.show() </span><br><span class="line">    myWidget.setBtnText(<span class="string">&quot;间接设置&quot;</span>) </span><br><span class="line">    sys.exit(app.exec_())</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>可视化设计的窗体对象被定义为QmyWidget类
+的一个私有属性self.__ui，在QmyWidget类的内部对窗体上的组件的访问都通过这个属性实现，而外部无法直接访问窗体上的对象，这更符合面向对象封装隔离的设计思想。</p></li>
+<li><p>窗体上的组件不会与QmyWidget里定义的属性 混淆。</p></li>
+<li><p>当然，也可以定义界面对象为公共属性，即创建界面对象时用下面的语句：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.ui=Ui_FormHello() </span><br></pre></td></tr></table></figure></li>
+</ul></li>
+</ul></li>
+</ol>
+<h5 id="信号和槽的使用">2.3信号和槽的使用</h5>
+<p><strong>信号（Signal）</strong>就是在特定情况下被发射（emit）
+的一种通告，例如一个PushButton按钮最常见的信号就是鼠标单击时发射的clicked()信号，一个ComboBox最常见的信号是选择的项变化时发射的
+CurrentIndexChanged()信号。GUI程序设计的主要内容就是对界面上各组件发射的特定信号进行响应，只需要知道什么情况下发射了哪些信号，然后合理地去响应和处理这些信号就可以了。</p>
+<p>槽（Slot）就是对信号响应的函数。槽实质上是一个函数，它可以被直接调用。槽函数与一般的函数不同的是：槽函数可以与一个信号关联，当信号被发射时，关联的槽函数会被自动执行。Qt的类一般都有一些内建（build-in）的槽函数，例如QWidget有一个槽函数close()，其功能是关闭窗口。如果将一个PushButton
+按钮的clicked()信号与窗体的close()槽函数关联，那么点击按钮时就会关闭窗口。</p>
+<h5 id="自定义信号的使用">2.4自定义信号的使用</h5>
+<h3 id="二pyqt5-gui应用程序设计">二、PyQt5 GUI应用程序设计</h3>
+<h4 id="第3章-常用-界面组件的使用">第3章 常用 界面组件的使用</h4>
+<h4 id="第4章-modelview结构">第4章 Model/View结构</h4>
+<h4 id="第5章-事件处理">第5章 事件处理</h4>
+<h4 id="第6章-对话框与多窗口设计">第6章 对话框与多窗口设计</h4>
+<h4 id="第7章-数据库">第7章 数据库</h4>
+<h4 id="第8章-绘图">第8章 绘图</h4>
+<h4 id="第9章-文件">第9章 文件</h4>
+<h4 id="第10章-多媒体">第10章 多媒体</h4>
+<h4 id="第11章-gui设计增强技术">第11章 GUI设计增强技术</h4>
+<h3 id="三数据可视化">三、数据可视化</h3>
+<h4 id="第12章-pyqtchart二维绘图">第12章 PyQtChart二维绘图</h4>
+<h4 id="第13章-pyqtdatavisualization三维绘图">第13章
+PyQtDataVisualization三维绘图</h4>
+<h4 id="第14章-matplotlib数据可视化">第14章 Matplotlib数据可视化</h4>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/08/24/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/" rel="next" title="轨迹生成">
+                <i class="fa fa-chevron-left"></i> 轨迹生成
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/08/24/kuka%E7%BC%96%E7%A8%8B/" rel="prev" title="kuka编程">
+                kuka编程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7Carchive">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#section"><span class="nav-number">1.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80pyqt5-%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80"><span class="nav-number">1.0.1.</span> <span class="nav-text">一、PyQt5 应用开发基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC1%E7%AB%A0-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">第1章 开发环境搭建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC2%E7%AB%A0-pyqt5-gui-%E7%A8%8B%E5%BA%8F%E6%A1%86%E6%9E%B6"><span class="nav-number">1.0.1.2.</span> <span class="nav-text">第2章 PyQt5 GUI 程序框架</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#pyqt5-gui%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A1%86%E6%9E%B6"><span class="nav-number">1.0.1.2.1.</span> <span class="nav-text">2.1 pyqt5 GUI程序的基本框架</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%AF%E8%A7%86%E5%8C%96%E8%AE%BE%E8%AE%A1%E7%AA%97%E4%BD%93gui%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.0.1.2.2.</span> <span class="nav-text">2.2可视化设计窗体GUI程序</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E5%92%8C%E6%A7%BD%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.0.1.2.3.</span> <span class="nav-text">2.3信号和槽的使用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BF%A1%E5%8F%B7%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.0.1.2.4.</span> <span class="nav-text">2.4自定义信号的使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8Cpyqt5-gui%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.0.2.</span> <span class="nav-text">二、PyQt5 GUI应用程序设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC3%E7%AB%A0-%E5%B8%B8%E7%94%A8-%E7%95%8C%E9%9D%A2%E7%BB%84%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">第3章 常用 界面组件的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC4%E7%AB%A0-modelview%E7%BB%93%E6%9E%84"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">第4章 Model&#x2F;View结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86"><span class="nav-number">1.0.2.3.</span> <span class="nav-text">第5章 事件处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC6%E7%AB%A0-%E5%AF%B9%E8%AF%9D%E6%A1%86%E4%B8%8E%E5%A4%9A%E7%AA%97%E5%8F%A3%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.0.2.4.</span> <span class="nav-text">第6章 对话框与多窗口设计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC7%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.0.2.5.</span> <span class="nav-text">第7章 数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC8%E7%AB%A0-%E7%BB%98%E5%9B%BE"><span class="nav-number">1.0.2.6.</span> <span class="nav-text">第8章 绘图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC9%E7%AB%A0-%E6%96%87%E4%BB%B6"><span class="nav-number">1.0.2.7.</span> <span class="nav-text">第9章 文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC10%E7%AB%A0-%E5%A4%9A%E5%AA%92%E4%BD%93"><span class="nav-number">1.0.2.8.</span> <span class="nav-text">第10章 多媒体</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC11%E7%AB%A0-gui%E8%AE%BE%E8%AE%A1%E5%A2%9E%E5%BC%BA%E6%8A%80%E6%9C%AF"><span class="nav-number">1.0.2.9.</span> <span class="nav-text">第11章 GUI设计增强技术</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="nav-number">1.0.3.</span> <span class="nav-text">三、数据可视化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC12%E7%AB%A0-pyqtchart%E4%BA%8C%E7%BB%B4%E7%BB%98%E5%9B%BE"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">第12章 PyQtChart二维绘图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC13%E7%AB%A0-pyqtdatavisualization%E4%B8%89%E7%BB%B4%E7%BB%98%E5%9B%BE"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">第13章
+PyQtDataVisualization三维绘图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC14%E7%AB%A0-matplotlib%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="nav-number">1.0.3.3.</span> <span class="nav-text">第14章 Matplotlib数据可视化</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lei ting</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

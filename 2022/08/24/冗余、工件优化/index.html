@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、冗余自由度 刀具路径由离散的CLS数据组成， \[ CLS&#x3D;(x,y,z,i,j,k) \] 其中x,y,z为刀具位置，i,j,k为刀轴方向的单位向量 1、CLS对应的末端姿态 方法一： 引用文献中的方法  Peng J, Ding Y, Zhang G, 等. Smoothness-oriented path optimization for robotic millin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="参数优化">
+<meta property="og:url" content="http://example.com/2022/08/24/%E5%86%97%E4%BD%99%E3%80%81%E5%B7%A5%E4%BB%B6%E4%BC%98%E5%8C%96/index.html">
+<meta property="og:site_name" content="小博客">
+<meta property="og:description" content="一、冗余自由度 刀具路径由离散的CLS数据组成， \[ CLS&#x3D;(x,y,z,i,j,k) \] 其中x,y,z为刀具位置，i,j,k为刀轴方向的单位向量 1、CLS对应的末端姿态 方法一： 引用文献中的方法  Peng J, Ding Y, Zhang G, 等. Smoothness-oriented path optimization for robotic millin">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/08/24/%E5%86%97%E4%BD%99%E3%80%81%E5%B7%A5%E4%BB%B6%E4%BC%98%E5%8C%96/image-20220513120231244.png">
+<meta property="og:image" content="http://example.com/2022/08/24/%E5%86%97%E4%BD%99%E3%80%81%E5%B7%A5%E4%BB%B6%E4%BC%98%E5%8C%96/image-20220504214148968-16516717171351.png">
+<meta property="article:published_time" content="2022-08-24T09:48:05.779Z">
+<meta property="article:modified_time" content="2022-08-24T11:09:26.623Z">
+<meta property="article:author" content="lei ting">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/08/24/%E5%86%97%E4%BD%99%E3%80%81%E5%B7%A5%E4%BB%B6%E4%BC%98%E5%8C%96/image-20220513120231244.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2022/08/24/冗余、工件优化/"/>
+
+
+
+
+
+  <title>参数优化 | 小博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Leiting的茶会厅</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/24/%E5%86%97%E4%BD%99%E3%80%81%E5%B7%A5%E4%BB%B6%E4%BC%98%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">参数优化</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-08-24T17:48:05+08:00">
+                2022-08-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一冗余自由度">一、冗余自由度</h1>
+<p>刀具路径由离散的CLS数据组成， <span class="math display">\[
+CLS=(x,y,z,i,j,k)
+\]</span>
+其中<strong>x,y,z</strong>为刀具位置，<strong>i,j,k</strong>为刀轴方向的单位向量</p>
+<h2 id="cls对应的末端姿态">1、CLS对应的末端姿态</h2>
+<h3 id="方法一">方法一：</h3>
+<p>引用文献中的方法</p>
+<blockquote>
+<p>Peng J, Ding Y, Zhang G, 等. Smoothness-oriented path optimization
+for robotic milling processes[J]. Science China Technological Sciences,
+2020, 63(9): 1751–1763.</p>
+</blockquote>
+<p>由cls可以生成刀具姿态，但是刀具姿态并不唯一，定义初始机器人任务姿态为：</p>
+<p><span
+class="math inline">\(o_i=(x,y,z)\)</span>为刀具姿态矩阵的位置，z轴向量为
+<span class="math display">\[
+z_i = （i，j，k）
+\]</span> x轴向量为 <span class="math display">\[
+x_i=y_i \times z_i
+\]</span> y轴向量可以有下式计算得来 <span class="math display">\[
+y_i= \frac{z_i \times \overline{o_{i+1} o_{i}} } {\lVert {z_i \times
+\overline{o_{i+1} o_{i}}} \lVert}\\
+对于最后一个cls点\\
+y_i= \frac{z_i \times \overline{o_{i-1} o_{i}} } {\lVert {z_i \times
+\overline{o_{i-1} o_{i}}} \lVert}\\
+\]</span>
+由此可以得到机器人末端初始姿态矩阵，因为绕刀具轴的旋转对铣刀定位没有影响，因此对于一个CLS，存在无数的可行机器人姿态，可由绕刀轴旋转得到。
+<span class="math display">\[
+T(\gamma_i) = T_i \cdot Rot(\hat{z},\gamma_i)\\
+T_i = \begin{bmatrix}
+x_i&amp;y_i&amp;z_i&amp;o_i\\
+0&amp;0&amp;0&amp;1\end {bmatrix}\\
+\]</span> 其中<span
+class="math inline">\(T_i\)</span>为cls对应的初始末端矩阵，<span
+class="math inline">\(\gamma \in
+[-\pi,\pi]\)</span>为冗余自由度，这样就可以得到CLS任意冗余自由度对应的末端姿态矩阵。</p>
+<blockquote>
+<p>这种方法会导致刀具轨迹弯折时机器人姿态变化较大</p>
+</blockquote>
+<h3 id="方法二">方法二：</h3>
+<blockquote>
+<p>[1]Zhu W, Qu W, Cao L, 等. An off-line programming system for robotic
+drilling in aerospace manufacturing[J]. The International Journal of
+Advanced Manufacturing Technology, 2013, 68(9–12): 2535–2545.</p>
+</blockquote>
+<p>定义与上一个的方法一样，<span class="math inline">\(z_i =
+[i,j,k]\)</span>，而<span
+class="math inline">\(x_i\)</span>是三个标准单位向量<span
+class="math inline">\([1,0,0],[0,1,0],[0,0,1]\)</span>在由<span
+class="math inline">\([x,y,z]和[i,j,k]\)</span>决定的平面上的最长投影的归一化向量，<span
+class="math inline">\(y_i\)</span>是<span
+class="math inline">\(z_i\)</span>和<span
+class="math inline">\(x_i\)</span>的叉积。</p>
+<h3 id="方法三">方法三:</h3>
+<blockquote>
+<p>[1]熊刚. 机器人铣削加工的误差补偿和力控制方法研究[D]. 上海交通大学,
+2019.</p>
+</blockquote>
+<img src="/2022/08/24/%E5%86%97%E4%BD%99%E3%80%81%E5%B7%A5%E4%BB%B6%E4%BC%98%E5%8C%96/image-20220513120231244.png" class="" title="image-20220513120231244">
+<h3 id="方法四">方法四：</h3>
+<p>计算刀轴向量和 基座标系Z轴之间的变换矩阵</p>
+<p>将两个向量之间的变换视为绕某一轴的旋转某一角度的螺旋运动，旋转角为两个向量之间的夹角，而旋转轴则是两个向量之间的叉积。</p>
+<p>已知单位向量，将其绕某一轴<span
+class="math inline">\(\omega\)</span>旋转<span
+class="math inline">\(\theta\)</span>，通过使用<strong>罗德里格斯公式</strong>可以计算其旋转矩阵。
+<span class="math display">\[
+R(\omega,\theta) =I +sin\theta[\omega]+(1-cos\theta)[\omega]^2
+\]</span></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">方法一：</span><br><span class="line"><span class="comment">#使用轴角法求取向量之间的变换矩阵，和上一个函数是一样的方法</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rotation_matrix_from_vectors2</span>(<span class="params">vec2</span>):</span><br><span class="line">    vec1 = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>]</span><br><span class="line">    <span class="comment">#规范化两个向量</span></span><br><span class="line">    a, b = (vec1 / np.linalg.norm(vec1)).reshape(<span class="number">3</span>), (vec2 / np.linalg.norm(vec2)).reshape(<span class="number">3</span>)</span><br><span class="line">    <span class="comment">#求两个向量变换的旋转轴</span></span><br><span class="line">    v = np.cross(a, b)</span><br><span class="line">    s = np.linalg.norm(v)</span><br><span class="line">    v = v / s</span><br><span class="line">    <span class="comment">#求旋转角度</span></span><br><span class="line">    c = np.dot(a, b)</span><br><span class="line">    theta = math.acos(c)</span><br><span class="line">    <span class="comment">#使用mr库求取轴角法的旋转矩阵，用的是罗德里格斯公式</span></span><br><span class="line">    omegaHat = mr.VecToso3(v)</span><br><span class="line">    so3mat = omegaHat * theta</span><br><span class="line">    matrix = mr.MatrixExp3(so3mat)</span><br><span class="line">    <span class="comment">#求矩阵对应的欧拉角</span></span><br><span class="line">    r = R.from_matrix(matrix)</span><br><span class="line">    euler = r.as_euler(<span class="string">&#x27;ZYX&#x27;</span>,degrees=<span class="literal">True</span>)</span><br><span class="line">    matrix = r.as_matrix()</span><br><span class="line">    <span class="keyword">return</span> matrix</span><br><span class="line"></span><br><span class="line">方法二：本质上都是一样的</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rotation_matrix_from_vectors</span>(<span class="params">vec1,vec2</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot; Find the rotation matrix that aligns vec1 to vec2</span></span><br><span class="line"><span class="string">    :param vec1: A 3d &quot;source&quot; vector</span></span><br><span class="line"><span class="string">    :param vec2: A 3d &quot;destination&quot; vector</span></span><br><span class="line"><span class="string">    :return mat: A transform matrix (3x3) which when applied to vec1, aligns it with vec2.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    a, b = (vec1 / np.linalg.norm(vec1)).reshape(<span class="number">3</span>), (vec2 / np.linalg.norm(vec2)).reshape(<span class="number">3</span>)</span><br><span class="line">    v = np.cross(a, b)</span><br><span class="line">    c = np.dot(a, b)</span><br><span class="line">    s = np.linalg.norm(v)</span><br><span class="line">    kmat = np.array([[<span class="number">0</span>, -v[<span class="number">2</span>], v[<span class="number">1</span>]], [v[<span class="number">2</span>], <span class="number">0</span>, -v[<span class="number">0</span>]], [-v[<span class="number">1</span>], v[<span class="number">0</span>], <span class="number">0</span>]])</span><br><span class="line">    rotation_matrix = np.eye(<span class="number">3</span>) + kmat + kmat.dot(kmat) * ((<span class="number">1</span> - c) / (s ** <span class="number">2</span>))</span><br><span class="line">    <span class="keyword">return</span> rotation_matrix</span><br></pre></td></tr></table></figure>
+<h2 id="末端姿态对应的欧拉角">2、末端姿态对应的欧拉角</h2>
+<p>末端到基座标的旋转角ABC，是绕动坐标系旋转的ZYX欧拉角，KRC中定义角度A、B和C是绕Z、Y和X的旋转角度，旋转顺序也必须遵从：</p>
+<ol type="1">
+<li>绕Z轴旋转角度为A</li>
+<li>绕Y轴旋转角度为B</li>
+<li>绕X轴旋转角度为C</li>
+</ol>
+<img src="/2022/08/24/%E5%86%97%E4%BD%99%E3%80%81%E5%B7%A5%E4%BB%B6%E4%BC%98%E5%8C%96/image-20220504214148968-16516717171351.png" class="" title="image-20220504214148968">
+<p>由机器人导论中的方法，对旋转矩阵求逆解 <span class="math display">\[
+R_{ZYX}=R_Z(\alpha)R_Y(\beta)R_X(\gamma)=\begin {bmatrix} r11 &amp; r12
+&amp;r13\\
+r21&amp;r22&amp;r23\\
+r31&amp;r32&amp;r33\end {bmatrix}\\
+\beta=Atan2(-r_{31},\sqrt{r_{11}^2 + r_{21}^2})\\
+\alpha=Atan2(\frac {r_{21}}{c\beta},\frac {r_{11}}{c\beta})\\
+\gamma = Atan2(\frac{r_{32}}{c\beta},\frac {r_{33}}{c\beta})
+\]</span> 虽然存在第二个解，但是在上式中取<span
+class="math inline">\(\beta\)</span>的正根以得到单解，满足<span
+class="math inline">\(-90\le \beta \le
+90\)</span>，以此获取各种姿态表示法之间一一对应的映射函数。如果等于+-90，解的结果就退化了，这个时候一般取<span
+class="math inline">\(\alpha = 0\)</span>。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/" rel="next" title="谱聚类算法">
+                <i class="fa fa-chevron-left"></i> 谱聚类算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/08/24/%E5%AE%9E%E9%AA%8C%E8%AE%B0%E5%BD%95/" rel="prev" title="实验记录">
+                实验记录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7Carchive">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E5%86%97%E4%BD%99%E8%87%AA%E7%94%B1%E5%BA%A6"><span class="nav-number">1.</span> <span class="nav-text">一、冗余自由度</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cls%E5%AF%B9%E5%BA%94%E7%9A%84%E6%9C%AB%E7%AB%AF%E5%A7%BF%E6%80%81"><span class="nav-number">1.1.</span> <span class="nav-text">1、CLS对应的末端姿态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80"><span class="nav-number">1.1.1.</span> <span class="nav-text">方法一：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C"><span class="nav-number">1.1.2.</span> <span class="nav-text">方法二：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%89"><span class="nav-number">1.1.3.</span> <span class="nav-text">方法三:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E5%9B%9B"><span class="nav-number">1.1.4.</span> <span class="nav-text">方法四：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AB%E7%AB%AF%E5%A7%BF%E6%80%81%E5%AF%B9%E5%BA%94%E7%9A%84%E6%AC%A7%E6%8B%89%E8%A7%92"><span class="nav-number">1.2.</span> <span class="nav-text">2、末端姿态对应的欧拉角</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lei ting</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
