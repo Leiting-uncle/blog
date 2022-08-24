@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,21 +48,21 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
 
 
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
 
 
 
@@ -86,38 +86,38 @@
 <meta property="og:site_name" content="小博客">
 <meta property="og:description" content="谱聚类算法：谱指的是某个矩阵的特征值。 谱聚类的思想来源于图论，它把待聚类的数据集中的每一个样本看做是图中一个顶点，这些顶点连接在一起，连接的这些边上有权重，权重的大小表示这些样本之间的相似程度。同一类的顶点它们的相似程度很高，在图论中体现为同一类的顶点中连接它们的边的权重很大；不在同一类的顶点连接它们的边的权重很小。于是谱聚类的最终目标就是找到一种切割图的方法，使得切割之后的各个子图内的权重很">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/202203111026750.jpg">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220311114622575.png">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220311115316683.png">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220311115709665.png">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220311132125530.png">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220311132240644.png">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312185718753.png">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312190301385.png">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312190424470.png">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312190629703.png">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312200714522.png">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312201051146.png">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312201216584.png">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312201648665.png">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312205724786.png">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312205922264.png">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312205930303.png">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312210846810.png">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312211959073.png">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312212210088.png">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312212238622.png">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213754655.png">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213256066.png">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213419592.png">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213433072.png">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213820132.png">
-<meta property="og:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213915761.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/202203111026750.jpg">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220311114622575.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220311115316683.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220311115709665.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220311132125530.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220311132240644.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312185718753.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312190301385.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312190424470.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312190629703.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312200714522.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312201051146.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312201216584.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312201648665.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312205724786.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312205922264.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312205930303.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312210846810.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312211959073.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312212210088.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312212238622.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213754655.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213256066.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213419592.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213433072.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213820132.png">
+<meta property="og:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213915761.png">
 <meta property="article:published_time" content="2022-08-24T09:48:05.771Z">
 <meta property="article:modified_time" content="2022-08-24T11:09:24.341Z">
 <meta property="article:author" content="lei ting">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/202203111026750.jpg">
+<meta name="twitter:image" content="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/202203111026750.jpg">
 
 
 
@@ -181,7 +181,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">小博客</span>
         <span class="logo-line-after"><i></i></span>
@@ -209,7 +209,7 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/blog/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
@@ -219,7 +219,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/blog/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
@@ -260,12 +260,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -329,7 +329,7 @@
       
         <p><strong>谱聚类算法</strong>：谱指的是某个矩阵的<strong>特征值</strong>。</p>
 <p>谱聚类的思想来源于图论，它把待聚类的数据集中的每一个样本看做是图中一个<strong>顶点</strong>，这些顶点连接在一起，连接的这些<strong>边上有权重</strong>，<strong>权重的大小</strong>表示这些样本之间的<strong>相似程度</strong>。<strong>同一类</strong>的顶点它们的<strong>相似程度很高</strong>，在图论中体现为同一类的顶点中连接它们的边的<strong>权重很大</strong>；<strong>不在同一类</strong>的顶点连接它们的边的<strong>权重很小</strong>。于是谱聚类的<strong>最终目标</strong>就是找到一种<strong>切割图的方法</strong>，使得切割之后的各个子<strong>图内的权重很大</strong>，<strong>子图之间的权重很小</strong>。</p>
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/202203111026750.jpg" class="" title="img">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/202203111026750.jpg" class="" title="img">
 <h1 id="一预备知识">一、预备知识</h1>
 <ul>
 <li><p>假设给定一个数据集<span class="math inline">\(X=\{
@@ -351,17 +351,17 @@ id="邻接矩阵度和度矩阵连通子图">1.1<strong>邻接矩阵、度和度
 <h3 id="邻接矩阵">（1）邻接矩阵</h3>
 <p>所有顶点之间的权重构成一个矩阵，叫<strong>邻接矩阵</strong>，也叫<strong>权重矩阵</strong>。两个顶点互相之间的权重是一样的，因此<span
 class="math inline">\(W\)</span>是对称矩阵。</p>
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220311114622575.png" class="" title="image-20220311114622575">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220311114622575.png" class="" title="image-20220311114622575">
 <h3 id="度矩阵">（2）度矩阵</h3>
 <p>对于某个顶点的<strong>度</strong><span
 class="math inline">\(d_i,i=1,2,...,n\)</span>，定义为</p>
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220311115316683.png" class="" title="image-20220311115316683">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220311115316683.png" class="" title="image-20220311115316683">
 <p>度其实就是邻接矩阵的第<span
 class="math inline">\(i\)</span>行的和。（因为邻接矩阵是对称矩阵，所以第<span
 class="math inline">\(j\)</span>列的和也可以）</p>
 <p><strong>度矩阵</strong>定义为<span
 class="math inline">\(n\)</span>个度构成的<strong>对角矩阵</strong>：</p>
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220311115709665.png" class="" title="image-20220311115709665">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220311115709665.png" class="" title="image-20220311115709665">
 <p>对于给定顶点<span class="math inline">\(V\)</span>的一个子集<span
 class="math inline">\(A\subset V\)</span>，定义它的补为<span
 class="math inline">\(\bar{A}\)</span>。对于某个顶点<span
@@ -371,10 +371,10 @@ class="math inline">\(v_i \in
 A\)</span>，则<strong>指示向量</strong>第i个位置为1，即<span
 class="math inline">\(f_i =
 1\)</span>，否则为0；对于两个子集A和B，我们定义：</p>
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220311132125530.png" class="" title="image-20220311132125530">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220311132125530.png" class="" title="image-20220311132125530">
 <p>公式(4)表示两个子集中顶点之间的权重之和，<strong>注意这里不包含子集内顶点之间的权重</strong>。</p>
 <p><strong>子集大小</strong>有两种定义</p>
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220311132240644.png" class="" title="image-20220311132240644">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220311132240644.png" class="" title="image-20220311132240644">
 <h3 id="连通子图">（3）连通子图</h3>
 <p>如果<span
 class="math inline">\(A\)</span>中的任意两个顶点都至少存在一条路径将他们连接起来，并且<span
@@ -391,7 +391,7 @@ class="math inline">\(A_1\cup A_2 \cup... \cup A_k=V\)</span></p>
 <p>采用欧式距离计算两个顶点的距离<span
 class="math inline">\(s_{ij}\)</span>，然后设定一个阈值<span
 class="math inline">\(\epsilon\)</span></p>
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312185718753.png" class="" title="image-20220312185718753">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312185718753.png" class="" title="image-20220312185718753">
 <h3 id="k-邻近法">（2）k-邻近法</h3>
 <p>利用<strong>KNN算法</strong>遍历所有的样本点，取每个样本最近的k个点作为近邻，取与顶点最近的<span
 class="math inline">\(k\)</span>个顶点，该顶点与<span
@@ -400,38 +400,38 @@ class="math inline">\(k\)</span>个顶点的权重都大于0。但是这种方�
 <li>两个顶点只要其中一个点在另一个顶点的近邻中，则令<span
 class="math inline">\(\omega_{ij}=\omega_{ji}\)</span></li>
 </ul>
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312190301385.png" class="" title="image-20220312190301385">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312190301385.png" class="" title="image-20220312190301385">
 <ul>
 <li>两个顶点同时在双方的近邻中，则令<span
 class="math inline">\(\omega_{ij}=\omega_{ji}\)</span>​，否则<span
 class="math inline">\(\omega_{ij}=\omega_{ji}=0\)</span></li>
 </ul>
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312190424470.png" class="" title="image-20220312190424470">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312190424470.png" class="" title="image-20220312190424470">
 <h3 id="全连接法">（3）全连接法</h3>
 <p>该方法将所有的顶点都连接起来。然后通过度量空间中某种对称度量算子来计算顶点之间的相似度。常用的有<strong>多项式核函数，高斯核函数和Sigmoid核函数</strong>。最常用的是高斯核函数RBF，此时相似矩阵和邻接矩阵相同，比如使用<strong>高斯核函数</strong>计算两个顶点之间的相似度：</p>
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312190629703.png" class="" title="image-20220312190629703">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312190629703.png" class="" title="image-20220312190629703">
 <p>实际应用中，使用<strong>全连接法</strong>是最普遍的，而在全连接法中使用<strong>高斯径向核RBF</strong>是最普遍的。</p>
 <h2 id="图拉普拉斯矩阵">1.3 图拉普拉斯矩阵</h2>
 <h3 id="非规范化的图拉普拉斯矩阵">1.3.1 非规范化的图拉普拉斯矩阵</h3>
 <p>图拉普拉斯矩阵的定义如下：</p>
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312200714522.png" class="" title="image-20220312200714522">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312200714522.png" class="" title="image-20220312200714522">
 <p>其中<span
 class="math inline">\(D\)</span>为度矩阵，W为权重（近似）矩阵，所以L也是对称矩阵</p>
 <p><strong>性质：</strong></p>
 <ul>
 <li>对于任意向量$f R^n $</li>
 </ul>
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312201051146.png" class="" title="image-20220312201051146">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312201051146.png" class="" title="image-20220312201051146">
 <ul>
 <li><p><span
 class="math inline">\(L\)</span>是一个<strong>对称半正定矩阵</strong>。</p>
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312201216584.png" class="" title="image-20220312201216584"></li>
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312201216584.png" class="" title="image-20220312201216584"></li>
 <li><p><span
 class="math inline">\(L\)</span>的最小特征值为0，对应的特征向量是全为1的向量<span
 class="math inline">\(1\)</span>。<span class="math inline">\(0 \le
 \lambda_1 \le \lambda_2 ...\le \lambda_n\)</span></p></li>
 <li><p>对于一个对角分块矩阵<span class="math inline">\(A\)</span></p>
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312201648665.png" class="" title="image-20220312201648665">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312201648665.png" class="" title="image-20220312201648665">
 <p>他的特征值等于各个分块矩阵的特征值。</p></li>
 <li><p>若<span
 class="math inline">\(G\)</span>是一个具有非负权重的无向图，则它对应的图拉普拉斯矩阵L的0<strong>特征值的代数重数</strong>k等于G中<strong>连通子图的个数</strong>，假设k个连通子图记为<span
@@ -440,7 +440,7 @@ class="math inline">\(1_{A_i} \in R_n\)</span>。</p></li>
 </ul>
 <h3 id="规范化的图拉普拉斯矩阵">1.3.2规范化的图拉普拉斯矩阵</h3>
 <p>有两种规范化的图拉普拉斯矩阵，他们互相联系。这两种规划化的图拉普拉斯矩阵定义为：</p>
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312205724786.png" class="" title="image-20220312205724786">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312205724786.png" class="" title="image-20220312205724786">
 <p>公式(19)中的<span
 class="math inline">\(L_{sym}\)</span>是一个对称矩阵，下标sym是单词symmetric的简写，<span
 class="math inline">\(L_{rw}\)</span>不是对称矩阵，该矩阵和随机游走(random
@@ -449,8 +449,8 @@ walk)相关，下标rw就是random walk 的首字母组合。</p>
 <ul>
 <li>对于任意向量<span class="math inline">\(f \in R^n\)</span></li>
 </ul>
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312205922264.png" class="" title="image-20220312205922264">
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312205930303.png" class="" title="image-20220312205930303">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312205922264.png" class="" title="image-20220312205922264">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312205930303.png" class="" title="image-20220312205930303">
 <ul>
 <li><p><span class="math inline">\(L_{sym}\)</span>和<span
 class="math inline">\(L_{rw}\)</span>具有相同的特征值，对应的特征值向量关系为
@@ -461,18 +461,18 @@ class="math inline">\(L_{rw}\)</span>具有相同的特征值，对应的特征�
 </ul>
 <h1 id="二切割方法">二、切割方法</h1>
 <p>优化的目标函数为：</p>
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312210846810.png" class="" title="image-20220312210846810">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312210846810.png" class="" title="image-20220312210846810">
 <h2 id="ratiocut切图">2.1 RatioCut切图</h2>
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312211959073.png" class="" title="image-20220312211959073">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312211959073.png" class="" title="image-20220312211959073">
 <p>引入指示向量<span
 class="math inline">\(h_j∈{h_1,h_2,..h_k},j=1,2,...k,\)</span>对于任意一个向量<span
 class="math inline">\(h_j\)</span>,
 它是一个n维向量（n为样本数），我们定义</p>
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312212210088.png" class="" title="image-20220312212210088">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312212210088.png" class="" title="image-20220312212210088">
 <p>对应的<strong>RatioCut函数表达式</strong>为：</p>
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312212238622.png" class="" title="image-20220312212238622">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312212238622.png" class="" title="image-20220312212238622">
 <p>松弛化的目标函数：</p>
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213754655.png" class="" title="image-20220312213754655">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213754655.png" class="" title="image-20220312213754655">
 <p>将图切割为k个分组的问题转换成了求图拉普拉斯矩阵L的<strong>前k个最小特征值对应的特征向量<span
 class="math inline">\(h_j∈{h_1,h_2,..h_k},j=1,2,...k,\)</span></strong>和L二次型之和。</p>
 <p>求出来的<span
@@ -481,14 +481,14 @@ class="math inline">\(H=
 [h_1,h_2,..h_k]\)</span>当作一个新的具有k个维度特征n个样本的数据集进行<span
 class="math inline">\(k-means\)</span>聚类。是对每一个样本聚类，聚类的类别数是k,也就是对H的每一行进行聚类。</p>
 <h2 id="ncut切图">2.2 Ncut切图</h2>
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213256066.png" class="" title="image-20220312213256066">
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213419592.png" class="" title="image-20220312213419592">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213256066.png" class="" title="image-20220312213256066">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213419592.png" class="" title="image-20220312213419592">
 <p>优化目标任然是</p>
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213433072.png" class="" title="image-20220312213433072">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213433072.png" class="" title="image-20220312213433072">
 <p>松弛化的目标函数：</p>
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213820132.png" class="" title="image-20220312213820132">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213820132.png" class="" title="image-20220312213820132">
 <p>令<span class="math inline">\(B= D^{1/2}H\)</span>:</p>
-<img src="/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213915761.png" class="" title="image-20220312213915761">
+<img src="/blog/2022/08/24/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213915761.png" class="" title="image-20220312213915761">
 <p>上式的解<span class="math inline">\(B^*\)</span>也就是矩阵<span
 class="math inline">\(L_{sym}\)</span>的前k个最小特征值对应的特征向量按列排列成<span
 class="math inline">\(B^* = \{ b_1,b_2,...,b_k
@@ -543,7 +543,7 @@ class="math inline">\(L_{sym}\)</span>，在对这个矩阵做特征分解或者
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2022/08/24/%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%BF%90%E5%8A%A8%E5%AD%A6%E7%AC%94%E8%AE%B0/" rel="next" title="机器人学">
+              <a href="/blog/2022/08/24/%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%BF%90%E5%8A%A8%E5%AD%A6%E7%AC%94%E8%AE%B0/" rel="next" title="机器人学">
                 <i class="fa fa-chevron-left"></i> 机器人学
               </a>
             
@@ -553,7 +553,7 @@ class="math inline">\(L_{sym}\)</span>，在对这个矩阵做特征分解或者
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2022/08/24/%E5%86%97%E4%BD%99%E3%80%81%E5%B7%A5%E4%BB%B6%E4%BC%98%E5%8C%96/" rel="prev" title="参数优化">
+              <a href="/blog/2022/08/24/%E5%86%97%E4%BD%99%E3%80%81%E5%B7%A5%E4%BB%B6%E4%BC%98%E5%8C%96/" rel="prev" title="参数优化">
                 参数优化 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -630,7 +630,7 @@ class="math inline">\(L_{sym}\)</span>，在对这个矩阵做特征分解或者
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/%7C%7Carchive">
+                <a href="/blog/archives/%7C%7Carchive">
               
                   <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">posts</span>
@@ -766,57 +766,57 @@ class="math inline">\(L_{sym}\)</span>，在对这个矩阵做特征分解或者
 
   
   
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
   
 
   
   
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
   
 
   
   
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
   
 
   
   
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
 
 
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
 
 
 
