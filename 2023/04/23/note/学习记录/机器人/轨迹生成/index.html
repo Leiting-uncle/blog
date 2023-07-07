@@ -1,0 +1,871 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://imgbed.leiting2020.top/img/202305072001738.jpg">
+  <link rel="icon" href="https://imgbed.leiting2020.top/img/202305072001738.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Lei Ting">
+  <meta name="keywords" content="note">
+  
+    <meta name="description" content="一、加工前处理 1.选择模板 使用软件打开模型，进入到加工界面，选择多轴加工模板   undefined  2.设置机床坐标系以及安全平面。 右键点击工序导航器空白处切换到几何视图，双击MCS_MILL结点   undefined    undefined  点击确定，再定义安全平面，选择自动平面，安全距离为10.   undefined  3.设置几何">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器人轨迹生成">
+<meta property="og:url" content="http://example.com/2023/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/index.html">
+<meta property="og:site_name" content="LeiHub">
+<meta property="og:description" content="一、加工前处理 1.选择模板 使用软件打开模型，进入到加工界面，选择多轴加工模板   undefined  2.设置机床坐标系以及安全平面。 右键点击工序导航器空白处切换到几何视图，双击MCS_MILL结点   undefined    undefined  点击确定，再定义安全平面，选择自动平面，安全距离为10.   undefined  3.设置几何">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352741749409.png">
+<meta property="og:image" content="http://example.com/2023/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342071663647.png">
+<meta property="og:image" content="http://example.com/2023/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342072167570.png">
+<meta property="og:image" content="http://example.com/2023/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352744533127.png">
+<meta property="og:image" content="http://example.com/2023/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342075332981.png">
+<meta property="og:image" content="http://example.com/2023/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342081781160.png">
+<meta property="og:image" content="http://example.com/2023/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352747908537.png">
+<meta property="og:image" content="http://example.com/2023/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352759483932.png">
+<meta property="og:image" content="http://example.com/2023/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342093646955.png">
+<meta property="og:image" content="http://example.com/2023/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342098144760.png">
+<meta property="og:image" content="http://example.com/2023/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342098387492.png">
+<meta property="og:image" content="http://example.com/2023/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352768746542.png">
+<meta property="og:image" content="http://example.com/2023/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352770378816.png">
+<meta property="article:published_time" content="2023-04-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-07T16:06:16.170Z">
+<meta property="article:author" content="Lei Ting">
+<meta property="article:tag" content="机器人">
+<meta property="article:tag" content="轨迹生成">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2023/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352741749409.png">
+  
+  
+  
+  <title>机器人轨迹生成 - LeiHub</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Lei</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="机器人轨迹生成"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-23 00:00" pubdate>
+          2023年4月23日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          11 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">机器人轨迹生成</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="一加工前处理">一、加工前处理</h1>
+<h2 id="选择模板">1.选择模板</h2>
+<p>使用软件打开模型，进入到加工界面，选择<strong>多轴加工模板</strong></p>
+<figure>
+<img src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352741749409.png" srcset="/img/loading.gif" lazyload
+alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<h2
+id="设置机床坐标系以及安全平面"><strong>2.设置机床坐标系以及安全平面。</strong></h2>
+<p>右键点击工序导航器空白处切换到几何视图，双击MCS_MILL结点</p>
+<figure>
+<img src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342071663647.png" srcset="/img/loading.gif" lazyload
+alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<figure>
+<img src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342072167570.png" srcset="/img/loading.gif" lazyload
+alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<p>点击确定，再定义安全平面，<strong>选择自动平面，安全距离为10.</strong></p>
+<figure>
+<img src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352744533127.png" srcset="/img/loading.gif" lazyload
+alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<h2 id="设置几何体"><strong>3.设置几何体</strong></h2>
+<p>双击如下所示<strong>WORKPIECE</strong>结点，选择部件几何体</p>
+<figure>
+<img src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342075332981.png" srcset="/img/loading.gif" lazyload
+alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<figure>
+<img
+src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315113735427.png" srcset="/img/loading.gif" lazyload
+alt="image-20220315113735427" />
+<figcaption aria-hidden="true">image-20220315113735427</figcaption>
+</figure>
+<p>点击确定后弹出如下对话框，点击如下<strong>指定毛坯</strong>按钮</p>
+<figure>
+<img
+src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315113818697.png" srcset="/img/loading.gif" lazyload
+alt="image-20220315113818697" />
+<figcaption aria-hidden="true">image-20220315113818697</figcaption>
+</figure>
+<p>系统弹出选择毛坯对话框，选择<strong>包容块</strong>，
+参数设置如下：</p>
+<figure>
+<img
+src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315113808133.png" srcset="/img/loading.gif" lazyload
+alt="image-20220315113808133" />
+<figcaption aria-hidden="true">image-20220315113808133</figcaption>
+</figure>
+<p>点击确定后退回到工件对话框，观察到如图所示图案高亮，就可以点击确定按钮完成几何体的设置。</p>
+<h2 id="设置铣削区域几何体">4.设置铣削区域几何体</h2>
+<p>右键点击WORKPIECE结点，在弹出的选项中选择插入子选项下的几何体按钮。</p>
+<figure>
+<img src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342081781160.png" srcset="/img/loading.gif" lazyload
+alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<p>弹出对话框，<strong>设置几何体为WORKPIECE</strong>，点击<strong>铣削几何体</strong>按钮，名称为<strong>MILL_AREA_1</strong>如下所示：</p>
+<figure>
+<img src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352747908537.png" srcset="/img/loading.gif" lazyload
+alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<p>弹出铣削边界对话框，点击<strong>指定切削区域按钮</strong>按钮</p>
+<figure>
+<img
+src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315114124484.png" srcset="/img/loading.gif" lazyload
+alt="image-20220315114124484" />
+<figcaption aria-hidden="true">image-20220315114124484</figcaption>
+</figure>
+<p>观察工序导航器可以发现多了<strong>铣削几何体1</strong>节点做为WORKPIECE结点的<strong>子节点</strong>出现：</p>
+<figure>
+<img
+src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315114201859.png" srcset="/img/loading.gif" lazyload
+alt="image-20220315114201859" />
+<figcaption aria-hidden="true">image-20220315114201859</figcaption>
+</figure>
+<h2 id="设置刀具">5.设置刀具</h2>
+<p>右键点击工序导航器切换至机床视图，右键单击未用项下的刀具按钮</p>
+<figure>
+<img src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352759483932.png" srcset="/img/loading.gif" lazyload
+alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<figure>
+<img src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342093646955.png" srcset="/img/loading.gif" lazyload
+alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<p>添加两把刀具，一把用于粗加工的平头铣刀，一把球头铣刀。</p>
+<h1 id="二添加粗加工工序">二、添加粗加工工序</h1>
+<p>1.添加平面铣加工工序</p>
+<p>将工序导航器切换至程序视图，右键点击插入工序：</p>
+<figure>
+<img src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342098144760.png" srcset="/img/loading.gif" lazyload
+alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<figure>
+<img src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342098387492.png" srcset="/img/loading.gif" lazyload
+alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<p>弹出对话框，选择平面铣（planar Mill）参数设置如下：</p>
+<figure>
+<img
+src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315114652207.png" srcset="/img/loading.gif" lazyload
+alt="image-20220315114652207" />
+<figcaption aria-hidden="true">image-20220315114652207</figcaption>
+</figure>
+<p>弹出平面铣对话框，设置切削层参数，可以修改相应的切削参数</p>
+<figure>
+<img
+src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315114725330.png" srcset="/img/loading.gif" lazyload
+alt="image-20220315114725330" />
+<figcaption aria-hidden="true">image-20220315114725330</figcaption>
+</figure>
+<p>点击生成，出现刀轨效果如下：</p>
+<figure>
+<img
+src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315114841403.png" srcset="/img/loading.gif" lazyload
+alt="image-20220315114841403" />
+<figcaption aria-hidden="true">image-20220315114841403</figcaption>
+</figure>
+<figure>
+<img
+src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315110346007.png" srcset="/img/loading.gif" lazyload
+alt="image-20220315110346007" />
+<figcaption aria-hidden="true">image-20220315110346007</figcaption>
+</figure>
+<h1 id="三精加工工序">三、精加工工序</h1>
+<p>将工序导航器切换至程序视图，右键点击插入工序：</p>
+<figure>
+<img
+src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15342098387492-164731619499113.png" srcset="/img/loading.gif" lazyload
+alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<p>弹出对话框，选择<strong>可变轴轮廓铣（VARIABLE_CONTOUR）</strong>，选择之前创建的<strong>铣削几何体（MILL_AREA）</strong>，参数设置如下</p>
+<figure>
+<img
+src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315115034297.png" srcset="/img/loading.gif" lazyload
+alt="image-20220315115034297" />
+<figcaption aria-hidden="true">image-20220315115034297</figcaption>
+</figure>
+<p>弹出<strong>可变轮廓铣</strong>对话框，设置驱动方法为曲面，</p>
+<figure>
+<img
+src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315115140634.png" srcset="/img/loading.gif" lazyload
+alt="image-20220315115140634" />
+<figcaption aria-hidden="true">image-20220315115140634</figcaption>
+</figure>
+<p>弹出对话框，点击指定驱动几何体按钮，如下：</p>
+<p>通过修改驱动设置可以改变铣削参数</p>
+<figure>
+<img
+src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/image-20220315115320124.png" srcset="/img/loading.gif" lazyload
+alt="image-20220315115320124" />
+<figcaption aria-hidden="true">image-20220315115320124</figcaption>
+</figure>
+<p>点击确定，系统回退至曲面区域驱动方法对话框，选择切削方向如下:</p>
+<figure>
+<img src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352768746542.png" srcset="/img/loading.gif" lazyload
+alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<p>选择完成后系统有回退至之前对话框，设置材料侧方向，点击如下按钮，</p>
+<figure>
+<img src="%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/15352770378816.png" srcset="/img/loading.gif" lazyload
+alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<p>点击生成刀轨</p>
+<p>刀轨生成后可以在3d动态中查看铣削状态。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" class="category-chain-item">学习记录</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/" class="category-chain-item">机器人</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA/" class="print-no-link">#机器人</a>
+      
+        <a href="/tags/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/" class="print-no-link">#轨迹生成</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>机器人轨迹生成</div>
+      <div>http://example.com/2023/04/23/note/学习记录/机器人/轨迹生成/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Lei Ting</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/06/30/note/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="机器学习与神经网络学习笔记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">机器学习与神经网络学习笔记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/adams%E6%9C%BA%E7%94%B5%E4%BB%BF%E7%9C%9F/" title="adams机电仿真">
+                        <span class="hidden-mobile">adams机电仿真</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

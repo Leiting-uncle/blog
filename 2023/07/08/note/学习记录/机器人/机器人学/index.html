@@ -1,0 +1,1118 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://imgbed.leiting2020.top/img/202305072001738.jpg">
+  <link rel="icon" href="https://imgbed.leiting2020.top/img/202305072001738.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Lei Ting">
+  <meta name="keywords" content="note">
+  
+    <meta name="description" content="一、机器人学 1.1 空间形位与齐次变换 机器人在空间的位姿通常有两种表达方式，一种是在笛卡尔空间表示，通过在世界坐标系和机器人末端上建立坐标系，使用笛卡尔坐标描述机器人的位姿；另一种是通过关节空间表示，使用机器人六个关节的角度来描述机器人的形位。   image-20230602143835217  KUKA KR60-3机器人的姿态通常使用笛卡尔坐标进行控制，机器人基坐标系为X">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器人学">
+<meta property="og:url" content="http://example.com/2023/07/08/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6/index.html">
+<meta property="og:site_name" content="LeiHub">
+<meta property="og:description" content="一、机器人学 1.1 空间形位与齐次变换 机器人在空间的位姿通常有两种表达方式，一种是在笛卡尔空间表示，通过在世界坐标系和机器人末端上建立坐标系，使用笛卡尔坐标描述机器人的位姿；另一种是通过关节空间表示，使用机器人六个关节的角度来描述机器人的形位。   image-20230602143835217  KUKA KR60-3机器人的姿态通常使用笛卡尔坐标进行控制，机器人基坐标系为X">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://imgbed.leiting2020.top//img/202306021438479.png">
+<meta property="og:image" content="http://imgbed.leiting2020.top//img/202306021445104.png">
+<meta property="og:image" content="http://imgbed.leiting2020.top//img/202306032017628.png">
+<meta property="og:image" content="http://imgbed.leiting2020.top//img/202307072327294.png">
+<meta property="og:image" content="http://imgbed.leiting2020.top//img/202307072329798.png">
+<meta property="og:image" content="http://imgbed.leiting2020.top//img/202307072331684.png">
+<meta property="og:image" content="http://imgbed.leiting2020.top//img/202307072330966.png">
+<meta property="og:image" content="http://imgbed.leiting2020.top//img/202307072333083.png">
+<meta property="og:image" content="http://imgbed.leiting2020.top//img/202307072332993.png">
+<meta property="og:image" content="http://imgbed.leiting2020.top//img/202306041514035.png">
+<meta property="og:image" content="http://imgbed.leiting2020.top//img/202307072335656.png">
+<meta property="og:image" content="http://imgbed.leiting2020.top//img/202307072336041.png">
+<meta property="article:published_time" content="2023-07-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-07T15:47:05.747Z">
+<meta property="article:author" content="Lei Ting">
+<meta property="article:tag" content="机器人">
+<meta property="article:tag" content="运动学">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://imgbed.leiting2020.top//img/202306021438479.png">
+  
+  
+  
+  <title>机器人学 - LeiHub</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Lei</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="机器人学"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-07-08 00:00" pubdate>
+          2023年7月8日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          16k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          133 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">机器人学</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="一机器人学">一、机器人学</h1>
+<h2 id="空间形位与齐次变换">1.1 空间形位与齐次变换</h2>
+<p>机器人在空间的位姿通常有两种表达方式，一种是在笛卡尔空间表示，通过在世界坐标系和机器人末端上建立坐标系，使用笛卡尔坐标描述机器人的位姿；另一种是通过关节空间表示，使用机器人六个关节的角度来描述机器人的形位。</p>
+<figure>
+<img src="http://imgbed.leiting2020.top//img/202306021438479.png" srcset="/img/loading.gif" lazyload
+alt="image-20230602143835217" />
+<figcaption aria-hidden="true">image-20230602143835217</figcaption>
+</figure>
+<p>KUKA
+KR60-3机器人的姿态通常使用笛卡尔坐标进行控制，机器人基坐标系为<em>XB-YB-ZB</em>，在机器人刀尖上建立工具坐标系<em>XT-YT-ZT</em>，则末端工具在基坐标系中的位姿就可以用<em>XT-YT-ZT</em>相对于<em>XB-YB-ZB</em>的位姿描述。工具坐标系在基坐标系的位姿关系可以用一个
+的齐次变换矩阵<strong><em>T</em></strong>表示: <span
+class="math display">\[
+\boldsymbol{T}=\left[
+\begin{matrix}    \boldsymbol{R}&amp;     \boldsymbol{P}\\    0&amp;      1\\\end{matrix}
+\right] =\left[
+\begin{matrix}  \begin{matrix}  r_{11}&amp;     r_{12}\\    r_{21}&amp;     r_{22}\\\end{matrix}&amp;       \begin{matrix}  r_{13}&amp;     p_x\\   r_{23}&amp;     p_y\\\end{matrix}\\
+\begin{matrix}  r_{31}&amp;     r_{32}\\    0&amp;      0\\\end{matrix}&amp;        \begin{matrix}  r_{33}&amp;     p_z\\   0&amp;      1\\\end{matrix}\\\end{matrix}
+\right]
+\]</span></p>
+<h2 id="机器人运动学建模">1.2机器人运动学建模</h2>
+<h3 id="基于旋量法的运动学建模">1.2.1 基于旋量法的运动学建模</h3>
+<p>KUKA
+KR60-3结构简图如图所示，<em>XB-YB-ZB</em>为基坐标系，<em>XT-YT-ZT</em>为末端工具坐标系，<em>L</em>1~<em>L</em>6为机器人的结构参数，<span
+class="math inline">\(\boldsymbol{\xi }_1 - \boldsymbol{\xi }_6\)</span>
+分别为六个关节的旋量坐标，<em>r</em>1<em>~r</em>6
+分别为关节轴线上任意一点，其中<em>r</em>4<em>、r</em>5<em>、r</em>6为同一点，即后三关节轴线交点。</p>
+<figure>
+<img src="http://imgbed.leiting2020.top//img/202306021445104.png" srcset="/img/loading.gif" lazyload
+alt="image-20230602144531023" />
+<figcaption aria-hidden="true">image-20230602144531023</figcaption>
+</figure>
+<p>在旋量理论中，刚体在笛卡尔空间中的运动速度由角速度<span
+class="math inline">\(\omega\)</span>和线速度<span
+class="math inline">\(v\)</span>组成，这个向量被称为运动旋量，把运动旋量写成螺旋轴S与绕该转轴速度的合成形式，即：
+<span class="math display">\[
+\boldsymbol{\xi }=\left[ \begin{array}{c}    \boldsymbol{\omega
+}\\  \boldsymbol{v}\\\end{array} \right] =\left[
+\begin{array}{c}  \boldsymbol{\omega }\\  -\boldsymbol{\omega }\times
+\boldsymbol{q}+h\boldsymbol{\omega }\\\end{array} \right]
+\]</span>
+对于纯转动关节，机器人上一点的形位的变换可以由指数坐标$$表示，也可以将其写为4×4的齐次变换矩阵形式：</p>
+<p>​<br />
+<span class="math display">\[
+\boldsymbol{T}=e^{\left[ \boldsymbol{\xi } \right] \theta}=\left[
+\begin{matrix}    e^{\left[ \boldsymbol{\omega } \right]
+\theta}&amp;     \left( \boldsymbol{I}\theta +\left( 1-\cos \!\:\theta
+\right) \left[ \boldsymbol{\omega } \right] +(\theta -\sin \!\:\theta
+)\left[ \boldsymbol{\omega } \right] ^2 \right)
+\boldsymbol{v}\\    0&amp;      1\\\end{matrix} \right]
+\]</span></p>
+<p><span class="math display">\[
+e^{\left[ \boldsymbol{\omega } \right] \theta}=\mathrm{R}\left(
+\boldsymbol{\omega },\mathrm{\theta} \right) =\mathrm{I}+\left[
+\boldsymbol{\omega } \right] \sin \!\:\mathrm{\theta}+\left[
+\boldsymbol{\omega } \right] ^2(1-\cos \!\:\theta )
+\]</span></p>
+<p>由机器人的结构参数可以得到机器人的旋量参数，如表所示。</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span
+class="math inline">\(i\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(\omega_i\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(q_i\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(v_i\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">[0,0,-1]</td>
+<td style="text-align: center;">[0,0,0]</td>
+<td style="text-align: center;">[0,0,0]</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">[0,1,0]</td>
+<td style="text-align: center;">[350,0,815]</td>
+<td style="text-align: center;">[-815,0,350]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">[0,1,0]</td>
+<td style="text-align: center;">[1200,0,815]</td>
+<td style="text-align: center;">[-815,0,1200]</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">[-1,0,0]</td>
+<td style="text-align: center;">[2020,0,960]</td>
+<td style="text-align: center;">[0,-960,0]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">[0,1,0]</td>
+<td style="text-align: center;">[2020,0,960]</td>
+<td style="text-align: center;">[-960,0,2020]</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">[-1,0,0]</td>
+<td style="text-align: center;">[2020,0,960]</td>
+<td style="text-align: center;">[0,-960,0]</td>
+</tr>
+</tbody>
+</table>
+<p>在KUKA
+KR60-3工业机器人中，每个连杆通过关节的螺旋运动施加运动给后面的连杆。末端坐标系经由6个关节串联的运动链，做多次螺旋运动，从初始位姿<strong><em>M</em></strong>变换到当前位姿<strong><em>T</em></strong>。在确定基坐标系和机器人初始位姿后，在完成指定的关节运动后，可以通过正向运动学表达式表示机械臂的末端坐标系：
+<span class="math display">\[
+\boldsymbol{T}=e^{\left[ \boldsymbol{\xi }_1 \right] \theta _1}e^{\left[
+\boldsymbol{\xi }_2 \right] \theta _2}\cdots e^{\left[ \boldsymbol{\xi
+}_6 \right] \theta _6}\boldsymbol{M}
+\]</span></p>
+<h3 id="正运动学代码实现">1.2.2 正运动学代码实现</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#Normalizes a vector</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">Normalize</span>(<span class="hljs-params">V</span>):<br>    <span class="hljs-keyword">return</span> V / np.linalg.norm(V)<br><br><span class="hljs-comment">#Converts an so(3) representation to a 3-vector</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">so3ToVec</span>(<span class="hljs-params">so3mat</span>):<br>    <span class="hljs-keyword">return</span> np.array([so3mat[<span class="hljs-number">2</span>][<span class="hljs-number">1</span>], so3mat[<span class="hljs-number">0</span>][<span class="hljs-number">2</span>], so3mat[<span class="hljs-number">1</span>][<span class="hljs-number">0</span>]])<br><br><span class="hljs-comment">#Converts a spatial velocity vector into a 4x4 matrix in se3</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">VecTose3</span>(<span class="hljs-params">V</span>):    <br>    <span class="hljs-keyword">return</span> np.r_[np.c_[VecToso3([V[<span class="hljs-number">0</span>], V[<span class="hljs-number">1</span>], V[<span class="hljs-number">2</span>]]), [V[<span class="hljs-number">3</span>], V[<span class="hljs-number">4</span>], V[<span class="hljs-number">5</span>]]],<br>                 np.zeros((<span class="hljs-number">1</span>, <span class="hljs-number">4</span>))]<br>    <br><span class="hljs-comment">#Converts a 3-vector of exponential coordinates for rotation into axis-angle form</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">AxisAng3</span>(<span class="hljs-params">expc3</span>):<br>    <span class="hljs-keyword">return</span> (Normalize(expc3), np.linalg.norm(expc3))<br><br><span class="hljs-comment">#Computes the matrix exponential of a matrix in so(3)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">MatrixExp3</span>(<span class="hljs-params">so3mat</span>):   <br>    omgtheta = so3ToVec(so3mat)<br>    <span class="hljs-keyword">if</span> NearZero(np.linalg.norm(omgtheta)):<br>        <span class="hljs-keyword">return</span> np.eye(<span class="hljs-number">3</span>)<br>    <span class="hljs-keyword">else</span>:<br>        theta = AxisAng3(omgtheta)[<span class="hljs-number">1</span>]<br>        omgmat = so3mat / theta<br>        <span class="hljs-keyword">return</span> np.eye(<span class="hljs-number">3</span>) + np.sin(theta) * omgmat \<br>               + (<span class="hljs-number">1</span> - np.cos(theta)) * np.dot(omgmat, omgmat)<br>    <br><span class="hljs-comment">#Computes the matrix exponential of an se3 representation of exponential coordinates</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">MatrixExp6</span>(<span class="hljs-params">se3mat</span>):<br>    se3mat = np.array(se3mat)<br>    omgtheta = so3ToVec(se3mat[<span class="hljs-number">0</span>: <span class="hljs-number">3</span>, <span class="hljs-number">0</span>: <span class="hljs-number">3</span>])<br>    <span class="hljs-keyword">if</span> NearZero(np.linalg.norm(omgtheta)):<br>        <span class="hljs-keyword">return</span> np.r_[np.c_[np.eye(<span class="hljs-number">3</span>), se3mat[<span class="hljs-number">0</span>: <span class="hljs-number">3</span>, <span class="hljs-number">3</span>]], [[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>]]]<br>    <span class="hljs-keyword">else</span>:<br>        theta = AxisAng3(omgtheta)[<span class="hljs-number">1</span>]<br>        omgmat = se3mat[<span class="hljs-number">0</span>: <span class="hljs-number">3</span>, <span class="hljs-number">0</span>: <span class="hljs-number">3</span>] / theta<br>        <span class="hljs-keyword">return</span> np.r_[np.c_[MatrixExp3(se3mat[<span class="hljs-number">0</span>: <span class="hljs-number">3</span>, <span class="hljs-number">0</span>: <span class="hljs-number">3</span>]),<br>                           np.dot(np.eye(<span class="hljs-number">3</span>) * theta \<br>                                  + (<span class="hljs-number">1</span> - np.cos(theta)) * omgmat \<br>                                  + (theta - np.sin(theta)) \<br>                                    * np.dot(omgmat,omgmat),<br>                                  se3mat[<span class="hljs-number">0</span>: <span class="hljs-number">3</span>, <span class="hljs-number">3</span>]) / theta],<br>                     [[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>]]]<br><span class="hljs-comment">#空间坐标系下位姿计算</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">FKinBody</span>(<span class="hljs-params">M, Blist, thetalist</span>):<br>    T = np.array(M)<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(thetalist)):<br>        T = np.dot(T, MatrixExp6(VecTose3(np.array(Blist)[:, i] \<br>                                          * thetalist[i])))<br>    <span class="hljs-keyword">return</span> T<br><span class="hljs-comment">#末端坐标系下位姿计算</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">FKinSpace</span>(<span class="hljs-params">M, Slist, thetalist</span>):<br>    T = np.array(M)<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(thetalist) - <span class="hljs-number">1</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>):<br>        T = np.dot(MatrixExp6(VecTose3(np.array(Slist)[:, i] \<br>                                       * thetalist[i])), T)<br>    <span class="hljs-keyword">return</span> T<br><span class="hljs-comment">#旋量坐标</span><br>Slist=np.array([[   <span class="hljs-number">0</span>,    <span class="hljs-number">0</span>,    <span class="hljs-number">0</span>,   -<span class="hljs-number">1</span>,    <span class="hljs-number">0</span>,   -<span class="hljs-number">1</span>],<br> 				[   <span class="hljs-number">0</span>,    <span class="hljs-number">1</span>,    <span class="hljs-number">1</span>,    <span class="hljs-number">0</span>,    <span class="hljs-number">1</span>,    <span class="hljs-number">0</span>],<br>				[  -<span class="hljs-number">1</span>,    <span class="hljs-number">0</span>,    <span class="hljs-number">0</span>,    <span class="hljs-number">0</span>,    <span class="hljs-number">0</span>,    <span class="hljs-number">0</span>],<br> 				[   <span class="hljs-number">0</span>, -<span class="hljs-number">815</span>, -<span class="hljs-number">815</span>,    <span class="hljs-number">0</span>, -<span class="hljs-number">960</span>,    <span class="hljs-number">0</span>],<br> 				[   <span class="hljs-number">0</span>,    <span class="hljs-number">0</span>,    <span class="hljs-number">0</span>, -<span class="hljs-number">960</span>,    <span class="hljs-number">0</span>, -<span class="hljs-number">960</span>],<br> 				[   <span class="hljs-number">0</span>,  <span class="hljs-number">350</span>, <span class="hljs-number">1200</span>,    <span class="hljs-number">0</span>, <span class="hljs-number">2020</span>,    <span class="hljs-number">0</span>]])<br><span class="hljs-comment">#法兰相对于基座标系姿态</span><br>M=np.array([[ <span class="hljs-number">0</span>,    <span class="hljs-number">0</span>,    <span class="hljs-number">1</span>,  <span class="hljs-number">2190</span>],<br>            [ <span class="hljs-number">0</span>,    <span class="hljs-number">1</span>,    <span class="hljs-number">0</span>,     <span class="hljs-number">0</span>],<br>            [-<span class="hljs-number">1</span>,    <span class="hljs-number">0</span>,    <span class="hljs-number">0</span>,   <span class="hljs-number">960</span>],<br>            [ <span class="hljs-number">0</span>,    <span class="hljs-number">0</span>,    <span class="hljs-number">0</span>,     <span class="hljs-number">1</span>]])<br><span class="hljs-comment">#关节角</span><br>thetalist=np.array([<span class="hljs-number">0</span>,-<span class="hljs-number">90</span>/<span class="hljs-number">180</span>*pi,<span class="hljs-number">90</span>/<span class="hljs-number">180</span>*pi,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>])<br><span class="hljs-comment">#末端位姿计算</span><br>T = FKinSpace(M,Slist,thetalist)<br></code></pre></td></tr></table></figure>
+<h2 id="基于旋量法的逆运动学求解">1.3 基于旋量法的逆运动学求解</h2>
+<h4 id="pk子问题">1.3.1 PK子问题</h4>
+<p>对于六自由度串联机器人而言，逆运动学可以描述成：已知机器人末端工具坐标系位姿，求解满足当前位姿的一组或多组关节角。由KR60-3机器人后三轴相交与一点的特性，利用Paden-Kahan子问题推导机器人关节逆解解析式。Paden-Kahan子问题是基于旋量理论的指数积公式求解各关节旋转角度的几何方法。基于旋量理论的运动学逆解可以分为三个Paden-Kahan子问题，分别是绕单轴旋转、绕两个轴旋转和旋转到给定距离，目前KR60-3的逆运动学求解中只用到了两类子问题，所以本文只介绍子问题1和子问题2，如图所示。</p>
+<figure>
+<img src="http://imgbed.leiting2020.top//img/202306032017628.png" srcset="/img/loading.gif" lazyload
+alt="image-20230603201716446" />
+<figcaption aria-hidden="true">image-20230603201716446</figcaption>
+</figure>
+<p><code>PK子问题1</code>为一个点绕定轴旋转。描述为空间中一点<strong><em>p</em></strong>绕给定的轴线<span
+class="math inline">\(\boldsymbol{\xi
+}\)</span>旋转到<strong><em>q</em></strong>点位置，求解旋转角度<span
+class="math inline">\(\theta\)</span>，可用旋量法表示为 <span
+class="math display">\[
+e^{\left[ \boldsymbol{\xi } \right] \theta}\boldsymbol{p}=\boldsymbol{q}
+\]</span> 通过向量之间的几何关系，旋转角<span
+class="math inline">\(\theta\)</span>可以由以下公式计算： <span
+class="math display">\[
+\theta =\mathrm{a}\tan 2(\boldsymbol{\omega }^T\left(
+\boldsymbol{u}^{\mathrm{&#39;}}\times \boldsymbol{v}^{\mathrm{&#39;}}
+\right)
+\text{，}\boldsymbol{u}^{\mathrm{&#39;}}\boldsymbol{v}^{\mathrm{&#39;}})
+\]</span>
+<code>PK子问题2</code>为一个点绕两个相交轴连续旋转。描述为空间中一点<strong><em>p</em></strong>，绕两相交轴<span
+class="math inline">\(\boldsymbol{\xi }_1\)</span>和<span
+class="math inline">\(\boldsymbol{\xi }_2\)</span>
+进行旋转，先将<strong><em>p</em></strong>点绕旋转轴<span
+class="math inline">\(\boldsymbol{\xi }_2\)</span>旋转<span
+class="math inline">\(\theta_2\)</span>
+运动到<strong><em>s</em></strong>点，然后再绕旋转轴<span
+class="math inline">\(\boldsymbol{\xi }_1\)</span>旋转<span
+class="math inline">\(\theta_1\)</span>运动到<strong><em>q</em></strong>点，<span
+class="math inline">\(\omega_1\)</span>和 <span
+class="math inline">\(\omega_2\)</span>分别为轴线<span
+class="math inline">\(\boldsymbol{\xi }_1\)</span>和<span
+class="math inline">\(\boldsymbol{\xi }_2\)</span> 的方向向量。设<span
+class="math inline">\(\boldsymbol{u}=\boldsymbol{p}-\boldsymbol{r}\)</span>，<span
+class="math inline">\(\boldsymbol{v}=\boldsymbol{q}-\boldsymbol{r}\)</span>，<span
+class="math inline">\(\boldsymbol{z}=\boldsymbol{s}-\boldsymbol{r}\)</span>，用公式表示为：
+<span class="math display">\[
+e^{\left[ \boldsymbol{\xi }_1 \right] \theta
+_1}\boldsymbol{u}=\boldsymbol{z}=e^{-\left[ \boldsymbol{\xi }_2 \right]
+\theta _2}\boldsymbol{v}
+\]</span>
+若两个旋转轴重合，问题就变成了PK子问题1，若两个旋转轴不重合，可通过几何关系求解出中间点<strong><em>z</em></strong>，将子问题2分解为两个子问题1进行求解。
+<span class="math display">\[
+\begin{cases}   \boldsymbol{z}=a\boldsymbol{\omega
+}_1+b\boldsymbol{\omega }_2+c\left( \boldsymbol{\omega }_1\times
+\boldsymbol{\omega }_2 \right)\\    a=\frac{\left( \boldsymbol{\omega
+}_{1}^{T}\boldsymbol{\omega }_2 \right) \boldsymbol{\omega
+}_{2}^{T}\boldsymbol{u}-\boldsymbol{\omega
+}_{1}^{T}\boldsymbol{v}}{\left( \boldsymbol{\omega
+}_{1}^{T}\boldsymbol{\omega }_2 \right) ^2-1}\\  b=\frac{\left(
+\boldsymbol{\omega }_{1}^{T}\boldsymbol{\omega }_2 \right)
+\boldsymbol{\omega }_{1}^{T}\boldsymbol{v}-\boldsymbol{\omega
+}_{2}^{T}\boldsymbol{u}}{\left( \boldsymbol{\omega
+}_{1}^{T}\boldsymbol{\omega }_2 \right) ^2-1}\\  c=\frac{\left\|
+\boldsymbol{u} \right\| ^2-a^2-b^2-2ab\boldsymbol{\omega
+}_{1}^{T}\boldsymbol{\omega }_2}{\left\| \boldsymbol{\omega }_1\times
+\boldsymbol{\omega }_2 \right\| ^2}\\\end{cases}
+\]</span></p>
+<h4 id="kuka-kr60-3逆运动学求解">1.3.2 KUKA KR60-3逆运动学求解</h4>
+<p>由螺旋理论可知，位于螺旋轴上的点<span
+class="math inline">\(\boldsymbol{q}\)</span>不会受到螺旋运动的影响，即<span
+class="math inline">\(e^{[\boldsymbol{\xi
+}]\theta}\boldsymbol{q}=\boldsymbol{q}\)</span>。由KR60-3机器人结构简图可知，4、5、6关节轴线相交于同一点<span
+class="math inline">\(\boldsymbol{q}_4\)</span>，在正运动学公式中右乘<span
+class="math inline">\(\boldsymbol{q}_4\)</span>，就可以消除正运动学公式中4、5、6关节的影响，将6个关节的逆运动学求解分为两部分进行。
+<span class="math display">\[
+\boldsymbol{TM}^{-1}\boldsymbol{q}_6=e^{\left[ \boldsymbol{\xi }_1
+\right] \theta _1}e^{\left[ \boldsymbol{\xi }_2 \right] \theta _2}\cdots
+e^{\left[ \boldsymbol{\xi }_6 \right] \theta
+_6}\boldsymbol{q}_4=e^{\left[ \boldsymbol{\xi }_1 \right] \theta
+_1}e^{\left[ \boldsymbol{\xi }_2 \right] \theta _2}e^{\left[
+\boldsymbol{\xi }_3 \right] \theta _3}\boldsymbol{q}_4=[p_x,p_y,p_z,1]
+\]</span> 上式表示腕部中心点<span
+class="math inline">\(\boldsymbol{q}_4\)</span>在前三关节中螺旋运动，指<span
+class="math inline">\(\boldsymbol{q}_4\)</span>经过前三个关节的运动到达<span
+class="math inline">\(\boldsymbol{p}_1\)</span>。由此可使用Paden-Kahan子问题1，对前3个关节逐一进行求解。基于几何法，使用PK子问题1即可求解出前三个关节的关节角，得到：</p>
+<figure>
+<img src="http://imgbed.leiting2020.top//img/202307072327294.png" srcset="/img/loading.gif" lazyload
+alt="image-20230707232740162" />
+<figcaption aria-hidden="true">image-20230707232740162</figcaption>
+</figure>
+<p>其中，上述公式中<span class="math inline">\(y_2\)</span>、<span
+class="math inline">\(x_2\)</span>、<span
+class="math inline">\(y_{3}\)</span>和<span
+class="math inline">\(x_3\)</span>的表达式如下：</p>
+<figure>
+<img src="http://imgbed.leiting2020.top//img/202307072329798.png" srcset="/img/loading.gif" lazyload
+alt="image-20230707232906739" />
+<figcaption aria-hidden="true">image-20230707232906739</figcaption>
+</figure>
+<p>在得到前三个关节的关节角后，将上一步求取的前三个关节带入公式(2-10)中，然后在原公式中取在轴6上但不在4、5轴上一点进行解耦，即可消除第六轴的影响，将后三轴转换为一个子问题2和一个子问题1进行求解，在公式两边同乘以在轴6上但不在4、5轴上一点<span
+class="math inline">\(\boldsymbol{p}_6=[L_4+L_5,0,0]\)</span>。 <span
+class="math display">\[
+e^{-\left[ \boldsymbol{\xi }_3 \right] \theta _3}e^{-\left[
+\boldsymbol{\xi }_2 \right] \theta _2}e^{-\left[ \boldsymbol{\xi }_1
+\right] \theta _1}\boldsymbol{TM}^{-1}\boldsymbol{p}_6=e^{\left[
+\boldsymbol{\xi }_4 \right] \theta _4}e^{\left[ \boldsymbol{\xi }_5
+\right] \theta _5}\boldsymbol{p}_6=\left[ q_{6x},q_{6y},q_{6z},1 \right]
+=\boldsymbol{q}_6
+\]</span> 上式可以看成一个子问题2，<span
+class="math inline">\(\boldsymbol{p}_6\)</span>绕后4、5关节连续旋转，经过中间点<span
+class="math inline">\(\boldsymbol{p}_5\)</span>，移动到<span
+class="math inline">\(\boldsymbol{q}_6\)</span>位置，4、5关节轴线交点为<span
+class="math inline">\(\boldsymbol{q}_4\)</span>。使用子问题2求解出中间点<span
+class="math inline">\(\boldsymbol{p}_5\)</span>即可将问题转换为两个子问题1，对关节5、6进行求解。在求出关节角<span
+class="math inline">\(\theta _4\)</span>、<span
+class="math inline">\(\theta
+_5\)</span>后，代入公式，并取关节6轴线外一点<span
+class="math inline">\(\boldsymbol{p}_7=[L_4+L_5+1,0,0]\)</span>，计算得到绕关节6旋转后的$_7=<span
+class="math inline">\(，根据旋量理论将公式进行解耦，即可求出关节角\)</span>_6<span
+class="math inline">\(，关节角\)</span>_4<span
+class="math inline">\(、\)</span>_5<span
+class="math inline">\(、\)</span>_6$表达式如下： <span
+class="math display">\[
+\begin{cases}  \theta _4=\mathrm{a}\tan 2\left( \pm q_{6y},\pm \left(
+q_{6y}-L_1-L_2-L_3 \right) \right)\\  \theta _5=\mathrm{a}\tan 2\left(
+\pm \sqrt{\left( L_1+L_2+L_3 \right) ^2-\left( q_{6x}-L_4-L_5 \right)
+^2},q_{6x}-L_4-L_5 \right)\\ \theta _6=\mathrm{a}\tan 2\left(
+q_{7y},L_1+L_2+L_3-q_{7z} \right)\\\end{cases}
+\]</span></p>
+<h4 id="基于旋量法的逆运动学数值求解">1.3.3
+基于旋量法的逆运动学数值求解</h4>
+<p>如果逆运动学方程无解析解时，可采用迭代数值方法求解。即使存在解析解,数值算法也经常用于改善求解的精度。</p>
+<p>许多迭代方法可用于非线性方程的求解，’而是将运动学逆解方程转换成现有数值方法可解的形式。为此，将多次使用求解非线性方程的基本方法:牛顿-拉夫森法。此外，也将引入其他一些优化方法，以应对精确解不存在的情况，并利用这些方法得到最接近真实值的解或者相反情况，存在无穷多个运动学逆解（例如，运动学冗余情况）。为此，需要找到相对某种指标的最优解。因此，
+下面首先讨论用于求解非线性方程的<code>牛顿-拉夫森法</code>，接下来讨论优化第一必要条件。</p>
+<h5 id="牛顿-拉夫森法">（1）牛顿-拉夫森法</h5>
+<p>对于给定的微分方程方程<span
+class="math inline">\(g\)</span>，数值求解方程<span
+class="math inline">\(g(\theta)=0\)</span>，假设<span
+class="math inline">\(\theta^0\)</span>为初值，利用泰勒级数在<span
+class="math inline">\(\theta^0\)</span>处展开，并截取到第一项，得：</p>
+<figure>
+<img src="http://imgbed.leiting2020.top//img/202307072331684.png" srcset="/img/loading.gif" lazyload
+alt="image-20230707233137635" />
+<figcaption aria-hidden="true">image-20230707233137635</figcaption>
+</figure>
+<p>若只保留到第—阶，令<span
+class="math inline">\(g(\theta)=0\)</span>，求解<span
+class="math inline">\(\theta\)</span>得到：</p>
+<figure>
+<img src="http://imgbed.leiting2020.top//img/202307072330966.png" srcset="/img/loading.gif" lazyload
+alt="image-20230707233036914" />
+<figcaption aria-hidden="true">image-20230707233036914</figcaption>
+</figure>
+<p>再将上式求得的值作为初值，代人上述方程中，重复求解，得到下述方程：</p>
+<figure>
+<img src="http://imgbed.leiting2020.top//img/202307072333083.png" srcset="/img/loading.gif" lazyload
+alt="image-20230707233310039" />
+<figcaption aria-hidden="true">image-20230707233310039</figcaption>
+</figure>
+<p>上述过程不断迭代，直到满足某个指标值。例如，给定预先设定好的阂值满足：</p>
+<figure>
+<img src="http://imgbed.leiting2020.top//img/202307072332993.png" srcset="/img/loading.gif" lazyload
+alt="image-20230707233225946" />
+<figcaption aria-hidden="true">image-20230707233225946</figcaption>
+</figure>
+<p>对于KUKA KR60-3六自由度串联机器人，假设我们用坐标向量<span
+class="math inline">\(x\)</span>及其正向运动学方程<span
+class="math inline">\(x =
+f(\theta)\)</span>表示末端坐标，自然会得到一个从<span
+class="math inline">\(6\)</span>个关节坐标到<span
+class="math inline">\(6\)</span>个末端坐标的非线性向量方程。令<span
+class="math inline">\(x_d\)</span>为预期的末端坐标，牛顿-拉夫森法中的<span
+class="math inline">\(g(\theta)\)</span>可以定义成<span
+class="math inline">\(g(\theta)=x_d - f(\theta)\)</span>, 目标是找到关节
+坐标<span class="math inline">\(\theta_d\)</span>且保证： <span
+class="math display">\[
+g(\theta)=x_d - f(\theta)=0
+\]</span> 已知初始估计值<span
+class="math inline">\(\theta^0\)</span>接近真实解<span
+class="math inline">\(\theta_d\)</span>，运动学可以写成泰勒展开的形式，即：
+<span class="math display">\[
+x_d=f(\theta^0)+J(\theta^0)\Delta(\theta) + \mathrm{h.o.t}
+\]</span> 截取泰勒展开第一项，假设<span
+class="math inline">\(J(\theta^0)\)</span>可逆，使用下式求解<span
+class="math inline">\(\Delta\theta\)</span>，即： <span
+class="math display">\[
+\Delta\theta=J^{-1}(\theta^{0})(x_{d}-f(\theta^{0}))
+\]</span> 若正向运动学是<span
+class="math inline">\(\theta\)</span>的线性函数，这时新的估计值 <span
+class="math inline">\(\theta^0 = theta^0 +
+\Delta\theta\)</span>精确满足<span
+class="math inline">\(x_d=f(\theta^1)\)</span>。相反，若正向运动学是<span
+class="math inline">\(\theta\)</span>的非线性函数，就如通常情况,这时新的估计值<span
+class="math inline">\(\theta^1\)</span>比<span
+class="math inline">\(\theta^0\)</span>更接近真实值，迭代过程不断重复，最终在<span
+class="math inline">\(\theta_d\)</span>处收敛。</p>
+<figure>
+<img src="http://imgbed.leiting2020.top//img/202306041514035.png" srcset="/img/loading.gif" lazyload
+alt="image-20230604151422884" />
+<figcaption aria-hidden="true">image-20230604151422884</figcaption>
+</figure>
+<h5 id="逆运动学的数值算法">（2）逆运动学的数值算法</h5>
+<p>实际上，由于计算效率等原因，经常不采用求逆<span
+class="math inline">\(J^{-1}(\theta^0)\)</span>的方式来求解。可以找到更高效的方法求解线性方程<span
+class="math inline">\(Ax＝b\)</span>中的<span
+class="math inline">\(x\)</span>。例如，对于可逆阵<span
+class="math inline">\(A\)</span>，基于<span
+class="math inline">\(A\)</span>的<span
+class="math inline">\(LU\)</span>分解可以用更少的运算得到<span
+class="math inline">\(x\)</span>。或者将<span
+class="math inline">\(J^{-1}\)</span>替换成<code>Moore-Penrose</code>伪逆形式<span
+class="math inline">\(J^+\)</span>。</p>
+<p>修改上述算法，使之能应用在预期末端位形为<span
+class="math inline">\(T_{sd}\in SE(3)\)</span>而不是坐标向量<span
+class="math inline">\(x_d\)</span> 的情况。可将关节坐标雅可比<span
+class="math inline">\(J\)</span>替换成末端物体雅可比<span
+class="math inline">\(J_b\)</span>。注意，由于向量<span
+class="math inline">\(e=x_d
+-f(\theta^i)\)</span>表示的是从当前估计值（由正向运动学得到）到预期末端位形。不能简单地替换成<span
+class="math inline">\(T_{sd}-T_{sd}(\theta^i)\)</span>；<span
+class="math inline">\(J_s\)</span>的伪逆应该作为物体速度旋量<span
+class="math inline">\(V_b \in
+\R^6\)</span>。为找到一个合理的对比，我们可以想象<span
+class="math inline">\(e=x_d
+-f(\theta^i)\)</span>为一个速度向量，如果遵循单位时间，可使运动从<span
+class="math inline">\(f(\theta^i)\)</span> 到<span
+class="math inline">\(x_d\)</span>。类似的，我们应该能够找到—个速度旋量，如果遵循单位时间，可使运动从<span
+class="math inline">\(T_{sd}(\theta^i))\)</span>到预期行为<span
+class="math inline">\(T_{sd}\)</span>。</p>
+<p>为找到这个<span
+class="math inline">\(V_b\)</span>，首先需计算相对物体坐标系的预期位形，即
+<span class="math display">\[
+T_{bd}(\theta^{i})=T_{s b}^{-1}(\theta^{i})T_{s
+d}=T_{bs}(\theta^{i})T_{s d}
+\]</span> 然后,利用矩阵对数确定<span
+class="math inline">\([V]\)</span>即: <span class="math display">\[
+[V_b]=logT_{bd}(\theta^i)\\
+[V_s] = [Ad_{T_{sb}}][V_b]
+\]</span> 由此可以给出逆运动学算法：</p>
+<p>（a）初始化：已知<span
+class="math inline">\(T_{sd}\)</span>，初始估计值<span
+class="math inline">\(\theta_0\)</span>，设定<span
+class="math inline">\(i=0\)</span>;</p>
+<p>（b）计算<span class="math inline">\([V]\)</span>，当<span
+class="math inline">\(||\omega|| &gt;
+\varepsilon_{\omega}\)</span>或者<span class="math inline">\(||V|| &gt;
+\varepsilon_{v}\)</span>时：</p>
+<ul>
+<li>计算<span class="math inline">\(\theta^{i+1} = \theta^{i} +
+J^+(\theta ^ i)V\)</span></li>
+<li><span class="math inline">\(i = i+1\)</span></li>
+</ul>
+<p>完成一定次数的迭代后，就都能获得真实值<span
+class="math inline">\(\theta_d\)</span>的近似解<span
+class="math inline">\(\theta^k\)</span>。</p>
+<h5 id="数值解代码实现">（3） 数值解代码实现</h5>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">IKinBody</span>(<span class="hljs-params">Blist, M, T, thetalist0, eomg, ev</span>):<br>    <span class="hljs-comment">#Computes inverse kinematics in the body frame for an open chain robot</span><br>    <br>    thetalist = np.array(thetalist0).copy()<br>    i = <span class="hljs-number">0</span><br>    maxiterations = <span class="hljs-number">20</span><br>    Vb = se3ToVec(MatrixLog6(np.dot(TransInv(FKinBody(M, Blist, \<br>                                                      thetalist)), T)))<br>    err = np.linalg.norm([Vb[<span class="hljs-number">0</span>], Vb[<span class="hljs-number">1</span>], Vb[<span class="hljs-number">2</span>]]) &gt; eomg \<br>          <span class="hljs-keyword">or</span> np.linalg.norm([Vb[<span class="hljs-number">3</span>], Vb[<span class="hljs-number">4</span>], Vb[<span class="hljs-number">5</span>]]) &gt; ev<br>    <span class="hljs-keyword">while</span> err <span class="hljs-keyword">and</span> i &lt; maxiterations:<br>        thetalist = thetalist \<br>                    + np.dot(np.linalg.pinv(JacobianBody(Blist, \<br>                                                         thetalist)), Vb)<br>        i = i + <span class="hljs-number">1</span><br>        Vb \<br>        = se3ToVec(MatrixLog6(np.dot(TransInv(FKinBody(M, Blist, \<br>                                                       thetalist)), T)))<br>        err = np.linalg.norm([Vb[<span class="hljs-number">0</span>], Vb[<span class="hljs-number">1</span>], Vb[<span class="hljs-number">2</span>]]) &gt; eomg \<br>              <span class="hljs-keyword">or</span> np.linalg.norm([Vb[<span class="hljs-number">3</span>], Vb[<span class="hljs-number">4</span>], Vb[<span class="hljs-number">5</span>]]) &gt; ev<br>    <span class="hljs-keyword">return</span> (thetalist, <span class="hljs-keyword">not</span> err)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">IKinSpace</span>(<span class="hljs-params">Slist, M, T, thetalist0, eomg, ev</span>):<br>    <span class="hljs-comment">#Computes inverse kinematics in the space frame for an open chain robot</span><br>    thetalist = np.array(thetalist0).copy()<br>    i = <span class="hljs-number">0</span><br>    maxiterations = <span class="hljs-number">20</span><br>    Tsb = FKinSpace(M,Slist, thetalist)<br>    Vs = np.dot(Adjoint(Tsb), \<br>                se3ToVec(MatrixLog6(np.dot(TransInv(Tsb), T))))<br>    err = np.linalg.norm([Vs[<span class="hljs-number">0</span>], Vs[<span class="hljs-number">1</span>], Vs[<span class="hljs-number">2</span>]]) &gt; eomg \<br>          <span class="hljs-keyword">or</span> np.linalg.norm([Vs[<span class="hljs-number">3</span>], Vs[<span class="hljs-number">4</span>], Vs[<span class="hljs-number">5</span>]]) &gt; ev<br>    <span class="hljs-keyword">while</span> err <span class="hljs-keyword">and</span> i &lt; maxiterations:<br>        thetalist = thetalist \<br>                    + np.dot(np.linalg.pinv(JacobianSpace(Slist, \<br>                                                          thetalist)), Vs)<br>        i = i + <span class="hljs-number">1</span><br>        Tsb = FKinSpace(M, Slist, thetalist)<br>        Vs = np.dot(Adjoint(Tsb), \<br>                    se3ToVec(MatrixLog6(np.dot(TransInv(Tsb), T))))<br>        err = np.linalg.norm([Vs[<span class="hljs-number">0</span>], Vs[<span class="hljs-number">1</span>], Vs[<span class="hljs-number">2</span>]]) &gt; eomg \<br>              <span class="hljs-keyword">or</span> np.linalg.norm([Vs[<span class="hljs-number">3</span>], Vs[<span class="hljs-number">4</span>], Vs[<span class="hljs-number">5</span>]]) &gt; ev<br>    <span class="hljs-keyword">return</span> (thetalist, <span class="hljs-keyword">not</span> err)<br><br>eomg = <span class="hljs-number">0.01</span><br>ev = <span class="hljs-number">0.01</span><br>initial = np.array([<span class="hljs-number">40.050000</span>, -<span class="hljs-number">50.910000</span>, <span class="hljs-number">110.140000</span>, <span class="hljs-number">120.540000</span>, -<span class="hljs-number">11.390000</span>, <span class="hljs-number">97.930000</span>])/<span class="hljs-number">180</span>*math.pi<br>T = np.array([     [<span class="hljs-number">0.410150</span>,    -<span class="hljs-number">0.123729</span>,    -<span class="hljs-number">0.903586</span>,  <span class="hljs-number">1183.631143</span>] ,<br>                [-<span class="hljs-number">0.190306</span>,    -<span class="hljs-number">0.980556</span>,     <span class="hljs-number">0.047886</span>, -<span class="hljs-number">1137.765860</span>] ,<br>                 [-<span class="hljs-number">0.891942</span>,     <span class="hljs-number">0.152317</span>,    -<span class="hljs-number">0.425722</span>,   <span class="hljs-number">756.413634</span> ],<br>                [ <span class="hljs-number">0.000000</span>,     <span class="hljs-number">0.000000</span>,     <span class="hljs-number">0.000000</span>,     <span class="hljs-number">1.000000</span>] ])<br>[theta,success] = mr.IKinSpace(Slist,M,T,initial,eomg,ev)<br></code></pre></td></tr></table></figure>
+<h2 id="机器人运动学">1.4 机器人运动学</h2>
+<h3 id="雅可比矩阵">1.4.1 雅可比矩阵</h3>
+<p>除了关节角度和机器人末端执行器位置之间的关系外，还需要研究关节和末端执行器速度之间的关系。在本节中，推导了这种关系的公式，并研究其结构和性质，还研究了连杆之间力传递的关系。由第2章的公式(2-5)，当给定一组关节角<span
+class="math inline">\(\boldsymbol{\theta }=\left[ \theta _1,\theta
+_2,\theta _3,\theta _4,\theta _5,\theta _6 \right]
+^{\mathrm{T}}\)</span>时，可以确定机器人末端的位置与姿态： <span
+class="math display">\[
+            \boldsymbol{X}=F\left( \boldsymbol{\theta } \right)
+\]</span> 其中，<span class="math inline">\(\boldsymbol{X}=\left[
+X,Y,Z,A,B,C \right]
+^{\mathrm{T}}\)</span>，将公式两边进行求导，可以得到： <span
+class="math display">\[
+\boldsymbol{V}=\dot{\boldsymbol{X}}=\boldsymbol{J}\left(
+\boldsymbol{\theta } \right) \dot{\boldsymbol{\theta}}
+\]</span> 式中，$( ) $为雅可比矩阵。</p>
+<p>一般情况下，雅可比矩阵通过矢量差乘积法、微分变换法得到。而使用指数积公式表示正运动学，可以更加明确、优雅的推导出雅可比矩阵。在机器人正运动学的指数积公式下，末端的速度$$的表达式为：
+<span class="math display">\[
+\left[ \boldsymbol{V} \right]
+=\dot{\boldsymbol{T}}\boldsymbol{T}^{-1}=\sum_{i=1}^6{\left(
+\frac{\partial \boldsymbol{T}}{\partial \boldsymbol{\theta
+}_i}\dot{\boldsymbol{\theta}}_i
+\right)}\boldsymbol{T}^{-1}=\sum_{i=1}^6{\left( \frac{\partial
+\boldsymbol{T}}{\partial \boldsymbol{\theta }_i}\boldsymbol{T}^{-1}
+\right)}\dot{\boldsymbol{\theta}}_i
+\]</span>
+带入机器人正运动学公式，并使用伴随映射将上式写成向量形式，即：</p>
+<figure>
+<img src="http://imgbed.leiting2020.top//img/202307072335656.png" srcset="/img/loading.gif" lazyload
+alt="image-20230707233546591" />
+<figcaption aria-hidden="true">image-20230707233546591</figcaption>
+</figure>
+<figure>
+<img src="http://imgbed.leiting2020.top//img/202307072336041.png" srcset="/img/loading.gif" lazyload
+alt="image-20230707233634974" />
+<figcaption aria-hidden="true">image-20230707233634974</figcaption>
+</figure>
+<p>式中，对于任意<span class="math inline">\(\boldsymbol{\xi }\in
+\boldsymbol{R}^6\)</span>，与$=( , ) ( 3 ) $相关联的伴随映射为: <span
+class="math display">\[
+\boldsymbol{\xi }^{\prime}=Ad_{\boldsymbol{T}}\left( \boldsymbol{\xi }
+\right) =\left[
+\begin{matrix}    \boldsymbol{R}&amp;                                                                   0\\
+\left[ \boldsymbol{P} \right]
+\boldsymbol{R}&amp;                   \boldsymbol{R}\\\end{matrix}
+\right] \boldsymbol{\xi }
+\]</span></p>
+<h3 id="雅可比矩阵代码实现">1.4.2 雅可比矩阵代码实现</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">JacobianBody</span>(<span class="hljs-params">Blist, thetalist</span>):<br>    <span class="hljs-comment">#Computes the body Jacobian for an open chain robot</span><br>    Jb = np.array(Blist).copy().astype(np.<span class="hljs-built_in">float</span>)<br>    T = np.eye(<span class="hljs-number">4</span>)<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(thetalist) - <span class="hljs-number">2</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>):<br>        T = np.dot(T,MatrixExp6(VecTose3(np.array(Blist)[:, i + <span class="hljs-number">1</span>] \<br>                                         * -thetalist[i + <span class="hljs-number">1</span>])))<br>        Jb[:, i] = np.dot(Adjoint(T), np.array(Blist)[:, i])<br>    <span class="hljs-keyword">return</span> Jb<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">JacobianSpace</span>(<span class="hljs-params">Slist, thetalist</span>):<br>   <span class="hljs-comment">#Computes the space Jacobian for an open chain robot</span><br>    Js = np.array(Slist).copy().astype(np.<span class="hljs-built_in">float</span>)<br>    T = np.eye(<span class="hljs-number">4</span>)<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-built_in">len</span>(thetalist)):<br>        T = np.dot(T, MatrixExp6(VecTose3(np.array(Slist)[:, i - <span class="hljs-number">1</span>] \<br>                                * thetalist[i - <span class="hljs-number">1</span>])))<br>        Js[:, i] = np.dot(Adjoint(T), np.array(Slist)[:, i])<br>    <span class="hljs-keyword">return</span> Js<br></code></pre></td></tr></table></figure>
+<h2 id="涉及的函数说明">1.5 涉及的函数说明</h2>
+<h3 id="空间变换与齐次矩阵">1.5.1 空间变换与齐次矩阵</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-number">1.</span>计算旋转矩阵的逆<br>invR = RotInv(R)<br><br><span class="hljs-number">2.</span>将三维向量转换为<span class="hljs-number">3</span>*<span class="hljs-number">3</span>反对称矩阵<br>so3mat = VecToso3(omg)<br><br><span class="hljs-number">3.</span>将<span class="hljs-number">3</span>*<span class="hljs-number">3</span>反对称矩阵转换为三维向量<br>omg = so3ToVec(so3mat)<br><br><span class="hljs-number">4.</span>从旋转的三维指数坐标中提取出轴线和角度<br>[omghat,theta] = AxisAng3(expc3)<br><br><span class="hljs-number">5.</span>计算矩阵指数对应的旋转矩阵<br>R = MatrixExp3(so3mat)<br><br><span class="hljs-number">6.</span>计算旋转矩阵对应的矩阵对数<br>so3mat = MatrixLog3(R)<br><br><span class="hljs-number">7.</span>M到SO（<span class="hljs-number">3</span>）旋转矩阵的空间距离的度量<br>d = DistanceToSO3(mat)<br><br><span class="hljs-number">8.</span>判断M是否为旋转矩阵<br>judge = TestIfSO3(mat)<br><br><span class="hljs-number">9.</span>返回与M最近的旋转矩阵<br>R = ProjectToSO3(mat)<br><br><span class="hljs-number">10.</span>将旋转矩阵和位置向量转换为变换矩阵<br>T = RpToTrans(R,p)<br><br><span class="hljs-number">11.</span>从变换矩阵中分离出旋转矩阵和位置向量<br>[R,p] = TransToRp(T)<br><br><span class="hljs-number">12.</span>变换矩阵求逆<br>invT = TransInv(T)<br><br><span class="hljs-number">13.</span>构造与六维向量形式的运动旋量V对应的<br>se3mat = VecTose3(V)<br><br><span class="hljs-number">14.</span>构造与se(<span class="hljs-number">3</span>)矩阵对应的六维向量形式的运动旋量V<br>V = se3ToVec(se3mat)<br><br><span class="hljs-number">15.</span>计算变换矩阵T的<span class="hljs-number">6</span>*<span class="hljs-number">6</span>的伴随矩阵<br>AdT = Adjoint(T)<br><br><span class="hljs-number">16.</span>返回正则化的螺旋轴表达式<br>S = ScrewToAxis(q,s,h)<br><br><span class="hljs-number">17.</span>从六位向量形式的指数坐标中提取出螺旋轴和沿轴线移动的距离<br>[S,theta] = AxisAng6(expc6)<br><br><span class="hljs-number">18.</span>计算矩阵指数对应的变换矩阵<br>T = MatrixExp6(se3mat)<br><br><span class="hljs-number">19.</span>计算变换矩阵对应的矩阵对数<br>se3mat = MatrixLog6(T)<br><br><span class="hljs-number">20.</span>M到变换矩阵的空间距离<br>d = DistanceToSE3(mat)<br><br><span class="hljs-number">21.</span>判断是否为SE3变换矩阵<br>judge = TestIfSE3(mat)<br><br><span class="hljs-number">22.</span>离M最近的变换矩阵<br>T = ProjectToSE3(mat)<br></code></pre></td></tr></table></figure>
+<h3 id="运动学">1.5.2 运动学</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#正运动学</span><br>末端坐标系下。给定初始形位，关节旋量以及关节值，计算末端坐标系<br>T = FKinBody(M,Blist,thetalist)<br>空间坐标系下。给定初始形位，关节旋量以及关节值，计算末端坐标系<br>T = FKinSpace(M,Slist,thetalist)<br><br><span class="hljs-comment">#雅可比矩阵</span><br>给定物体坐标系下描述的各关节旋量Blist及关节角，计算物体雅可比JB<br>Jb=JacobianBody(Blist,thetalist)<br>给定物体坐标系下描述的各关节旋量Slist及关节角，计算物体雅可比Js<br>J=JacobianSpace(Slist,thetalist)<br><br><span class="hljs-comment">#逆运动学</span><br>［theta11st,success］＝IKinBody（B1ist,M,T,theta1ist,eomg,ev）<br>［theta11st,success］＝IKinSpace（B1ist,M,T,theta1ist,eomg,ev）<br></code></pre></td></tr></table></figure>
+<h2 id="参考链接">1.6 参考链接</h2>
+<p>机器人POE运动学代码网址：<a
+target="_blank" rel="noopener" href="https://github.com/NxRLab/ModernRobotics">NxRLab/ModernRobotics:
+Modern Robotics: Mechanics, Planning, and Control Code Library --- The
+primary purpose of the provided software is to be easy to read and
+educational, reinforcing the concepts in the book. The code is optimized
+neither for efficiency nor robustness. (github.com)</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" class="category-chain-item">学习记录</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/" class="category-chain-item">机器人</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA/" class="print-no-link">#机器人</a>
+      
+        <a href="/tags/%E8%BF%90%E5%8A%A8%E5%AD%A6/" class="print-no-link">#运动学</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>机器人学</div>
+      <div>http://example.com/2023/07/08/note/学习记录/机器人/机器人学/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Lei Ting</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年7月8日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/07/08/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/typora%E5%85%AC%E5%BC%8F/" title="Markdown公式">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Markdown公式</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/06/30/note/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="机器学习与神经网络学习笔记">
+                        <span class="hidden-mobile">机器学习与神经网络学习笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

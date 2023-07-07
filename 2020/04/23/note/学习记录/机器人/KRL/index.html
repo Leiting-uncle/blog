@@ -1,0 +1,2057 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://imgbed.leiting2020.top/img/202305072001738.jpg">
+  <link rel="icon" href="https://imgbed.leiting2020.top/img/202305072001738.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Lei Ting">
+  <meta name="keywords" content="note">
+  
+    <meta name="description" content="1、KRL程序 1.1程序的结构与建立 1.1.1程序接口 当KRC1软件被安装在目录“KRC：\R1\MADA\”：时，下列文件可作为标准。    File Meaning     $MACHINE.DAT 控制器和机器人的系统数据列表和系统变量   $ROBCOR.DAT 机器人动态模型的系统数据列表和数据   MACHINE.UPG 用于将来升级的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KRL">
+<meta property="og:url" content="http://example.com/2020/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/KRL/index.html">
+<meta property="og:site_name" content="LeiHub">
+<meta property="og:description" content="1、KRL程序 1.1程序的结构与建立 1.1.1程序接口 当KRC1软件被安装在目录“KRC：\R1\MADA\”：时，下列文件可作为标准。    File Meaning     $MACHINE.DAT 控制器和机器人的系统数据列表和系统变量   $ROBCOR.DAT 机器人动态模型的系统数据列表和数据   MACHINE.UPG 用于将来升级的">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-07T16:10:00.569Z">
+<meta property="article:author" content="Lei Ting">
+<meta property="article:tag" content="机器人">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>KRL - LeiHub</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Lei</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="KRL"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-04-23 00:00" pubdate>
+          2020年4月23日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          19k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          161 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">KRL</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="krl程序">1、KRL程序</h1>
+<h2 id="程序的结构与建立">1.1程序的结构与建立</h2>
+<h3 id="程序接口">1.1.1程序接口</h3>
+<p>当KRC1软件被安装在目录<code>“KRC：\R1\MADA\”</code>：时，下列文件可作为标准。</p>
+<table>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>$MACHINE.DAT</td>
+<td>控制器和机器人的系统数据列表和系统变量</td>
+</tr>
+<tr class="even">
+<td>$ROBCOR.DAT</td>
+<td>机器人动态模型的系统数据列表和数据</td>
+</tr>
+<tr class="odd">
+<td>MACHINE.UPG</td>
+<td>用于将来升级的系统文件</td>
+</tr>
+<tr class="even">
+<td>ROBCOR.UPG</td>
+<td>用于将来升级的系统文件</td>
+</tr>
+</tbody>
+</table>
+<p>下列文件可在目录<code>“KRC：\R1\SYSTEM\”</code>：下找到</p>
+<table>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>$CONFIG.DAT</td>
+<td>系统数据列表和一般数据</td>
+</tr>
+<tr class="even">
+<td>BAS.SRC</td>
+<td>运动控制的基本软件包</td>
+</tr>
+<tr class="odd">
+<td>IR_STOPM.SRC</td>
+<td>故障时服务功能所使用的程序</td>
+</tr>
+<tr class="even">
+<td>SPS.SUB</td>
+<td>监视使用的提交文件</td>
+</tr>
+</tbody>
+</table>
+<h3 id="文件">1.1.2 文件</h3>
+<p>KRL程序由SRC和DAT文件组成。</p>
+<p><strong>SRC</strong>文件包含实际的程序代码，有两个变量：<strong>DEF</strong>和<strong>DEFFCT</strong>(带返回值)。</p>
+<p><strong>DAT</strong>文件包含特定的程序数据。它们的区别基于<strong>KRL</strong>文件概念：除处理顺序不同外，程序包含工业机器人完成的动作也不同。也可能是特殊的运动顺序，打开和关闭夹手，或复杂的顺序，例如有关焊枪限制的控制。</p>
+<h3 id="文件结构">1.1.3文件结构</h3>
+<p>KRL文件的内部结构由<strong>声明部分、指令部分和最多255个局部子程序和函数</strong>组成。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs KRL">DEF NAME(x1：IN)<br>声明<br>指令<br>END  <br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>DEF</strong>:有的文件不带扩展名，因此在声明中前缀<strong>“DEF”</strong>。名称最多可包含24个字符，但不允许包含关键字(见[变量和声明]一节)。所有文件以<strong>“DEF”</strong>开头和<strong>“END”</strong>结束。</li>
+<li><strong>声明</strong>
+:程序执行前已经检查过声明，即在编译期间检查声明。声明部分不可能有指令,第一个指令开始于指令部分。<br />
+</li>
+<li><strong>指令</strong>
+与声明不同，指令是动态的，程序处理过程中执行指令。<br />
+</li>
+<li><strong>数据列表</strong>
+一个机器人程序可能仅包含一个单个的程序文件或一个程序文件和相关的数据表。
+数据表和文件具有相同的公共名，区别仅在于扩展名不同。</li>
+</ul>
+<h2 id="建立和编辑程序">1.2建立和编辑程序</h2>
+<h3 id="新建程序">1.2.1新建程序</h3>
+<p><strong>Module：</strong>包含框架程序的一个SRC文件和DAT文件被创建。
+<strong>Expert：</strong>仅包含标题DEF…和END的一个SRC文件和DAT文件被创建。
+<strong>Cell：</strong>此时，仅创建一个包含SRC的框架程序。该程序用于通过中央PLC控制机器人。
+<strong>Function：</strong>此时，一个包含标题DEF…和END的函数(SRC文件)被创建。
+<strong>Submit：</strong>创建一个SUB文件的框架程序。Submit文件包含可以使用的指令，例如，用于循环监视(夹手等)。Submit文件工作类似于机器人，由控制器解释程序处理。
+<strong>Expert
+Submit：</strong>使用Submit模板，创建一个SUB文件，这时仅包含标题DEF…和END。</p>
+<h3 id="编辑编译和链接程序">1.2.2 编辑、编译和链接程序</h3>
+<p>通过菜单<strong>“新建”</strong>建立一个文件后，
+则可以使用编辑器编辑该文件，
+可使用软键<strong>“编辑”</strong>完成该操作。关闭编辑器后，则整个程序代码被<strong>编译</strong>，也就是说，原文的KRL代码被转换为能让控制器理解的语言。</p>
+<p><strong>编译：</strong>该处理中，编译器检查代码和语法上的错误，如果检查到错误，则产生对应的消息和拓展名为<strong>“.ERR”.</strong>的错误文件</p>
+<p><strong>链接编辑器：</strong>当通过软件“选择”装入一个程序后，建立程序所需要的所有文件和数据表被链接到一起。链接期间，检查模型是否存在，是否已经被编译和存在错误。当传输参数时，编辑器检查所传输参数的类型兼容性。如果链接期间出现错误，则产生扩展名为<strong>“.ERR”</strong>的错误文件。</p>
+<p>您也可以使用一般文本编辑器写一个KRL程序，然后通过“装载”软键装入系统存储器中。这时，您必须<strong>确保完成所有的必要的初始化（例如：轴速度）
+。</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs KRL">下面的简单程序是一个定义轴速度和加速度的举例<br>DEF PROG1()<br>：-----声明部分----<br>INT J<br>：------指令部分-------<br>$VEL_AXIS[1]=100 ；定义轴速度<br>$VEL_AXIS[2]=100<br>$VEL_AXIS[3]=100<br>$VEL_AXIS[4]=100<br>$VEL_AXIS[5]=100<br>$VEL_AXIS[6]=100<br><br>$ACC_AXIS[1]=100 ；定义轴加速度<br>$ACC_AXIS[2]=100<br>$ACC_AXIS[3]=100<br>$ACC_AXIS[4]=100<br>$ACC_AXIS[5]=100<br>$ACC_AXIS[6]=100<br><br>PTP&#123;A1 0，A2 -90，A3 90，A4 0，A5 0，A6 0&#125;<br><br>FOR J=1 TO 5<br>PTP &#123;A1 4&#125;<br>PTP &#123;A2 -7，A3 5&#125;<br>PTP &#123;A1 0，A2 -9，A3 9&#125;<br>ENDFOR<br><br>PTP &#123;A1 0，A2 -90，A3 90，A4 0，A5 0，A6 0&#125;<br><br>END<br></code></pre></td></tr></table></figure>
+<h2 id="改变程序">1.3改变程序</h2>
+<h3 id="程序修改">1.3.1程序修改</h3>
+<h3 id="编辑器">1.3.2编辑器</h3>
+<h3 id="隐藏程序部分">1.4隐藏程序部分</h3>
+<p>缺省时“折合”是“关闭”的，且只能由专家级别用户“打开”，然后用户才可以在KUKA图形用户界面(KUKAGUI)上看见信息。专家级用户在指示范围内装入相关的声明或指令<strong>“
+FOLD”</strong>和<strong>“
+：ENDFOLD”</strong>就可以使KRL块让一般用户看见。</p>
+<p>通过按菜单键“程序”，然后选择“折合”和需要的命令，可以使程序中的折合显示或隐藏
+。</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/11/29/202111301050211.png" srcset="/img/loading.gif" lazyload
+alt="image-20211130105034128" />
+<figcaption aria-hidden="true">image-20211130105034128</figcaption>
+</figure>
+<p> <strong>Current FOLD opn/cls</strong>
+打开或关闭编辑光标定位行的折合  <strong>All FOLDs opn</strong>
+打开程序的所有折合  <strong>All FOLDs cls</strong>
+关闭程序的所有折合</p>
+<h3 id="程序举例">1.4.1 程序举例</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs KRL">DEF FOLDS( )<br><br>：FOLD DECLARATION；%附加信息<br>：---------声明部分--------<br>EXT BAS (BAS_COMMAND：IN，REAL：IN)<br>DECL AXIS HOME<br>INT I<br>：END FOLD<br><br>：FOLD INITIALISATION<br>：----------初始化--------<br>INTERRUPT DECL 3 WHEN $STOPMESS==TRUE DO IR_STOPM( )<br>INTERRUPT ON 3<br>BAS(#INITMOV，0)初始化速度，<br>：加速度，$BASE，$TOOL，等<br>FOR I=1 TO 16<br>$OUT[I]=FALSE<br>ENDFOR<br>HOME=&#123;AXIS：A10，A2-90，A390，A40，A530，A60&#125;<br>：END FOLD<br><br>：-------------主程序部分-----------<br>PTP HOME：BCO运行<br>LIN&#123;X 540，Y 630，Z 1500，A 0，B 90，C 0&#125;<br>PTP HOME<br><br>END<br></code></pre></td></tr></table></figure>
+<p>该举例程序在屏上幕显示如下</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/11/29/202111301055117.png" srcset="/img/loading.gif" lazyload
+alt="image-20211130105557055" />
+<figcaption aria-hidden="true">image-20211130105557055</figcaption>
+</figure>
+<p>打开折合时的显示：</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/11/29/202111301056876.png" srcset="/img/loading.gif" lazyload
+alt="image-20211130105626771" />
+<figcaption aria-hidden="true">image-20211130105626771</figcaption>
+</figure>
+<p>对于编辑器来说“折回”仅仅是一个指令。因为其前面的分号，所以编译器把折合语句看作是一般注释。</p>
+<h2 id="程序运行模式">1.5程序运行模式</h2>
+<p>程序运行模式定义如何执行程序</p>
+<ul>
+<li><p>程序不停止</p></li>
+<li><p>一步一步执行运动指令</p></li>
+<li><p>单步执行。</p>
+<p>所有的程序运行模式如下表说明</p></li>
+</ul>
+<table>
+
+<thead>
+<tr class="header">
+<th>运行模式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>GO</strong></td>
+<td>执行程序中的所有指令，直到程序结束。</td>
+</tr>
+<tr class="even">
+<td><strong>MSTEP</strong></td>
+<td>运动步(运动指令)
+程序一次执行一个运动指令，也就是说，每个运动指令后插入一个 STOP。
+执行的程序不作前置处理。</td>
+</tr>
+<tr class="odd">
+<td><strong>ISTEP</strong></td>
+<td>增量步进(单步) 程序一步一步执行， 也就是说，
+每个指令后插入一个STOP（包括空行） 。 执行的程序不作前置处理。</td>
+</tr>
+<tr class="even">
+<td><strong>PSTEP</strong></td>
+<td>程序单步(程序单步) 子程序被完整地执行。
+执行的程序不作前置处理。</td>
+</tr>
+<tr class="odd">
+<td><strong>CSTEP</strong></td>
+<td>连续步进(运动指令)
+程序一次执行一个运动指令，也就是说，每个运动指令后插入一个
+STOP且精确定位。 执行的程序作前置处理。也就是说，定位为粗定位。</td>
+</tr>
+</tbody>
+</table>
+<p>可在<strong>KCP</strong>上使用状态键或通过变量“<strong><span
+class="math inline">\(PRO_MODE**”选择程序运行模式**GO，MSTEP和ISTEP**。另一方面，程序运行模式**PSTEP和CSTEP**只能通过变量**“\)</span>PRO_MODE”</strong>来设置。要修改该状态，首先激活菜单函数<strong>“Monitor”--&gt;“Variable”--&gt;“Single”</strong>，然后在“名称”的文本输入框中输入变量“$PRO_MODE”和“新值”文本输入框中输入期望的新值。</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/11/30/202111301138779.png" srcset="/img/loading.gif" lazyload
+alt="image-20211130113821701" />
+<figcaption aria-hidden="true">image-20211130113821701</figcaption>
+</figure>
+<h2 id="错误处理">1.6错误处理</h2>
+<h3 id="view-err">view ERR</h3>
+<p>使用菜单<strong>“监视”→“变量”→“修改”</strong>，您可以在线显示错误号的含义。要这样做的话，在状态窗口的<strong>“Name”</strong>文本输入框中输入字符<strong>“$”</strong>后跟错误号。本例子中，输入<strong>“$2263”</strong>,然后按回车键。</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/11/30/202111301541099.png" srcset="/img/loading.gif" lazyload
+alt="image-20211130154138042" />
+<figcaption aria-hidden="true">image-20211130154138042</figcaption>
+</figure>
+<h3 id="jump-to">jump to</h3>
+<p>如果现在将SRC文件(“ERROR.SRC”存在的条件下)装入编辑器，您必须进行适当的修改。闪烁光标已经自动定位在包含错误的第一行，使得修改非常方便。确保关闭受限制的可见性和可以看见DEF—行。细节可见<strong>[隐藏程序部分]</strong>。</p>
+<h3 id="refresh">Refresh</h3>
+<p>关闭编辑器，存储修改后的文件，按错误列表中的软键“刷新”；如果已经排除完了所有的错误，则错误列表消失。</p>
+<h2 id="注释">1.7注释</h2>
+<p>注释可在程序的任何位置插入。通常在其前面加<code>“：”</code></p>
+<h1 id="变量和声明">2 变量和声明</h1>
+<h2 id="变量和名称">2.1变量和名称</h2>
+<h4 id="名称"><strong>名称</strong></h4>
+<p>KRL中的名称</p>
+<ul>
+<li>最大长度为24个字符。</li>
+<li>可以包含字母（A-Z）、数字（0－9）和符号‘—’和‘$’。</li>
+<li>必须以字母开始。</li>
+<li>不要使用关键字。</li>
+</ul>
+<blockquote>
+<p>因为所有的系统变量（见2.4节）以符号<strong>‘$’</strong>开头，所以该符号在自定义名称中不能作为第一个符号。</p>
+</blockquote>
+<p>变量被看作是一个固定的存储器区域，变量的内容可以通过变量名称来寻址。当执行程序时，变量通过存储器位置（地址）和存储器内容（值）来表示。</p>
+<h4 id="值分配"><strong>值分配</strong></h4>
+<p>使用等号(=)给变量分配值。</p>
+<p>不同的数据对象(见节2.2)有不同的存储器需求，所以变量的数据类型在使用前<strong>必须声明</strong></p>
+<h4 id="变量周期"><strong>变量周期</strong></h4>
+<p>变量的周期即该时间段内变量在存储器内存在。
+取决于变量是在SRC文件或数据表中声明：</p>
+<p><strong>SRC文件中声明的变量</strong>
+周期受程序运行时间的限制。执行完成后存储器区域再分配，则变量值丢失。
+<strong>数据表中声明的变量 (见数据表一章)</strong>
+周期与程序运行时间无关，只要该数据表存在，该变量就存在。因此这种变量是永久保持的（直到系统关机）</p>
+<h2 id="数据对象">2.2数据对象</h2>
+<h3 id="数据对象的声明和初始化">2.2.1数据对象的声明和初始化</h3>
+<h4 id="decl"><strong>DECL：</strong></h4>
+<p>给一个数据类型分配一个变量名称和保留存储器空间，在KRL中须使用DECL声明来完成。</p>
+<p><code>DECL INT QUANTITY，NUMBER</code></p>
+<p>两个变量<code>QUANTITY</code>和<code>NUMBER</code>为<code>INTEGER</code>数据类型。
+这样编译器就知道这两个变量和相关的数据类型，当使用该变量时，可检查该数据类型是否允许操作。
+声明变量，如例子所述，首先是<strong>关键字</strong><code>DECL</code>，其后跟的是<strong>数据类型</strong>和<strong>分配该数据类型的变量列表</strong></p>
+<blockquote>
+<p>当声明变量和阵列为预定数据类型时，关键字DECL可以省略。不包括简单数据类型<code>INT，REAL，CHAR和BOOL</code>(见2.2.2一节)，结构数据类型<code>POS，E6POS，FRAME，AXIS和E6AXIS</code>(见2.2.5一节)是预定的。</p>
+<p>对于数据类型是POS的变量（非阵列），声明可以省略。POS数据类型是变量的标准数据类型。
+自由可定义结构或列举类型的声明中关键字DECL是包括缺少的。(见节2.2.5和2.2.6)。</p>
+</blockquote>
+<h4 id="初始化"><strong>初始化</strong></h4>
+<p>当变量声明完成后，它的值第一次是不可用的，因为根据存储器位置的不同该值可能不同。要使变量可以开始工作，必须预设定一个特定的值。第一次<strong>给变量分配值</strong>称为初始化。</p>
+<p>分配给变量的值是一个指令，因此不要在声明部分出现。初始化，可在指令的任何部分发生。理想状态下，所有<strong>声明过的变量应该是在声明部分后的初始化部分直接初始化完成</strong>。</p>
+<p><strong>仅数据表中允许直接在声明行中初始化变量。</strong></p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/11/30/202111301609288.png" srcset="/img/loading.gif" lazyload
+alt="程序基本结构" />
+<figcaption aria-hidden="true">程序基本结构</figcaption>
+</figure>
+<h3 id="简单数据类型">2.2.2简单数据类型</h3>
+<table>
+
+<thead>
+<tr class="header">
+<th>数据类型</th>
+<th>整数</th>
+<th>实数</th>
+<th>布尔</th>
+<th>字符</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>关键字</td>
+<td>INT</td>
+<td>REAL</td>
+<td>BOOL</td>
+<td>CHAR</td>
+</tr>
+<tr class="even">
+<td>含义</td>
+<td>整数</td>
+<td>浮点数字</td>
+<td>逻辑型</td>
+<td>1个字符</td>
+</tr>
+<tr class="odd">
+<td>值的范围</td>
+<td>-2<sup>31-2</sup>31-1</td>
+<td>+1.1E-38… ±3.4E+38</td>
+<td>TRUE，FALSE</td>
+<td>ASCII字符</td>
+</tr>
+</tbody>
+</table>
+<h4 id="int">INT</h4>
+<p>如果将一个实数值分配给一个整数型变量，则该值一般被圆整(x.0到.49向下圆整，x.5到x.99向上圆整)。</p>
+<blockquote>
+<p>另外：整数相除的结果从小数点后被切掉，举例：7/4=1</p>
+</blockquote>
+<h4 id="二进制系统-十六进制系统">二进制系统 十六进制系统</h4>
+<p>KRL中可使用反逗号<code>（’）</code>和二进制前缀<strong>B</strong>或十六进制前缀<strong>H</strong>表示二进制或十六进制整数。</p>
+<h4 id="实数">实数</h4>
+<p>以<strong>浮点形式</strong>表示，标准格式将一个数字分成<strong>固定点部分</strong>和一个<strong>指数</strong>。</p>
+<h4 id="布尔">布尔</h4>
+<p>布尔变量用于逻辑状态的说明（例如，输入/输出）。值仅有真或假。</p>
+<h4 id="字符型">字符型</h4>
+<p>字符型变量可以代表符合ASCII字符规定的一个准确的字符。给一个字符型变量分配的ASCII字符，必须位于括号<strong>(”)</strong>内。</p>
+<h3 id="阵列">2.2.3阵列</h3>
+<p>术语“阵列“指的是相同数据类型对象的组合产生的一个数据对象；通过下标可以寻址阵列中的独立的元素。声明如下
+<code>DECL INT OTTO[7]</code></p>
+<h4 id="阵列指针">阵列指针</h4>
+<p>●阵列可能是任何数据类型。单独的元素也可能有复杂的数据类型(例如，阵列组成的阵列)。
+●仅整数型数据类型允许作为下标。
+●除常量和变量外，算术表达式也允许作为下标（见节2.3.1）。
+●下标起始值通常为1。</p>
+<h4 id="维阵列">2维阵列</h4>
+<p>除已经讨论过的一维阵列，也就是说仅有一个下标，在KRL中还可以使用两维或三维阵列。采用
+<code>DECL REAL MATRIX[7，3]</code></p>
+<h4 id="三维阵列">三维阵列</h4>
+<p>三维阵列可以看作是一个接一个的一些两维矩阵。第三维指示矩阵所处位置的级别（见图4）。一个三维阵列可简单地声明为一维或两维阵列，例如：
+<code>DECL BOOL ARRAY_3D[5，3，4]</code></p>
+<h3 id="字符串">2.2.4 字符串</h3>
+<p>使用字符型数据类型，您仅可以存储一个独立的字符。要使用一串字符，例如字，您只需简单地将一个一维阵列的数据类型定义为字符型：
+<code>DECL CHAR NAME[8]</code></p>
+<p>如同通常一样，您可以寻址阵列NAME[
+]中的单个的元素，例如：<code>NAME[3]=”G”</code></p>
+<p>当然，您也可以直接输入全部字符串：<code>NAME[ ]=”ABCDEFG”</code></p>
+<h3 id="结构">2.2.5结构</h3>
+<p>使用声明语句<code>STRUC</code>，预先定义好的不同数据类型或预定数据类型的组合构成一个新的复合数据类型</p>
+<h4 id="stru">STRU</h4>
+<p>复合使用的一个典型例子是标准数据类型POS。它由文件$OPERATE.SRC中声明的6个实数值和2个整数值组成：
+<code>STRUC POS REAL X，，Y，Z，A，B，C，INT S，T</code></p>
+<h4 id="点分离">点分离</h4>
+<p>如果，例如您现在使用结构数据类型的一个POSITION变量，您可以使用分离点给个别的元素分配值：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">POSITION.X</span>=<span class="hljs-number">34.4</span><br><span class="hljs-attr">POSITION.Y</span>=-<span class="hljs-number">23.2</span><br><span class="hljs-attr">POSITION.Z</span>=<span class="hljs-number">100.0</span><br><span class="hljs-attr">POSITION.A</span>=<span class="hljs-number">90</span><br><span class="hljs-attr">POSITION.B</span>=<span class="hljs-number">29.5</span><br><span class="hljs-attr">POSITION.C</span>=<span class="hljs-number">3.5</span><br><span class="hljs-attr">POSITION.S</span>=<span class="hljs-number">2</span><br><span class="hljs-attr">POSITION.T</span>=<span class="hljs-number">6</span>  <br></code></pre></td></tr></table></figure>
+<h4 id="集合">集合</h4>
+<p>或使用所谓的集合共同分配值：
+<code>POSITION=&#123;X34.4，Y-23.2，Z100.0，A90，B29.5，C3.5，S2，T6&#125;</code></p>
+<p>● 集合的值可以是简单的常量或它们自己的集合。 ●
+不是必须在集合中指定结构中的所有组成。 ●
+成分的指定顺序不必依照它们定义的顺序。 ● 集合中每个成分可能只包含一次。
+● 在由结构组成阵列的情况下，一个集合定义一个单独的阵列元素的值。 ●
+结构类型的名称可在一个集合的开头指定-以冒号分开。</p>
+<blockquote>
+<p>对于POS、E6POS、AXIS、E6AXIS和FRAME结构缺少的成分不能被改变。而对于其它集合，则不存在的成分被设置为无效的成分</p>
+</blockquote>
+<p>建立您自己的结构变量的步骤使用下列例子解释：</p>
+<p>变量S_PARA必须由3个不同数据类型的元素组成。首先，必须建立一个满足这个要求的新的数据类型：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">STRUC WELDTYPE <span class="hljs-type">REAL</span> V_WIRE，<span class="hljs-type">INT</span> CHARAC，<span class="hljs-type">BOOL</span> ARC<br></code></pre></td></tr></table></figure>
+<p>建立了一个名称为<code>WELDTYPE</code>的新的数据类型(<code>WELDTYPE</code>不是一个变量!)。<strong>WELDTYPE</strong>由
+<code>V_WIRE、CHARAC和ARC</code>三个成分组成。您现在可以任何新数据类型的变量，例如：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">DECL WELDTYPE S_PARA</span><br></code></pre></td></tr></table></figure>
+<p>这样您就建立了一个数据类型为WELDTYPE的变量S_PARA。可以通过点分开单独寻址各个成分和通过集合－如上说明来寻址。</p>
+<blockquote>
+<p>为了更容易区分自定义数据类型和变量，新数据类型的名称以…TYPE结束。</p>
+</blockquote>
+<h4 id="预定义结构">预定义结构</h4>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/11/30/202111302104582.png" srcset="/img/loading.gif" lazyload
+alt="image-20211130210427516" />
+<figcaption aria-hidden="true">image-20211130210427516</figcaption>
+</figure>
+<h4 id="几何数据类型">几何数据类型</h4>
+<p><strong>AXIS，E6AXIS，POS，E6POS和FRAME</strong>的类型也称为几何数据类型，因为它们提供编程师一个简单的方法用来说明几何关系。</p>
+<h3 id="列举类型">2.2.6列举类型</h3>
+<p>ENUM</p>
+<p>#符号</p>
+<h2 id="数据处理">2.3数据处理</h2>
+<h3 id="操作">2.3.1操作</h3>
+<h4 id="算术操作">2.3.1.1算术操作</h4>
+<table>
+<thead>
+<tr class="header">
+<th>操作</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>+</td>
+<td>加法或正号</td>
+</tr>
+<tr class="even">
+<td>-</td>
+<td>减法或负号</td>
+</tr>
+<tr class="odd">
+<td>*</td>
+<td>乘法</td>
+</tr>
+<tr class="even">
+<td>/</td>
+<td>除法</td>
+</tr>
+</tbody>
+</table>
+<h4 id="几何操作">2.3.1.2几何操作</h4>
+<p>KRL中几何操作以冒号
+<code>：</code>表示。完成数据类型为<strong>FRAME</strong>和<strong>POS</strong>的操作数的框架联接（<strong>逻辑操作</strong>）。</p>
+<h4 id="框架连接">框架连接</h4>
+<p>框架操作是求左和右的值。<strong>最右边的结果</strong>的数据类型往往是操作数的数据类型（见表5）。</p>
+<table>
+<thead>
+<tr class="header">
+<th>左边操作数(参考CS)</th>
+<th>操作</th>
+<th>右边操作数(目标CS)</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>POS</td>
+<td>：</td>
+<td>POS</td>
+<td>POS</td>
+</tr>
+<tr class="even">
+<td>POS</td>
+<td>：</td>
+<td>FRAME</td>
+<td>FRAME</td>
+</tr>
+<tr class="odd">
+<td>FRAME</td>
+<td>：</td>
+<td>POS</td>
+<td>POS</td>
+</tr>
+<tr class="even">
+<td>FRAME</td>
+<td>：</td>
+<td>FRAME</td>
+<td>FRAME</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>如果左边的操作数的数据类型是POS，进行类型匹配。POS结构指定的位置被转换为框架。意思是系统检查该位置的刀具框架。</p>
+</blockquote>
+<h5 id="举例">举例</h5>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/11/30/202111302139127.png" srcset="/img/loading.gif" lazyload
+alt="image-20211130213917050" />
+<figcaption aria-hidden="true">image-20211130213917050</figcaption>
+</figure>
+<p>现在的任务就是定义工件坐标系和房间坐标系的相对关系。首先必须先定义下列框架变量：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">FRAME <span class="hljs-selector-tag">TABLE</span>，WORKPIECE，BASE<br></code></pre></td></tr></table></figure>
+<p>房间坐标系已经由系统明确地指定。桌子坐标系和工件坐标系现在根据给定的约束初始化。</p>
+<figure class="highlight tp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs tp">TABLE=&#123;<span class="hljs-keyword">X</span><span class="hljs-number">450</span>，<span class="hljs-keyword">Y</span><span class="hljs-number">600</span>，<span class="hljs-keyword">Z</span><span class="hljs-number">800</span>，A<span class="hljs-number">0</span>，B<span class="hljs-number">0</span>，C<span class="hljs-number">0</span>&#125;<br>WORKPIECE=&#123;<span class="hljs-keyword">X</span><span class="hljs-number">80</span>，<span class="hljs-keyword">Y</span><span class="hljs-number">110</span>，<span class="hljs-keyword">Z</span><span class="hljs-number">55</span>，A<span class="hljs-number">-40</span>，B<span class="hljs-number">180</span>，C<span class="hljs-number">0</span>&#125;<br></code></pre></td></tr></table></figure>
+<p>使用几何操作得到工件坐标系和房间坐标系的相对关系</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf"><span class="hljs-attribute">BASE</span><span class="hljs-operator">=</span>TABLE：WORKPIECE<br></code></pre></td></tr></table></figure>
+<p>在我们的案例中，BASE定义如下：</p>
+<figure class="highlight tp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs tp">BASE=&#123;<span class="hljs-keyword">X</span><span class="hljs-number">530</span>，<span class="hljs-keyword">Y</span><span class="hljs-number">710</span>，<span class="hljs-keyword">Z</span><span class="hljs-number">855</span>，A<span class="hljs-number">140</span>，B<span class="hljs-number">0</span>，C<span class="hljs-number">-180</span>&#125;<br>另一个可能是：<br>BASE=&#123;<span class="hljs-keyword">X</span><span class="hljs-number">530</span>，<span class="hljs-keyword">Y</span><span class="hljs-number">710</span>，<span class="hljs-keyword">Z</span><span class="hljs-number">855</span>，A<span class="hljs-number">-40</span>，B<span class="hljs-number">180</span>，C<span class="hljs-number">0</span>&#125;  <br></code></pre></td></tr></table></figure>
+<h4 id="关系操作">2.3.1.3关系操作</h4>
+<table>
+<thead>
+<tr class="header">
+<th>操作</th>
+<th>说明</th>
+<th>允许的数据类型</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>==</td>
+<td>等于</td>
+<td>INT，REAL，CHAR，ENUM，BOOL</td>
+</tr>
+<tr class="even">
+<td>&lt;&gt;</td>
+<td>不等于</td>
+<td>INT，REAL，CHAR，ENUM，BOOL</td>
+</tr>
+<tr class="odd">
+<td>&gt;</td>
+<td>大于</td>
+<td>INT，REAL，CHAR，ENUM</td>
+</tr>
+<tr class="even">
+<td>&lt;</td>
+<td>小于</td>
+<td>INT，REAL，CHAR，ENUM</td>
+</tr>
+<tr class="odd">
+<td>&gt;=</td>
+<td>大于或等于</td>
+<td>INT，REAL，CHAR，ENUM</td>
+</tr>
+<tr class="even">
+<td>&lt;=</td>
+<td>小于或等于</td>
+<td>INT，REAL，CHAR，ENUM</td>
+</tr>
+</tbody>
+</table>
+<h4 id="逻辑操作">2.3.1.4逻辑操作</h4>
+<table>
+<thead>
+<tr class="header">
+<th>操作</th>
+<th>操作数数量</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>NOT</td>
+<td>1</td>
+<td>非</td>
+</tr>
+<tr class="even">
+<td>AND</td>
+<td>2</td>
+<td>逻辑与</td>
+</tr>
+<tr class="odd">
+<td>OR</td>
+<td>2</td>
+<td>逻辑或</td>
+</tr>
+<tr class="even">
+<td>EXOR</td>
+<td>2</td>
+<td>异或</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th>操作</th>
+<th>NOT A</th>
+<th>A AND B</th>
+<th>A OR B</th>
+<th>A EXOR B</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A=TRUE</td>
+<td>B=TRUE</td>
+<td>FALSE</td>
+<td>TRUE</td>
+<td>TRUE</td>
+<td>FALSE</td>
+</tr>
+<tr class="even">
+<td>A=TRUE</td>
+<td>B=FALSE</td>
+<td>FALSE</td>
+<td>FALSE</td>
+<td>TRUE</td>
+<td>TRUE</td>
+</tr>
+<tr class="odd">
+<td>A=FALSE</td>
+<td>B=TRUE</td>
+<td>TRUE</td>
+<td>FALSE</td>
+<td>TRUE</td>
+<td>TRUE</td>
+</tr>
+<tr class="even">
+<td>A=FALSE</td>
+<td>B=FALSE</td>
+<td>TRUE</td>
+<td>FALSE</td>
+<td>FALSE</td>
+<td>FALSE</td>
+</tr>
+</tbody>
+</table>
+<h4 id="位操作">2.3.1.5位操作</h4>
+<table>
+<thead>
+<tr class="header">
+<th>操作</th>
+<th>操作数数量</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>B_NOT</td>
+<td>1</td>
+<td>一位一位反</td>
+</tr>
+<tr class="even">
+<td>B_AND</td>
+<td>2</td>
+<td>一位一位与</td>
+</tr>
+<tr class="odd">
+<td>B_OR</td>
+<td>2</td>
+<td>一位一位或</td>
+</tr>
+<tr class="even">
+<td>B_EXOR</td>
+<td>2</td>
+<td>一位一位异或</td>
+</tr>
+</tbody>
+</table>
+<h4 id="操作优先级">2.3.1.6操作优先级</h4>
+<table>
+<thead>
+<tr class="header">
+<th>优先级</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>NOT B_NOT</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>* /</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>+ -</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>AND B_AND</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>EXOR B_EXOR</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>OR B_OR</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>== &lt;&gt; &lt; &gt; &gt;= &lt;=</td>
+</tr>
+</tbody>
+</table>
+<h3 id="标准函数">2.3.2标准函数</h3>
+<table style="width:100%;">
+
+<thead>
+<tr class="header">
+<th>说明</th>
+<th>函数</th>
+<th>函数的数 据类型</th>
+<th>函数值的范围</th>
+<th>函数的数 据类型</th>
+<th>结果的范围</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>绝对值</strong></td>
+<td><strong>ABS(X)</strong></td>
+<td><strong>REAL</strong></td>
+<td><strong>--∞…+∞</strong></td>
+<td><strong>REAL</strong></td>
+<td><strong>0…+∞</strong></td>
+</tr>
+<tr class="even">
+<td><strong>平方根</strong></td>
+<td><strong>SQRT(X)</strong></td>
+<td><strong>REAL</strong></td>
+<td><strong>0…+∞</strong></td>
+<td><strong>REAL</strong></td>
+<td><strong>0…+∞</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>正弦</strong></td>
+<td><strong>SIN(X)</strong></td>
+<td><strong>REAL</strong></td>
+<td><strong>--∞…+∞</strong></td>
+<td><strong>REAL</strong></td>
+<td><strong>-1…+1</strong></td>
+</tr>
+<tr class="even">
+<td><strong>余弦</strong></td>
+<td><strong>COS(X)</strong></td>
+<td><strong>REAL</strong></td>
+<td><strong>--∞…+∞</strong></td>
+<td><strong>REAL</strong></td>
+<td><strong>-1…+1</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>正切</strong></td>
+<td><strong>TAN(X)</strong></td>
+<td><strong>REAL</strong></td>
+<td><strong>--∞…+∞</strong>*</td>
+<td><strong>REAL</strong></td>
+<td><strong>--∞…+∞</strong></td>
+</tr>
+<tr class="even">
+<td><strong>反余弦</strong></td>
+<td><strong>ACOS(x)</strong></td>
+<td><strong>REAL</strong></td>
+<td><strong>-1…+1</strong></td>
+<td><strong>REAL</strong></td>
+<td><strong>00…180</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>反正切</strong></td>
+<td><strong>ATAN2(Y，X)</strong></td>
+<td><strong>REAL</strong></td>
+<td><strong>--∞…+∞</strong></td>
+<td><strong>REAL</strong></td>
+<td><strong>-900…+900</strong></td>
+</tr>
+<tr class="even">
+<td><strong><em>900的倍数，也就是说.X≠(2k-1)</em>90，K∈N</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="系统变量和系统文件">2.4系统变量和系统文件</h2>
+<blockquote>
+<p>所有预定变量的列表见单独资料[系统变量]</p>
+</blockquote>
+<h3 id="计时器">计时器</h3>
+<p>16个计时器变量<strong><span
+class="math inline">\(TIMER[1]…\)</span>TIMER[16]</strong>可用于测量时间顺序，可用作“秒表”。开始和停止计时使用系统变量<strong><span
+class="math inline">\(TIMER_STOP[1]…\)</span>TIMER_STOP[16]：</strong></p>
+<p><strong>开始计时器4</strong></p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-symbol">$TIMER</span>_STOP[<span class="hljs-number">4</span>]=<span class="hljs-literal">FALSE</span> <br></code></pre></td></tr></table></figure>
+<p><strong>关闭计时器4</strong></p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-symbol">$TIMER</span>_STOP[<span class="hljs-number">4</span>]=<span class="hljs-literal">TRUE</span><br></code></pre></td></tr></table></figure>
+<p>使用一般变量分配可在任何时候复位有关的计时器变量。举例来说：</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-meta"><span class="hljs-keyword">$TIMER</span>[4]=0</span><br></code></pre></td></tr></table></figure>
+<p>如果计时器变量值从负向正变化，对应的标记则设置为TRUE(暂停条件)，举例来说：</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-symbol">$TIMER</span>_FLAG[<span class="hljs-number">4</span>]=<span class="hljs-literal">TRUE</span><br></code></pre></td></tr></table></figure>
+<p>当控制器启动时，所有的计时器变量预设置为0，标记 <strong><span
+class="math inline">\(TIMER_FLAG[1]……\)</span>TIMER_FLAG[16]</strong>
+预设置为<strong>FALSE</strong></p>
+<p>变量<strong><span
+class="math inline">\(TIMER_STOP[1]……\)</span>TIMER_STOP[16]</strong>
+预设置为<strong>TRUE</strong>。
+计时器变量的单位是毫秒(ms)。<strong><span
+class="math inline">\(TIMER[1]……\)</span>TIMER[16]和<span
+class="math inline">\(TIMER_FLAG[1]……\)</span>TIMER_FLAG[16]</strong>以12ms循环更新。</p>
+<h3 id="标记">标记</h3>
+<p>1024个标记<strong><span
+class="math inline">\(FLAG[1]…\)</span>FLAG[1024]</strong>被用作全局标记。这些布尔变量预设置为<strong>FALSE</strong>。您可以随时在用户界面上通过“监视”菜单看标记的当前值</p>
+<h3 id="循环标记">循环标记</h3>
+<p>KRC...中可用32个循环标记<strong><span
+class="math inline">\(CYCFLAG[1]…\)</span>CYCFLAG[32]</strong>
+，控制器启动后预设为<strong>FALSE</strong>。</p>
+<h3 id="符号">$符号</h3>
+<p>预定变量一般选择一个容易记忆的名称。以$符号开始和有意义的英文缩写组成。</p>
+<p>有的预定变量针对整个KRC...控制器(例如<strong><span
+class="math inline">\(ALARM_STOP**用于定义输出到到PLC的急停信号PLC).其它，然而仅用于机器人(例如**\)</span>BASE</strong>用于基本坐标系)。</p>
+<p>机器人驱动器中有关控制的数据存储在目录<strong>“Steu”</strong>中，有关机器人的数据存储在目录<strong>“R1”</strong>中，并可在KUKA
+GUI上显示。</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/01/202112011504129.png" srcset="/img/loading.gif" lazyload
+alt="image-20211201150449034" />
+<figcaption aria-hidden="true">image-20211201150449034</figcaption>
+</figure>
+<p>在KRC...中还有KUKA定义的和控制软件一起的数据表。这些数据表被称为预定数据表，主要包含预定变量。</p>
+<h4 id="machine.dat">$MACHINE.DAT</h4>
+<p>是预定数据表，包含专有的系统变量。适配控制器和所连接机器人(运动信息，控制参数等)的机床数据。控制系统和机器人系统中都有一个$MACHINE.DAT，您不可以新建或删除现存的。
+例如：</p>
+<div class="line-block"><strong>$ALARM_STOP</strong> | <strong>急停信号
+(控制器特有)</strong> |<br />
+--------------- | ----------------------------- |<br />
+<strong>$NUM_AX</strong> | <strong>机器人轴数 （机器人特有）</strong>
+|</div>
+<h4 id="custom.dat">$CUSTOM.DAT</h4>
+<p>仅在控制系统中存在的数据表。包含可以配置或参数化特定控制函数的数据。编程师仅可以改变预定变量的值。不可以新建或删除现存的。例如：</p>
+<div class="line-block"><strong>$PSER_1</strong> |
+<strong>串行接口1的协议参数</strong> |<br />
+------------ | ------------------------ |<br />
+<strong>$IBUS_ON</strong> | <strong>激活可选的联络母线组</strong>
+|</div>
+<h4 id="config.dat">$CONFIG.DAT</h4>
+<p>KUKA预定的数据表，不包含任何系统变量，然而，在控制级和机器人级都有一个<strong>$CONFIG.DAT</strong>可用。其中可定义长时间有效的变量、结构、通道和信号，对许多程序普通重要。
+数据表分为以下几个程序块：</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs ada"><span class="hljs-comment">-- BAS</span><br><span class="hljs-comment">-- AUTOEXT</span><br><span class="hljs-comment">-- GRIPPER</span><br><span class="hljs-comment">-- PERCEPT</span><br><span class="hljs-comment">-- SPOT</span><br>A10<br>A50<br>A20<br><span class="hljs-comment">-- TOUCHSENSE</span><br><span class="hljs-comment">-- USER  </span><br></code></pre></td></tr></table></figure>
+<p>用户的全局声明应该输入USER程序块，因为仅该处的声明在以后的软件升级中被转移。</p>
+<h4 id="robcor.dat">$ROBCOR.DAT</h4>
+<p>文件<strong>$ROBCOR.DAT</strong>包含特定机器人的机器人动态模型的数据。在轨迹计划编排中需要这些数据。在文件中您不可以新建一个新变量或删除现存的。</p>
+<h1 id="运动编程">3运动编程</h1>
+<h2 id="不同坐标系的应用">3.1不同坐标系的应用</h2>
+<p>最基本的坐标系时<strong>连接（轴指定）坐标系和笛卡尔坐标系</strong></p>
+<p>KRC...中定义的角度A、B和C是绕坐标轴Z、Y和X的旋转角度。旋转的顺序必须保留。</p>
+<ol type="1">
+<li>绕Z轴的旋转角度为A</li>
+<li>绕Y轴的旋转角度为B</li>
+<li>绕X轴的旋转角度为C</li>
+</ol>
+<p>这个旋转顺序与众所周知的航空领域的roll--pitch—yaw角度一致。角度C对应于roll，角度B对应于pitch，角度A对应于yaw。</p>
+<p>KRC...中预定了下列<strong>笛卡儿坐标系</strong></p>
+<table>
+
+<thead>
+<tr class="header">
+<th>坐标系</th>
+<th>系统变量</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>全局坐标系</td>
+<td>$WORLD</td>
+<td>写保护</td>
+</tr>
+<tr class="even">
+<td>机器人坐标系</td>
+<td><span class="math inline">\(ROBROOT | 写保护(可在
+R1/MADA/\)</span>MA CHINE.DAT中改 变)</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>工具坐标系</td>
+<td>$TOOL*</td>
+<td>可写</td>
+</tr>
+<tr class="even">
+<td>基本(工件)坐标系</td>
+<td>$BASE*</td>
+<td>可写</td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/01/202112011649243.png" srcset="/img/loading.gif" lazyload
+alt="image-20211201164943160" />
+<figcaption aria-hidden="true">image-20211201164943160</figcaption>
+</figure>
+<h3 id="world坐标系">world坐标系</h3>
+<p>全局坐标系是固定的(=当机器人移动时坐标系不动)坐标系，用作机器人系统（机器人、支撑部分或工具）的根本坐标系。是机器人系统和单元外围装备的参考系统。</p>
+<h3 id="机器人坐标系">机器人坐标系</h3>
+<p>机器人坐标系位于机器人底部，是机器人机械结构的参考坐标系。起源于全局坐标系且当机器人系统交货时机器人坐标系与全局坐标系一致。与<span
+class="math inline">\(WORLD的偏置关系可使用\)</span>ROBROOT定义。</p>
+<h3 id="工具坐标系">工具坐标系</h3>
+<p>工具坐标系的原点在刀尖上。可以以下列方法选择方位，坐标系的X轴与工具的工作方向一致，X轴的方向远离工具。工具坐标系随工具的移动而移动</p>
+<h3 id="基坐标系">基坐标系</h3>
+<p>基坐标系是用来定义工件位置的参考坐标系。机器人在基坐标系中编程，全局坐标系作为它的参考坐标系。在交货时，<strong><span
+class="math inline">\(BASE=\)</span>WORLD</strong>。可以改变<strong>$BASE</strong>，例如当使用相同的程序加工不同位置的许多相同的工件时。</p>
+<h2 id="点到点运动ptp">3.2点到点运动PTP</h2>
+<p>PTP:点到点运动是将刀尖（刀具中心点：TCP）从当前位置移动到编程终点位置的最快方法。控制器计算各轴必要的角度差别。</p>
+<h3 id="一般说明">3.2.1一般说明</h3>
+<p>使用下列系统变量： ●<strong><span
+class="math inline">\(VEL_AXIS[轴数]:编程的最大轴速度**
+**●\)</span>ACC_AXIS[轴数]:编程的最大轴加速度</strong>
+机床数据中所有的输入以最大值的百分比给定。对于所有轴来说，如果还没有编程这两个系统变量，执行程序则会产生相关的错误消息。</p>
+<blockquote>
+<p>由于在笛卡儿坐标系中的PTP运动通常不知道哪一个轴是主导轴，所以明智的做法是将所有轴设置同样的加速度和速度值。</p>
+</blockquote>
+<h3 id="更高级的运动轮廓">3.2.2更高级的运动轮廓</h3>
+<h3 id="运动命令">3.2.3运动命令</h3>
+<blockquote>
+<p>程序中首先定义轴的速度和加速度，必须在执行点到点运动前分配这些值</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs KRL">DEFPTP_AXIS( ) ;程序名是PTP_AXIS<br>$VEL_AXIS[1]=100 ；定义轴速度<br>$VEL_AXIS[2]=100<br>$VEL_AXIS[3]=100<br>$VEL_AXIS[4]=100<br>$VEL_AXIS[5]=100<br>$VEL_AXIS[6]=100<br><br>$ACC_AXIS[1]=100 ；定义轴加速度<br>$ACC_AXIS[2]=100<br>$ACC_AXIS[3]=100<br>$ACC_AXIS[4]=100<br>$ACC_AXIS[5]=100<br>$ACC_AXIS[6]=100<br>PTP&#123;AXIS：A1 0，A2 –90，A3 90，A4 0，A5 0，A6 0&#125;<br>END<br></code></pre></td></tr></table></figure>
+<h4 id="ptp">PTP</h4>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">PTP</span>&#123;A3 <span class="hljs-number">45</span>&#125;  <br></code></pre></td></tr></table></figure>
+<p>PTP指令中定义的角度值是绝对值。因此机器人并不是旋转45度，而是旋转到45度。</p>
+<h4 id="ptp_rel">PTP_REL</h4>
+<p>相对运动，使用指令PTP
+REL。例如要旋转轴1和4都是35度，简单编程如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs KRL">PTP REL PTP REL &#123;A1 35，A4 35&#125;  <br></code></pre></td></tr></table></figure>
+<p>通过POS结构在笛卡儿坐标系中输入值，如同下面的举例：</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs gams">DEF PTP_POS( )<br><br><span class="hljs-meta"><span class="hljs-keyword">$BASE</span>=$WORLD ;设置基本坐标系</span><br><br><span class="hljs-meta"><span class="hljs-keyword">$TOOL</span>=$NULLFRAME  ；设置工具坐标系</span><br><br><span class="hljs-meta"><span class="hljs-keyword">$VEL</span>_AXIS[1]=100 ；定义轴速度</span><br><span class="hljs-meta"><span class="hljs-keyword">$VEL</span>_AXIS[2]=100</span><br><span class="hljs-meta"><span class="hljs-keyword">$VEL</span>_AXIS[3]=100</span><br><span class="hljs-meta"><span class="hljs-keyword">$VEL</span>_AXIS[4]=100</span><br><span class="hljs-meta"><span class="hljs-keyword">$VEL</span>_AXIS[5]=100</span><br><span class="hljs-meta"><span class="hljs-keyword">$VEL</span>_AXIS[6]=100</span><br><br><span class="hljs-meta"><span class="hljs-keyword">$ACC</span>_AXIS[1]=100 ；定义轴加速度</span><br><span class="hljs-meta"><span class="hljs-keyword">$ACC</span>_AXIS[2]=100</span><br><span class="hljs-meta"><span class="hljs-keyword">$ACC</span>_AXIS[3]=100</span><br><span class="hljs-meta"><span class="hljs-keyword">$ACC</span>_AXIS[4]=100</span><br><span class="hljs-meta"><span class="hljs-keyword">$ACC</span>_AXIS[5]=100</span><br><span class="hljs-meta"><span class="hljs-keyword">$ACC</span>_AXIS[6]=100</span><br><br>PTP&#123;POS：X <span class="hljs-number">1025</span>，Y <span class="hljs-number">0</span>，Z <span class="hljs-number">1480</span>，A <span class="hljs-number">0</span>，B <span class="hljs-number">90</span>，C <span class="hljs-number">0</span>，S ’B010’，T ’B000010’&#125;<br>END<br></code></pre></td></tr></table></figure>
+<h4 id="坐标系">坐标系</h4>
+<p>笛卡儿坐标系中使用<strong>几何操作</strong>可以直接在运动命令中进行框架联接，这种方法，例如可以不修改系统变量<strong>$BASE</strong>而初始化与基本坐标系的偏置。</p>
+<blockquote>
+<p>而且，通过冒号操作指定一个基本偏置比重新定义<span
+class="math inline">\(BASE更有优势：运动指令中出现偏置操作，则必须在运动指令前设置\)</span>BASE。以该方法，即使停止了程序后选择后续的程序段，运动总是选择了正确的基本坐标系。</p>
+<p>因此， <span class="math inline">\(BASE 和\)</span>TOOL
+仅可以被设置一次，例如，在程序的初始化部分。然后可以使用几何操作进行后续的偏置。</p>
+</blockquote>
+<h4 id="ini">INI</h4>
+<p>在这个例子中，速度和加速度及<span
+class="math inline">\(BASE和\)</span>TOOL坐标系的分配不是“手动”进行，而时由标准基本软件包中的“BAS.SRC”来完成，要这样做，必须首先使用EXT指令使程序认识。
+初始化命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs KRL">INI BAS(#INITMOV，0)<br></code></pre></td></tr></table></figure>
+<p>然后分配缺省值给所有重要的系统变量。</p>
+<h4 id="bco">BCO</h4>
+<blockquote>
+<p>明智的做法是编程一个“Home”作为第一个运动指令；移动机器人到一个明确定义的位置，这样就确立了程序段一致性。机器人在程序的结束应返回该位置。</p>
+</blockquote>
+<h4 id="s和t">S和T</h4>
+<p>POS定义中的“S”和“T”用于选择一个特定的，
+明确定义的空间中需要许多轴定位的同一个点的机器人位置 。</p>
+<p>程序的第一个运动指令必须总是一个定义了状态和转的完整的PTP指令(或一个完整的使用轴坐标系的PTP指令)。在后续的PTP指令中，只要不需要特定轴定位，例如要要避开障碍时可以省略“S”和“T”，机器人保持最短轴轨迹使用的S和T值，则在第一个PTP指令中编程
+“S”和 “T”后，每次程序运行时，机器人的轨迹都相同 。</p>
+<h4 id="turn">Turn</h4>
+<p>属性包含“Turn”属性的扩展笛卡儿位置，可以在不需要特殊移动策略（例如辅助点）时，轴的移动角度大于+1800或小于－1800。对于旋转轴，轴值前面的各位决定符号，如下：
+位x=0：轴的角度 ≥00 位x=1：轴的角度＜00</p>
+<p><strong>值T‘B10011’意思是指轴1、2、5的角度是负值，而轴3、4、6是正值(高位是0可以省略)。</strong></p>
+<h4 id="status">Status</h4>
+<p>状态S当轴位置不明确时使用(见图18)。S根据当前机器人运动系统的不同而不同</p>
+<h2
+id="连续轨迹运动cp运动连续轨迹">3.3连续轨迹运动(CP运动=连续轨迹)</h2>
+<h3 id="速度和加速度">3.3.1速度和加速度</h3>
+<p>与PTP运动不同，在连续轨迹运动中不是只定义起点和终点，还需要定义这些点之间沿直线和圆弧轨迹的TCP运动。
+输入的速度和加速率对于单独的轴或TCP的运动不再有关系，对于平移运动、旋转角和旋转的角度<strong>必须编程速度和加速度</strong>。</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/01/202112012138244.png" srcset="/img/loading.gif" lazyload
+alt="image-20211201213842160" />
+<figcaption aria-hidden="true">image-20211201213842160</figcaption>
+</figure>
+<p>当调用基本软件包的初始化顺序时，CP运动的缺省设置速度和加速率也被预设为机床数据<strong><span
+class="math inline">\(CONFIG.DAT**定义的最大值。
+CP运动的轴速度和加速度被监视，监视范围在系统变量**\)</span>ACC_ACT_MA和<span
+class="math inline">\(VEL_ACT_MA**定义，如果超过该范围，则触发制动反应，同时产生错误消息。标准范围是法向轴加速度的250%和法向轴速度的110%。这些监控范围对所有操作模式和手动移动都有效。要预防超过监控范围引起的反应（制动反应），可以使用系统变量**\)</span>CP_VEL_TYPE</strong>降低轴进给速、加速度和速度。该变量的缺省设置是<strong>#CONSTANT</strong>，I也就是说，在程序模式降速是不激活的。如果要在T1模式（T1模式使用更低的速度和加速度）使用该功能，必须设置值<strong>#VAR_T1</strong>，而对于所有操作模式则要设置值<strong>#VAR_ALL</strong>。在JOG模式总是激活降速。在测试模式如果降低轨迹速度，系统变量<strong>$CPVELREDMELD</strong>会产生错误消息，要这样做的话，必须分配该值为“1”。</p>
+<h3 id="方位控制">3.3.2方位控制</h3>
+<p>如果轨迹运动期间，要改变工具在空间中的方位，可以使用系统变量<strong>$ORI_TYPE</strong>设置为方位控制模式(见图21)：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs KRL">$ORI_TYPE=#CONSTANT 轨迹运动期间方位保持不变；对于使用的起点和终点，编程的方位被忽略。<br>$ORI_TYPE=#VAR 轨迹运动期间从最初的方位到最终的方位，方位连续变化。 该值在初始化期间通过BAS(#INITMOV，0)来设置。<br></code></pre></td></tr></table></figure>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/01/202112012151012.png" srcset="/img/loading.gif" lazyload
+alt="image-20211201215128891" />
+<figcaption aria-hidden="true">image-20211201215128891</figcaption>
+</figure>
+<p>对于圆弧运动，
+固定的和变化的方位外，还需要选择空间相关的方位和轨迹相关的方位</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs lasso">$CIRC_TYPE=#BASE 在圆弧运动期间执行空间相关的方位控制。该值也要在初始化期间通过BAS(#INITMOV，<span class="hljs-number">0</span>)来设置。<br>$CIRC_TYPE=#PATH  在圆弧运动期间执行轨迹相关的方位控制。<br></code></pre></td></tr></table></figure>
+<h4 id="固定方位轨迹相关">固定方位＋轨迹相关</h4>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/01/202112012156936.png" srcset="/img/loading.gif" lazyload
+alt="image-20211201215601814" />
+<figcaption aria-hidden="true">image-20211201215601814</figcaption>
+</figure>
+<h4 id="变化的方位轨迹相关">变化的方位+轨迹相关</h4>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/01/202112012157417.png" srcset="/img/loading.gif" lazyload
+alt="image-20211201215729303" />
+<figcaption aria-hidden="true">image-20211201215729303</figcaption>
+</figure>
+<h4 id="固定方位空间相关">固定方位＋空间相关</h4>
+<p><img
+src="http://pic.leiting2020.top:5050/images/2021/12/01/202112012158373.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="变化的方位空间相关">变化的方位＋空间相关</h4>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/01/202112012158738.png" srcset="/img/loading.gif" lazyload
+alt="image-20211201215811638" />
+<figcaption aria-hidden="true">image-20211201215811638</figcaption>
+</figure>
+<h3 id="线性运动">3.3.3线性运动</h3>
+<h4 id="line">LINE</h4>
+<p>使用关键字LIN或LIN_REL及终点定义来编程一个线性运动，类似于PTP编程。线性运动的终点以笛卡儿坐标输入。仅允许使用数据类型<strong>FRAME或POS</strong>
+.</p>
+<h4 id="circle">CIRCLE</h4>
+<p>要明确地定义空间中的一个圆和圆弧运动，需要互相不在一条直线的三个不同点。圆弧运动的起点也是当前位置，同PTP中的LIN。</p>
+<h4 id="continue">CONTINUE</h4>
+<h2 id="使用逼近定位的运动">3.5使用逼近定位的运动</h2>
+<h1 id="程序执行控制">5.程序执行控制</h1>
+<h2 id="程序分支">5.1程序分支</h2>
+<h3 id="跳跃分支">5.1.1跳跃分支</h3>
+<h4 id="goto"><strong>GOTO</strong></h4>
+<h3 id="条件分支">5.1.2条件分支</h3>
+<h4 id="if"><strong>IF</strong></h4>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/01/202112021002076.png" srcset="/img/loading.gif" lazyload
+alt="image-20211202100224989" />
+<figcaption aria-hidden="true">image-20211202100224989</figcaption>
+</figure>
+<h3 id="转换">5.1.3转换</h3>
+<h4 id="switch">SWITCH</h4>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs routeros">DEF MAIN（）<br>…<br>SIGNAL PROG_NR <span class="hljs-variable">$IN</span>[1] <span class="hljs-keyword">TO</span> <span class="hljs-variable">$IN</span>[4]；期望的程序号现在通过PLC存储在INT变量PROG_NO中<br>…<br>SWITCH PROG_NO<br>	CASE 1 ；如果<span class="hljs-attribute">PROG_NO</span>=1<br>		PART_1（）<br>	CASE 2 ；如果<span class="hljs-attribute">PROG_NO</span>=2<br>		PART_2（）<br>		PART_2A（）<br>	CASE3，4，5 ；如果<span class="hljs-attribute">PROG_NO</span>=3，4或5<br>		<span class="hljs-variable">$OUT</span>[3]=<span class="hljs-literal">TRUE</span><br>		PART_345（）<br><span class="hljs-built_in">	DEFAULT </span>；如果PROG_NO&lt;&gt;1，2，3，4或5<br>		ERROR_UP（）<br>ENDSWITCH<br>…<br>END<br></code></pre></td></tr></table></figure>
+<h2 id="循环">5.2循环</h2>
+<h3 id="计数循环">5.2.1计数循环</h3>
+<h4 id="for">FOR</h4>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/01/202112021008354.png" srcset="/img/loading.gif" lazyload
+alt="image-20211202100830271" />
+<figcaption aria-hidden="true">image-20211202100830271</figcaption>
+</figure>
+<p>计数器中输入整数类型的表达式作为<strong>Start和End</strong>的值。
+循环开始时对该表达式求值。</p>
+<p>以起始值预先定义整数型变量<strong>Counter</strong>(必须提前声明)
+，然后该值在每次循环执行后增加或减少编程的增量。</p>
+<p><strong>Increment</strong>既不能是一个变量，也不能是零。如果没有指定增量，则使用缺省值1。允许使用负的增量值。</p>
+<p>每个FOR语句必须以一个<strong>ENDFOR</strong>语句结束。</p>
+<h3 id="跳出循环">5.2.2跳出循环</h3>
+<h4 id="while">WHILE</h4>
+<p>WHILE循环在重复开始时请求一个执行条件。它是一个跳出循环，它不是单次运行，直到开始设置的执行条件满足时才跳出。WHILE循环语法如下:</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/01/202112021012568.png" srcset="/img/loading.gif" lazyload
+alt="image-20211202101229494" />
+<figcaption aria-hidden="true">image-20211202101229494</figcaption>
+</figure>
+<h3 id="非一跳出循环">5.2.3非一跳出循环</h3>
+<h4 id="repeat">REPEAT</h4>
+<p>与WHILE循环相对应的是REPEAT循环。
+REPEAT,直到循环结束时才检查结束条件。因
+此REPEAT循环总是运行一次，即使在循环开始前结束条件已经满足。</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/01/202112021013437.png" srcset="/img/loading.gif" lazyload
+alt="image-20211202101317355" />
+<figcaption aria-hidden="true">image-20211202101317355</figcaption>
+</figure>
+<h3 id="无穷循环">5.2.4无穷循环</h3>
+<p>只能使用EXIT语句结束指令程序段的重复执行</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/01/202112021014670.png" srcset="/img/loading.gif" lazyload
+alt="image-20211202101457595" />
+<figcaption aria-hidden="true">image-20211202101457595</figcaption>
+</figure>
+<h3 id="循环的退出">5.2.5循环的退出</h3>
+<p>使用<strong>EXIT语句</strong>可以提前结束任何循环。通过在循环的指令程序段内调用EXIT，循环运行立即结束，程序在循环结束语句后重新开始。</p>
+<p>在REPEAT和WHILEl循环中选择合理的结束和执行条件而不必主要依靠使用EXIT语句。但是对于无穷循环，仅可以使用EXIT结束循环的执行。</p>
+<h2 id="等待指令">5.3等待指令</h2>
+<h3 id="等待一个事件">5.3.1等待一个事件</h3>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/01/202112021019289.png" srcset="/img/loading.gif" lazyload
+alt="image-20211202101902218" />
+<figcaption aria-hidden="true">image-20211202101902218</figcaption>
+</figure>
+<p>如果在调用WAIT时逻辑表达式条件已经为TRUE，则不会停止程序的执行(但是触发提前运行停止)。
+如果条件为FALSE，则停止执行程序直到表达式的值为TRUE才继续执行程序。</p>
+<h4 id="数字值">数字值</h4>
+<table>
+
+<thead>
+<tr class="header">
+<th>WAIT FOR...</th>
+<th>消息窗口中的消息</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong><span class="math inline">\(IN[5]** | **Waiting for input5**
+| **等待直到输入5为TRUE** | | **\)</span>OUT[5]==FALSE</strong></td>
+<td><strong>Waiting for not output5</strong></td>
+<td><strong>等待直到输入5为FALSE</strong></td>
+</tr>
+<tr class="even">
+<td><strong><span class="math inline">\(TIMER[5]&gt;=300** | **Waiting
+until timer5&gt;=300** | **等待直到计时器5至少达到 300ms** | |
+**\)</span>TIMER_FLAG[5]</strong></td>
+<td><strong>Waiting for Timer_Flag5</strong></td>
+<td><strong>等待直到计时器标志5为TRUE</strong></td>
+</tr>
+<tr class="odd">
+<td><strong><span class="math inline">\(FLAG[5]==FALSE** | **Waiting for
+not flag5** | **等待直到标志5为FALSE** | |
+**\)</span>CYCFLAG[5]</strong></td>
+<td><strong>Waiting for cyclical flag5</strong></td>
+<td><strong>等待直到循环标志5为TRUE</strong></td>
+</tr>
+<tr class="even">
+<td><strong>I[5]==9</strong></td>
+<td><strong>Waiting for counter5==9</strong></td>
+<td><strong>等待直到计时器5的值等于 “9</strong></td>
+</tr>
+</tbody>
+</table>
+<h4 id="变量值">变量值</h4>
+<p>一个变量被转换为一个数字。该变量必须在数据表(<em>.dat)中声明。在源文件(</em>.src)中的声明则是定义该变量的值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs KRL">数据表：            源文件：<br>DEFDAT PROG1      DEF PROG1( )<br>…                 …<br>DECL INT          INT VAR INT VAR=7<br>…                 …<br></code></pre></td></tr></table></figure>
+<p>长文本</p>
+<p>信号声明</p>
+<h3 id="等待时间">5.3.2 等待时间</h3>
+<p><strong>WAIT SEC</strong>语句允许使用秒来编程等待时间：</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/01/202112021031150.png" srcset="/img/loading.gif" lazyload
+alt="image-20211202103119076" />
+<figcaption aria-hidden="true">image-20211202103119076</figcaption>
+</figure>
+<h2 id="停止程序">5.4停止程序</h2>
+<p><strong>HALT</strong> 如果要中断程序执行和停止处理，编程如下指令</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/01/202112021031846.png" srcset="/img/loading.gif" lazyload
+alt="image-20211202103151778" />
+<figcaption aria-hidden="true">image-20211202103151778</figcaption>
+</figure>
+<h2 id="确认消息">5.5 确认消息</h2>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/01/202112021034743.png" srcset="/img/loading.gif" lazyload
+alt="image-20211202103413677" />
+<figcaption aria-hidden="true">image-20211202103413677</figcaption>
+</figure>
+<h1 id="输入输出指令">6 输入输出指令</h1>
+<h2 id="一般说明-1">6.1一般说明</h2>
+<p>KRC…可以识别1026个输入和1024个输出。在标准的KUKA控制柜中，用户可以使用X11连接器的下列输入和输出（MFC模块）：
+输入 1…16</p>
+<p>其它输入/输出可以随意配置，例如使用区域总线。
+可以读输入和写输出。它们通过系统变量<strong><span
+class="math inline">\(IN[No]或\)</span>OUT[No]</strong>寻址。未使用的输出可以当作标记使用。
+MFC模块可在文件<strong>“ IOSYS.INI”</strong>重新分配输入/输出。</p>
+<h1 id="子程序和函数">7.子程序和函数</h1>
+<h2 id="声明">7.1声明</h2>
+<h3 id="def">DEF</h3>
+<p>所有的子程序与主程序的声明方法一样，使用DEF声明加上名字，以END结束，举例说明：
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/02/202112021121367.png" srcset="/img/loading.gif" lazyload
+alt="image-20211202112145283" /></p>
+<h3 id="deffct">DEFFCT</h3>
+<p>函数是子程序类型中的一种；不同的是，程序名同时也是一个指定数据类型的变量。函数的结果可以通过简单地给变量分配一个值来传递。因此，当使用关键字DEFFCT声明函数时，函数的数据类型和函数的名字都要指定。函数以ENDFCT指令结束。因为函数假设为传递一个值，所以必须在ENDFCT语句前使用RETURN语句指定该值。例子:</p>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs fortran">DEFFCT <span class="hljs-built_in">INT</span> <span class="hljs-function"><span class="hljs-keyword">FUNCTION</span></span>（）<br>…<br><span class="hljs-keyword">RETURN</span>（X）<br>ENDFCT  <br></code></pre></td></tr></table></figure>
+<h3 id="局部函数">局部函数</h3>
+<p>主程序和子程序或函数在同一个SRC文件中。该文件与主程序名相同。</p>
+<h3 id="全局函数">全局函数</h3>
+<p>全局子程序和函数以单独的SRC文件存储。以该方法，则如果被其它程序调用，则每个调用的程序都变成了子程序</p>
+<p>有在主程序的数据表中声明过的变量都可以在子程序和函数中被识别。主程序（SRC文件）中已经声明过的变量称为“
+runtime变量”，仅可以在主程序中使用。试图在子程序中使用这些变量会产生相应的错误消息。
+主程序中声明过的变量也不能在全局子程序和函数中被识别。
+子程序或函数中声明过的变量在主程序中不能被识别。
+主程序不能存储其它主程序的局部子程序和函数。
+局部子程序/函数名的最大长度是24个字符。全局子程序/函数名的最大长度是20个字符（由于有文件扩展名）。</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/02/202112021525430.png" srcset="/img/loading.gif" lazyload
+alt="image-20211202152503328" />
+<figcaption aria-hidden="true">image-20211202152503328</figcaption>
+</figure>
+<h2
+id="子程序和函数的调用和参数传递">7.2子程序和函数的调用和参数传递</h2>
+<p>通过输入子程序名加上圆括号调用子程序。</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gcode">SUBPRO<span class="hljs-name">G1</span>（）  <br></code></pre></td></tr></table></figure>
+<h3 id="参数表">参数表</h3>
+<p><strong>值调用（IN）</strong></p>
+<p><strong>参考调用(OUT)</strong></p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/02/202112021533478.png" srcset="/img/loading.gif" lazyload
+alt="image-20211202153337386" />
+<figcaption aria-hidden="true">image-20211202153337386</figcaption>
+</figure>
+<p>在子程序或函数中通过在参数表的每个变量后输入关键字<strong>IN</strong>输入“通过值调用”。通过输入字<strong>OUT</strong>得到
+“通过参考调用”，<strong>OUT</strong>也是缺省设置。例如：</p>
+<figure class="highlight tp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs tp">DEF CALCULATE（<span class="hljs-keyword">X</span>：OUT，<span class="hljs-keyword">Y</span>：IN，<span class="hljs-keyword">Z</span>：IN，B）  <br></code></pre></td></tr></table></figure>
+<p>当传输一个阵列时，在子程序和函数中也必须声明该阵列，但是没有索引。</p>
+<h1 id="中断处理">8中断处理</h1>
+<p>可能产生中断的原因和系统将对它们采取的措施，必须在中断可以被激活前定义好。
+INTERRUPT
+使用中断声明完成该操作，给每个中断分配一个优先级、事件和调用的中断程序。完整的语句是：
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/02/202112021553548.png" srcset="/img/loading.gif" lazyload
+alt="image-20211202155355478" /></p>
+<table>
+
+<thead>
+<tr class="header">
+<th>自变量</th>
+<th>数据类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Priority</td>
+<td>INT</td>
+<td>指定中断优先级的算术表达式，可以使用的优先级为 1…39和81…128。
+值40…80为机器人系统的自动优先级分配保留。</td>
+</tr>
+<tr class="even">
+<td>Event</td>
+<td>BOOL</td>
+<td>定义中断事件的逻辑表达式。下列是允许的： 一个布尔常数 一个布尔变量
+一个信号名 一个比较</td>
+</tr>
+<tr class="odd">
+<td>Subprogram</td>
+<td></td>
+<td>当事件发生时要执行的中断程序的名字</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>中断声明是一条指令，因此， 千万不要在声明部分中使用。</p>
+</blockquote>
+<ul>
+<li>一个声明可能在任何时候被另一个声明重写。</li>
+<li>GLOBAL中断不同于一般的中断，即使声明的子程序在左边仍然保持有效。</li>
+<li>一次最多可以声明32个中断。</li>
+<li>在中断条件下不能存储结构变量和成分。</li>
+<li>除GLOBAL变量和数据表中声明的变量外，实时变量不能当作中断程序参数被传输。</li>
+</ul>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/02/202112021600081.png" srcset="/img/loading.gif" lazyload
+alt="image-20211202160020982" />
+<figcaption aria-hidden="true">image-20211202160020982</figcaption>
+</figure>
+<h2 id="中断的激活">8.2中断的激活</h2>
+<h3 id="打开中断">打开中断</h3>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">INTERRUPT</span> <span class="hljs-literal">ON</span> <span class="hljs-number">4</span>  开优先级为<span class="hljs-number">4</span>的中断  <br><span class="hljs-attribute">INTERRUPT</span> <span class="hljs-literal">ON</span>	开所有中断<br></code></pre></td></tr></table></figure>
+<h3 id="边缘触发">边缘触发</h3>
+<p>检查是边缘触发型的，也就是说一个中断仅在逻辑条件从FALSE状态变化为TRUE状态时被
+触发，反之如果当开中断时条件已经是TRUE则不触发。</p>
+<h3 id="关闭中断">关闭中断</h3>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cmake">与开的方法相同，中断可以单独或所有一起被关：<br>INTERRUPT <span class="hljs-keyword">OFF</span> <span class="hljs-number">4</span><br>或<br>INTERRUPT <span class="hljs-keyword">OFF</span>  <br></code></pre></td></tr></table></figure>
+<h3 id="禁止使能">禁止/使能</h3>
+<p>使用关键字<strong>ENABLE和DISABLE</strong>，已经打开的中断可以被单独或全部使能或禁止。
+禁止命令可以在被中断前保护程序的某些部分。一个禁止的中断可以被识别和存储，但是不能被执行。仅当被使能后，已经发生的中断才以它们的优先级顺序被执行。</p>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs gauss"><span class="hljs-keyword">DISABLE</span> <span class="hljs-number">4</span><br>或<br><span class="hljs-keyword">DISABLE</span><br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>触发一个中断的前提条件是： ●中断必须是声明过的（ INTERRUPT DECL…）
+●中断必须被打开（ INTERRUPT ON） ●中断必须是没有被禁止的
+●对应的事件必须已经发生（边缘触发）</p>
+</blockquote>
+<h3 id="优先级">优先级</h3>
+<h2 id="停止现在的运动">8.3停止现在的运动</h2>
+<p>如果必要的话，
+在中断程序中使用BRAKE语句，则可以在中断事件中停止已经正在执行的机器人的运动</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">BRAKE</span>  <br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>BRAKE 指令仅可以在中断程序中使用，
+在其它程序中使用则会导致一个错误引起的停止。</p>
+</blockquote>
+<h2 id="取消中断事务">8.4取消中断事务</h2>
+<p>KRC...中机器人运动的取消是可能的，使用语句：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">RESUME</span><br></code></pre></td></tr></table></figure>
+<p>RESUME可以取消当前中断被声明的级别和以下级别的所有运行的中断程序和子程序。</p>
+<blockquote>
+<p>同 BRAKE 语句，RESUME 仅允许在中断程序中使用。当激活 RESUME
+语句时，提前运行指针千万不要在中断被声明的级别，至少应低一个级别。</p>
+</blockquote>
+<h2 id="循环标记的使用">8.5循环标记的使用</h2>
+<p>在中断声明指令中不允许使用逻辑操作因此，要定义复杂的事件，您必须使用使用程序如下;</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><br><span class="hljs-variable">$CYCFLAG</span><span class="hljs-selector-attr">[3]</span>=<span class="hljs-variable">$IN</span><span class="hljs-selector-attr">[1]</span> AND（<span class="hljs-selector-attr">[$IN[2]</span> OR <span class="hljs-variable">$IN</span><span class="hljs-selector-attr">[3]</span>）<br>INTERRUPT DECL <span class="hljs-number">10</span> WHEN <span class="hljs-variable">$CYCFLAG</span><span class="hljs-selector-attr">[3]</span> DO IR_PROG（）<br>INTERRUPT ON <span class="hljs-number">10</span><br></code></pre></td></tr></table></figure>
+<p>您可以同时监视和逻辑组合3个输入。</p>
+<h1 id="触发轨迹相关的开关动作">9 触发轨迹相关的开关动作</h1>
+<h2 id="在轨迹的起点或终点开关动作">9.1在轨迹的起点或终点开关动作</h2>
+<h3 id="trigger">TRIGGER</h3>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/02/202112021655596.png" srcset="/img/loading.gif" lazyload
+alt="image-20211202165500522" />
+<figcaption aria-hidden="true">image-20211202165500522</figcaption>
+</figure>
+<table>
+
+<thead>
+<tr class="header">
+<th>自变量</th>
+<th>数据类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Switching point</td>
+<td>INT</td>
+<td>对于单独的程序段， DISTANCE=0指明为下一个运动
+的起点，属性DISTANCE=1则为终点。 对于逼近程序段，
+DISTANCE=1表示后续逼近定位圆 弧的中点。如果前一个程序段也
+是一个逼近程序段， DISTANCE=0表示前述逼近定位 圆弧的终点。</td>
+</tr>
+<tr class="even">
+<td>Time</td>
+<td>INT</td>
+<td>使用属性DELAY，可以延迟或提前开关动作某些时 间。
+开关点仅可以在有关程序段保持有效时被延迟 或提前。 单位是毫秒。</td>
+</tr>
+<tr class="odd">
+<td>Instruction</td>
+<td></td>
+<td>指令可以是 一个子程序调用 变量值的分配
+一个输出指令（也可以是脉冲）。</td>
+</tr>
+<tr class="even">
+<td>Priority</td>
+<td>INT</td>
+<td>使用子程序调用的每个TRIGGER语句必须定义一个
+优先级。允许值为1...39和81...128。
+优先级的使用与中断中的一样。（见章8）。
+值40...80为机器人自动优先级分配保留。如果要 使用，编程PRIO=－1。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="在轨迹的任何点开关动作">9.2在轨迹的任何点开关动作</h2>
+<h3 id="trigger-1">TRIGGER</h3>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/02/202112021658812.png" srcset="/img/loading.gif" lazyload
+alt="image-20211202165850725" />
+<figcaption aria-hidden="true">image-20211202165850725</figcaption>
+</figure>
+<table>
+
+<thead>
+<tr class="header">
+<th>自变量</th>
+<th>数据类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Distance</td>
+<td>INT</td>
+<td>触发后， 您可以在从编程的终点起指定一个期望的 距离。
+如果该终点是一个被逼近的点， 指定开关动作的期
+望距离从逼近定位范围中紧靠终点位置算起。 通过指定一个负的距离，
+开关点可以最远被移回到 起点。如果该起点是一个逼近定位点，开关点可以
+最远被移到逼近定位范围的起点。 通过指定一个正的距离，
+则最远移到编程的下一个 精确定位点 单位是毫米。</td>
+</tr>
+<tr class="even">
+<td>Time</td>
+<td>INT</td>
+<td>使用属性DELAY，可以延迟(+)或提前(-)轨迹中开 关点某些时间。
+开关点仅可以在上述给定（最远到下一个精确定位
+点）开关范围内被延迟或提前。逼近定位运动中。
+开关点至多可以被提前到开始逼近定位的起点。 单位是毫秒。</td>
+</tr>
+<tr class="odd">
+<td>Instruction</td>
+<td></td>
+<td>指令可以是 一个子程序调用 变量值的分配
+一个输出指令（也可以是脉冲）。</td>
+</tr>
+<tr class="even">
+<td>Priority</td>
+<td>INT</td>
+<td>使用子程序调用的每个TRIGGER语句必须定义一个
+优先级。允许值为1...39和81...128。
+优先级的使用与中断中的一样。（见章8）。
+值40...80为机器人自动优先级分配保留。如果要 使用，编程PRIO=－1。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="触发语句重叠">9.3触发语句重叠</h2>
+<ul>
+<li>手动给两个触发语句分配各自的优先级；</li>
+<li>分配两个触发语句的优先级都为“--1”，然后由系统自动分配正确的优先级。</li>
+</ul>
+<h1 id="数据表">10 数据表</h1>
+<h2 id="局部数据表">10.1局部数据表</h2>
+<p>数据表用于特殊编程准备和更高级别声明。包含点的消息，例如坐标：
+●一个数据表可能为每个SRC文件草拟。数据表与SRC文件具有相同的文件名并以“.DAT”作为扩展名。
+●数据表仅可能由声明和初始化组成。 ● 一行由声明和初始化组成。
+●不接受系统变量。</p>
+<h3 id="defdat">DEFDAT</h3>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/02/202112021705632.png" srcset="/img/loading.gif" lazyload
+alt="image-20211202170512546" />
+<figcaption aria-hidden="true">image-20211202170512546</figcaption>
+</figure>
+<p>在数据表中允许使用下列声明： ● SRC文件中使用子程序和函数的外部声明。
+● 导入变量的导入声明。 ● SRC文件中使用变量的声明和初始化。 ●
+SRC文件中使用信号和通道名的声明。 ●
+数据表或SRC文件中使用数据的声明和列举类型（ Struc，Enum）。</p>
+<h2 id="全局数据表">10.2全局数据表</h2>
+<p>数据表中定义的变量可被“别的”主程序接受 。</p>
+<h3 id="public">PUBLIC</h3>
+<p>数据表必须在开头行以关键字PUBLIC定义为“公共可接受”。</p>
+<p>如果要使用变量OTTO，从以上数据表PROG_1中导入到PROG_2（），可以在PROG_2（）中编程下列导入声明，与数据表中的关键字PUBLIC一样：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">IMPORT</span> <span class="hljs-keyword">INT</span> OTTO_2 IS <span class="hljs-regexp">/R1/</span>PROG_1..OTTO<br></code></pre></td></tr></table></figure>
+<p>目录/R1下的数据表PROG_1.DAT中的变量OTTO现在是程序PROG_2（）中的OTTO_2</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/02/202112021711185.png" srcset="/img/loading.gif" lazyload
+alt="image-20211202171155090" />
+<figcaption aria-hidden="true">image-20211202171155090</figcaption>
+</figure>
+<h3 id="global">GLOBAL</h3>
+<p>变量被声明为“全局变量”，例如<code>DECL GLOBAL INTOTTO=0</code>，可不使用导入命令而被所有别的主程序接受。
+如果一个全局变量已经被声明，就不能在别的主程序中改变该全局变量名。</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2021/12/02/202112021712719.png" srcset="/img/loading.gif" lazyload
+alt="image-20211202171258641" />
+<figcaption aria-hidden="true">image-20211202171258641</figcaption>
+</figure>
+<blockquote>
+<p>仅允许在数据表中声明全局变量。 如果要在SRC或SUB文件中声明，
+则会产生错误消息。</p>
+<p>对许多程序有用的长时间有效的、一般意义的变量、结构、通道和信号可以提前定义在$CONFIG.DAT中</p>
+</blockquote>
+<h1 id="外部编辑器">11外部编辑器</h1>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" class="category-chain-item">学习记录</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/" class="category-chain-item">机器人</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA/" class="print-no-link">#机器人</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>KRL</div>
+      <div>http://example.com/2020/04/23/note/学习记录/机器人/KRL/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Lei Ting</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年4月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/04/23/note/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/%E8%B4%AD%E4%B9%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="服务器购买">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">服务器购买</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/kuka%E7%A4%BA%E4%BE%8B%E7%A8%8B%E5%BA%8F/" title="KRL示例程序">
+                        <span class="hidden-mobile">KRL示例程序</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

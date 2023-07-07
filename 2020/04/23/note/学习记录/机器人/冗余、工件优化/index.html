@@ -1,0 +1,775 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://imgbed.leiting2020.top/img/202305072001738.jpg">
+  <link rel="icon" href="https://imgbed.leiting2020.top/img/202305072001738.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Lei Ting">
+  <meta name="keywords" content="note">
+  
+    <meta name="description" content="一、冗余自由度 刀具路径由离散的CLS数据组成， \[ CLS&#x3D;(x,y,z,i,j,k) \] 其中x,y,z为刀具位置，i,j,k为刀轴方向的单位向量 1、CLS对应的末端姿态 方法一： 引用文献中的方法  Peng J, Ding Y, Zhang G, 等. Smoothness-oriented path optimization for robotic millin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="冗余、工件优化">
+<meta property="og:url" content="http://example.com/2020/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/%E5%86%97%E4%BD%99%E3%80%81%E5%B7%A5%E4%BB%B6%E4%BC%98%E5%8C%96/index.html">
+<meta property="og:site_name" content="LeiHub">
+<meta property="og:description" content="一、冗余自由度 刀具路径由离散的CLS数据组成， \[ CLS&#x3D;(x,y,z,i,j,k) \] 其中x,y,z为刀具位置，i,j,k为刀轴方向的单位向量 1、CLS对应的末端姿态 方法一： 引用文献中的方法  Peng J, Ding Y, Zhang G, 等. Smoothness-oriented path optimization for robotic millin">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-07T16:09:39.845Z">
+<meta property="article:author" content="Lei Ting">
+<meta property="article:tag" content="机器人">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>冗余、工件优化 - LeiHub</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Lei</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="冗余、工件优化"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-04-23 00:00" pubdate>
+          2020年4月23日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          26 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">冗余、工件优化</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="一冗余自由度">一、冗余自由度</h1>
+<p>刀具路径由离散的CLS数据组成， <span class="math display">\[
+CLS=(x,y,z,i,j,k)
+\]</span>
+其中<strong>x,y,z</strong>为刀具位置，<strong>i,j,k</strong>为刀轴方向的单位向量</p>
+<h2 id="cls对应的末端姿态">1、CLS对应的末端姿态</h2>
+<h3 id="方法一">方法一：</h3>
+<p>引用文献中的方法</p>
+<blockquote>
+<p>Peng J, Ding Y, Zhang G, 等. Smoothness-oriented path optimization
+for robotic milling processes[J]. Science China Technological Sciences,
+2020, 63(9): 1751–1763.</p>
+</blockquote>
+<p>由cls可以生成刀具姿态，但是刀具姿态并不唯一，定义初始机器人任务姿态为：</p>
+<p><span
+class="math inline">\(o_i=(x,y,z)\)</span>为刀具姿态矩阵的位置，z轴向量为
+<span class="math display">\[
+z_i = （i，j，k）
+\]</span> x轴向量为 <span class="math display">\[
+x_i=y_i \times z_i
+\]</span> y轴向量可以有下式计算得来 <span class="math display">\[
+y_i= \frac{z_i \times \overline{o_{i+1} o_{i}} } {\lVert {z_i \times
+\overline{o_{i+1} o_{i}}} \lVert}\\
+对于最后一个cls点\\
+y_i= \frac{z_i \times \overline{o_{i-1} o_{i}} } {\lVert {z_i \times
+\overline{o_{i-1} o_{i}}} \lVert}\\
+\]</span>
+由此可以得到机器人末端初始姿态矩阵，因为绕刀具轴的旋转对铣刀定位没有影响，因此对于一个CLS，存在无数的可行机器人姿态，可由绕刀轴旋转得到。
+<span class="math display">\[
+T(\gamma_i) = T_i \cdot Rot(\hat{z},\gamma_i)\\
+T_i = \begin{bmatrix}
+x_i&amp;y_i&amp;z_i&amp;o_i\\
+0&amp;0&amp;0&amp;1\end {bmatrix}\\
+\]</span> 其中<span
+class="math inline">\(T_i\)</span>为cls对应的初始末端矩阵，<span
+class="math inline">\(\gamma \in
+[-\pi,\pi]\)</span>为冗余自由度，这样就可以得到CLS任意冗余自由度对应的末端姿态矩阵。</p>
+<blockquote>
+<p>这种方法会导致刀具轨迹弯折时机器人姿态变化较大</p>
+</blockquote>
+<h3 id="方法二">方法二：</h3>
+<blockquote>
+<p>[1]Zhu W, Qu W, Cao L, 等. An off-line programming system for robotic
+drilling in aerospace manufacturing[J]. The International Journal of
+Advanced Manufacturing Technology, 2013, 68(9–12): 2535–2545.</p>
+</blockquote>
+<p>定义与上一个的方法一样，<span class="math inline">\(z_i =
+[i,j,k]\)</span>，而<span
+class="math inline">\(x_i\)</span>是三个标准单位向量<span
+class="math inline">\([1,0,0],[0,1,0],[0,0,1]\)</span>在由<span
+class="math inline">\([x,y,z]和[i,j,k]\)</span>决定的平面上的最长投影的归一化向量，<span
+class="math inline">\(y_i\)</span>是<span
+class="math inline">\(z_i\)</span>和<span
+class="math inline">\(x_i\)</span>的叉积。</p>
+<h3 id="方法三">方法三:</h3>
+<blockquote>
+<p>[1]熊刚. 机器人铣削加工的误差补偿和力控制方法研究[D]. 上海交通大学,
+2019.</p>
+</blockquote>
+<figure>
+<img
+src="%E5%86%97%E4%BD%99%E3%80%81%E5%B7%A5%E4%BB%B6%E4%BC%98%E5%8C%96/image-20220513120231244.png" srcset="/img/loading.gif" lazyload
+alt="image-20220513120231244" />
+<figcaption aria-hidden="true">image-20220513120231244</figcaption>
+</figure>
+<h3 id="方法四">方法四：</h3>
+<p>计算刀轴向量和 基座标系Z轴之间的变换矩阵</p>
+<p>将两个向量之间的变换视为绕某一轴的旋转某一角度的螺旋运动，旋转角为两个向量之间的夹角，而旋转轴则是两个向量之间的叉积。</p>
+<p>已知单位向量，将其绕某一轴<span
+class="math inline">\(\omega\)</span>旋转<span
+class="math inline">\(\theta\)</span>，通过使用<strong>罗德里格斯公式</strong>可以计算其旋转矩阵。
+<span class="math display">\[
+R(\omega,\theta) =I +sin\theta[\omega]+(1-cos\theta)[\omega]^2
+\]</span></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs python">方法一：<br><span class="hljs-comment">#使用轴角法求取向量之间的变换矩阵，和上一个函数是一样的方法</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">rotation_matrix_from_vectors2</span>(<span class="hljs-params">vec2</span>):<br>    vec1 = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>]<br>    <span class="hljs-comment">#规范化两个向量</span><br>    a, b = (vec1 / np.linalg.norm(vec1)).reshape(<span class="hljs-number">3</span>), (vec2 / np.linalg.norm(vec2)).reshape(<span class="hljs-number">3</span>)<br>    <span class="hljs-comment">#求两个向量变换的旋转轴</span><br>    v = np.cross(a, b)<br>    s = np.linalg.norm(v)<br>    v = v / s<br>    <span class="hljs-comment">#求旋转角度</span><br>    c = np.dot(a, b)<br>    theta = math.acos(c)<br>    <span class="hljs-comment">#使用mr库求取轴角法的旋转矩阵，用的是罗德里格斯公式</span><br>    omegaHat = mr.VecToso3(v)<br>    so3mat = omegaHat * theta<br>    matrix = mr.MatrixExp3(so3mat)<br>    <span class="hljs-comment">#求矩阵对应的欧拉角</span><br>    r = R.from_matrix(matrix)<br>    euler = r.as_euler(<span class="hljs-string">&#x27;ZYX&#x27;</span>,degrees=<span class="hljs-literal">True</span>)<br>    matrix = r.as_matrix()<br>    <span class="hljs-keyword">return</span> matrix<br><br>方法二：本质上都是一样的<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">rotation_matrix_from_vectors</span>(<span class="hljs-params">vec1,vec2</span>):<br>    <span class="hljs-string">&quot;&quot;&quot; Find the rotation matrix that aligns vec1 to vec2</span><br><span class="hljs-string">    :param vec1: A 3d &quot;source&quot; vector</span><br><span class="hljs-string">    :param vec2: A 3d &quot;destination&quot; vector</span><br><span class="hljs-string">    :return mat: A transform matrix (3x3) which when applied to vec1, aligns it with vec2.</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    a, b = (vec1 / np.linalg.norm(vec1)).reshape(<span class="hljs-number">3</span>), (vec2 / np.linalg.norm(vec2)).reshape(<span class="hljs-number">3</span>)<br>    v = np.cross(a, b)<br>    c = np.dot(a, b)<br>    s = np.linalg.norm(v)<br>    kmat = np.array([[<span class="hljs-number">0</span>, -v[<span class="hljs-number">2</span>], v[<span class="hljs-number">1</span>]], [v[<span class="hljs-number">2</span>], <span class="hljs-number">0</span>, -v[<span class="hljs-number">0</span>]], [-v[<span class="hljs-number">1</span>], v[<span class="hljs-number">0</span>], <span class="hljs-number">0</span>]])<br>    rotation_matrix = np.eye(<span class="hljs-number">3</span>) + kmat + kmat.dot(kmat) * ((<span class="hljs-number">1</span> - c) / (s ** <span class="hljs-number">2</span>))<br>    <span class="hljs-keyword">return</span> rotation_matrix<br></code></pre></td></tr></table></figure>
+<h2 id="末端姿态对应的欧拉角">2、末端姿态对应的欧拉角</h2>
+<p>末端到基座标的旋转角ABC，是绕动坐标系旋转的ZYX欧拉角，KRC中定义角度A、B和C是绕Z、Y和X的旋转角度，旋转顺序也必须遵从：</p>
+<ol type="1">
+<li>绕Z轴旋转角度为A</li>
+<li>绕Y轴旋转角度为B</li>
+<li>绕X轴旋转角度为C</li>
+</ol>
+<figure>
+<img
+src="%E5%86%97%E4%BD%99%E3%80%81%E5%B7%A5%E4%BB%B6%E4%BC%98%E5%8C%96/image-20220504214148968-16516717171351.png" srcset="/img/loading.gif" lazyload
+alt="image-20220504214148968" />
+<figcaption aria-hidden="true">image-20220504214148968</figcaption>
+</figure>
+<p>由机器人导论中的方法，对旋转矩阵求逆解 <span class="math display">\[
+R_{ZYX}=R_Z(\alpha)R_Y(\beta)R_X(\gamma)=\begin {bmatrix} r11 &amp; r12
+&amp;r13\\
+r21&amp;r22&amp;r23\\
+r31&amp;r32&amp;r33\end {bmatrix}\\
+\beta=Atan2(-r_{31},\sqrt{r_{11}^2 + r_{21}^2})\\
+\alpha=Atan2(\frac {r_{21}}{c\beta},\frac {r_{11}}{c\beta})\\
+\gamma = Atan2(\frac{r_{32}}{c\beta},\frac {r_{33}}{c\beta})
+\]</span> 虽然存在第二个解，但是在上式中取<span
+class="math inline">\(\beta\)</span>的正根以得到单解，满足<span
+class="math inline">\(-90\le \beta \le
+90\)</span>，以此获取各种姿态表示法之间一一对应的映射函数。如果等于+-90，解的结果就退化了，这个时候一般取<span
+class="math inline">\(\alpha = 0\)</span>。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" class="category-chain-item">学习记录</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/" class="category-chain-item">机器人</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA/" class="print-no-link">#机器人</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>冗余、工件优化</div>
+      <div>http://example.com/2020/04/23/note/学习记录/机器人/冗余、工件优化/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Lei Ting</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年4月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/kuka%E7%BC%96%E7%A8%8B/" title="KRL编程示例">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">KRL编程示例</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%BF%90%E5%8A%A8%E5%AD%A6%E7%AC%94%E8%AE%B0/" title="机器人运动学笔记">
+                        <span class="hidden-mobile">机器人运动学笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

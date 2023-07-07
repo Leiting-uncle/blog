@@ -1,0 +1,799 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://imgbed.leiting2020.top/img/202305072001738.jpg">
+  <link rel="icon" href="https://imgbed.leiting2020.top/img/202305072001738.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Lei Ting">
+  <meta name="keywords" content="note">
+  
+    <meta name="description" content="Bitvise连接Linux服务器教程  本文转载自：https:&#x2F;&#x2F;v2raytech.com&#x2F;bitvise-connect-linux-server-tutorial&#x2F;，如文中内容有错误请到原文查看原始版(最新版)   如有问题，欢迎到 网络跳越论坛 或 TG群组 https:&#x2F;&#x2F;t.me&#x2F;hijkclub 交流  Bitvise是windows平台下一款功能强大的免费ssh">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bitvise连接Linux服务器教程">
+<meta property="og:url" content="http://example.com/2021/04/23/note/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/Bitvise%E8%BF%9E%E6%8E%A5Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="LeiHub">
+<meta property="og:description" content="Bitvise连接Linux服务器教程  本文转载自：https:&#x2F;&#x2F;v2raytech.com&#x2F;bitvise-connect-linux-server-tutorial&#x2F;，如文中内容有错误请到原文查看原始版(最新版)   如有问题，欢迎到 网络跳越论坛 或 TG群组 https:&#x2F;&#x2F;t.me&#x2F;hijkclub 交流  Bitvise是windows平台下一款功能强大的免费ssh">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-23T12:21:00.000Z">
+<meta property="article:modified_time" content="2023-07-07T16:02:36.666Z">
+<meta property="article:author" content="Lei Ting">
+<meta property="article:tag" content="Shell">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Bitvise连接Linux服务器教程 - LeiHub</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Lei</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Bitvise连接Linux服务器教程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-04-23 20:21" pubdate>
+          2021年4月23日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          19 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Bitvise连接Linux服务器教程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="bitvise连接linux服务器教程">Bitvise连接Linux服务器教程</h1>
+<blockquote>
+<p>本文转载自：https://v2raytech.com/bitvise-connect-linux-server-tutorial/，如文中内容有错误请到原文查看原始版(最新版)</p>
+</blockquote>
+<blockquote>
+<p>如有问题，欢迎到 <a target="_blank" rel="noopener" href="https://hijk.club/">网络跳越论坛</a> 或
+TG群组 https://t.me/hijkclub 交流</p>
+</blockquote>
+<p><strong>Bitvise</strong>是windows平台下一款功能强大的<strong>免费ssh客户端</strong>，其shell终端可以执行各种Linux命令，还有上传下载文件的终端，以及支持远程桌面连接（要求服务端已安装xrdp）。有了<strong>Bitvise</strong>，完全可以取代<strong>Xshell</strong>、<strong>putty</strong>、<strong>winSCP</strong>、<strong>SSH
+Secure Shell Client</strong>、<strong>secureCRT</strong>等工具。</p>
+<blockquote>
+<p><strong>备注：</strong>更多Windows平台免费SSH客户端可参考：<a
+target="_blank" rel="noopener" href="https://netfiles.pw/windows-free-ssh-clients/">Windows系统免费SSH客户端</a></p>
+</blockquote>
+<p><strong>Bitvise</strong>的官网是
+https://www.bitvise.com/ssh-client-download，可从这个页面下载windows安装包。如果官网无法打开或下载速度慢，请点击这个连接下载：<a
+target="_blank" rel="noopener" href="https://netfiles.pw/download.php?filename=/BvSshClient-Inst.exe">BvSshClient-Inst.exe</a>。</p>
+<p><strong>Bitvise</strong>
+主要缺点是没有中文界面，因此本教程介绍Bitvise的安装和使用。</p>
+<h2 id="bitvise教程">Bitvise教程</h2>
+<h3 id="安装bitvise">安装Bitvise</h3>
+<p>\1. 进 <a
+target="_blank" rel="noopener" href="https://www.bitvise.com/ssh-client-download">Bitvise官网</a>
+，点击页面中的“Bitvise SSH Client
+Installer”，保存文件到电脑上。如果官网无法打开或下载速度慢，请从这里高速下载：<a
+target="_blank" rel="noopener" href="https://netfiles.pw/download.php?filename=/BvSshClient-Inst.exe">BvSshClient-Inst.exe</a>。</p>
+<p>\2.
+双击下载的exe文件，弹出的安装界面中勾选“同意条款”，点击下方的“Install”开始安装：</p>
+<p><a
+target="_blank" rel="noopener" href="https://v2xtls.org/wp-content/uploads/2020/11/bitvise安装界面.jpg"><img
+src="F:\个人\科学上网\file\bitvise安装界面.jpg" srcset="/img/loading.gif" lazyload
+alt="bitvise安装界面" /></a></p>
+<p>bitvise安装界面</p>
+<p>\3. 黑框滚动，出现安装的日志，出现如下弹框说明安装成功：</p>
+<p><a
+target="_blank" rel="noopener" href="https://v2xtls.org/wp-content/uploads/2020/11/bitvise安装成功.jpg"><img
+src="F:\个人\科学上网\file\bitvise安装成功.jpg" srcset="/img/loading.gif" lazyload
+alt="bitvise安装成功" /></a></p>
+<p>bitvise安装成功</p>
+<p>\4. 点击确定，安装界面消失，程序自动运行，同时桌面上出现“Bitvise SSH
+Client”的图标。</p>
+<p>到此安装结束，无论使用多少次Bitvise，只需在电脑上安装一次即可。</p>
+<h3
+id="bitvise使用密钥连接linux服务器">Bitvise使用密钥连接Linux服务器</h3>
+<p>\1. 双击桌面上的Bitvise SSH
+Client图标，启动程序（首次安装完成后会自动运行）：</p>
+<p><a
+target="_blank" rel="noopener" href="https://v2xtls.org/wp-content/uploads/2020/11/bitvise启动界面.jpg"><img
+src="F:\个人\科学上网\file\bitvise启动界面.jpg" srcset="/img/loading.gif" lazyload
+alt="bitvise启动界面" /></a></p>
+<p>bitvise启动界面</p>
+<p>\2.
+填入服务器的ip、端口号(<strong>默认是22</strong>，搬瓦工默认不是22，请从后台查看)、用户名(<strong>默认是root</strong>)，”intial
+method”选“password”，在下面输入框输入密码（服务器密码在管理页面查看），同时勾选“sotre
+encrypted password in profile”。填好后建议点击左侧的“save profile
+as”按钮保存配置，下次使用时无需再填写。确认无误后，点击左下角的登录按钮，开始连接服务器。</p>
+<p>\3. 首次连接服务器会出现主机指纹确认，点击“Accept and Save”：</p>
+<p><a
+target="_blank" rel="noopener" href="https://v2xtls.org/wp-content/uploads/2020/11/bitvise主机指纹确认.jpg"><img
+src="F:\个人\科学上网\file\bitvise主机指纹确认.jpg" srcset="/img/loading.gif" lazyload
+alt="bitvise主机指纹确认" /></a></p>
+<p>bitvise主机指纹确认</p>
+<p>如果没有出现这个页面，而是提示“由于连接方在一段时间后没有正确大幅或连接的主机没有反应，连接尝试失败”，说明ip被墙或者信息填写错误，请检查ip和端口号是否正确，如果没问题，说明ip被墙了。</p>
+<p>\4.
+登录成功后，弹出两个窗口：黑乎乎的那个<strong>是终端窗口，</strong>用来输命令，另外一个像文件夹的是<strong>sftp程序，</strong>用来上传和下载文件：</p>
+<p><a
+target="_blank" rel="noopener" href="https://v2xtls.org/wp-content/uploads/2020/11/bitvise登录成功窗口.jpg"><img
+src="F:\个人\科学上网\file\bitvise登录成功窗口.jpg" srcset="/img/loading.gif" lazyload
+alt="bitvise登录成功窗口" /></a></p>
+<p>bitvise登录成功窗口</p>
+<p>如果你不小心把终端或者sftp窗口关闭了，没关系，点击主界面左边的”<strong>New
+terminal console”</strong>和”<strong>New SFTP
+window</strong>“，就分别又回来了！</p>
+<p>\5.
+接下来，在黑窗口里可以输入各种教程中的shell/bash命令。本站提供以下一键脚本，相关命令请点击教程查看：</p>
+<ol type="1">
+<li><a
+target="_blank" rel="noopener" href="https://v2xtls.org/shadowsocks-ss一键脚本/">Shadowsocks/SS一键脚本</a>；</li>
+<li><a
+target="_blank" rel="noopener" href="https://v2xtls.org/shadowsocksr-ssr一键脚本/">ShadowsocksR/SSR一键脚本</a>；</li>
+<li><a target="_blank" rel="noopener" href="https://v2xtls.org/v2ray一键脚本/">V2Ray一键脚本</a>；</li>
+<li><a
+target="_blank" rel="noopener" href="https://v2xtls.org/v2ray带伪装一键脚本/">v2ray带伪装一键脚本</a>；</li>
+<li><a
+target="_blank" rel="noopener" href="https://v2xtls.org/trojan一键脚本/">trojan一键脚本</a>。</li>
+</ol>
+<p><strong>注意：</strong>终端里无法按 <strong>ctrl + v
+粘贴</strong>，粘贴是点<strong>鼠标右键</strong>。复制更简单，<strong>选中要复制的文字就复制好了</strong>。使用过程中命令输错、终端状态不对，或者想中断脚本执行，随时按
+<strong>ctrl +
+c</strong>。另外，<strong>每个命令输完后都要按回车才执行，输入信息也是要按回车才算输入完！</strong></p>
+<h2 id="bitvise密钥登录linux服务器">Bitvise密钥登录Linux服务器</h2>
+<p>某些VPS商家，例如AWS、Google、<a
+target="_blank" rel="noopener" href="https://www.dmit.io/aff.php?aff=1062">DMIT</a>等，默认禁用了密码登录，此时需要使用密钥登录到服务器。</p>
+<p>密钥登录的操作与密码登录流程基本一致，除了第二步有以下不同：</p>
+<p>\1. 首先我们要导入密钥。操作为：点击主界面上的Client key
+manager，然后点击“Import”，选择密钥文件，点击“打开”，最后在弹出来的框中选择Import：</p>
+<p><a
+target="_blank" rel="noopener" href="https://v2xtls.org/wp-content/uploads/2020/11/Bitvise导入密钥-1024x577-1.jpg"><img
+src="F:\个人\科学上网\file\Bitvise导入密钥-1024x577-1.jpg" srcset="/img/loading.gif" lazyload
+alt="Bitvise导入密钥" /></a></p>
+<p>Bitvise导入密钥</p>
+<p>\2. 登录信息的Initial method选“publickey”，Client
+key选刚才导入的密钥文件：</p>
+<p><a
+target="_blank" rel="noopener" href="https://v2xtls.org/wp-content/uploads/2020/11/Bitvise导入密钥-1-1024x577-1.jpg"><img
+src="F:\个人\科学上网\file\Bitvise导入密钥-1-1024x577-1.jpg" srcset="/img/loading.gif" lazyload
+alt="Bitvise导入密钥" /></a></p>
+<p>Bitvise导入密钥</p>
+<p>接下来的操作和步骤请参考上面的密码登录。</p>
+<h2 id="文件操作">文件操作</h2>
+<p>网上教程需要编辑某个文件，但你不会用<strong>vi/vim/nano</strong>等命令行编辑器，sftp窗口就派上用场了：sftp窗口左边是你的电脑中的文件，右边是服务器上的文件，你只需要将右边服务器要编辑的文件拖到左边窗口就下载到你的电脑上：</p>
+<p><a
+target="_blank" rel="noopener" href="https://v2xtls.org/wp-content/uploads/2020/11/Bitvise上传和下载文件.jpg"><img
+src="F:\个人\科学上网\file\Bitvise上传和下载文件.jpg" srcset="/img/loading.gif" lazyload
+alt="Bitvise上传和下载文件" /></a></p>
+<p>Bitvise上传和下载文件</p>
+<p>文件下载下来后，用熟悉的写字板、notepad++、vs
+code等工具打开编辑，弄好后拖到右边再上传到服务器就行了。</p>
+<h2 id="其他">其他</h2>
+<ol type="1">
+<li>点击主界面上的“<strong>logout</strong>”按钮断开连接；</li>
+<li>搭建好程序后，无需保持Bitvise登录状态，退出不影响使用；</li>
+<li>服务端搭建好后，在其他的电脑配置SS/SSR/V2Ray客户端就可以直接用，不用再折腾<strong>Bitvise。</strong></li>
+</ol>
+<p>有了<strong>Bitvise</strong>，妈妈再也不用担心不会编辑网上教程中的配置文件了！</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" class="category-chain-item">科学上网</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/ssh/" class="category-chain-item">ssh</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Shell/" class="print-no-link">#Shell</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Bitvise连接Linux服务器教程</div>
+      <div>http://example.com/2021/04/23/note/科学上网/Bitvise连接Linux服务器教程/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Lei Ting</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年4月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/07/21/note/%E6%B8%B8%E6%88%8F/Mcsmanager/" title="Mcsmanager">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Mcsmanager</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/04/23/note/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/V2ray%E5%A4%9A%E7%94%A8%E6%88%B7%E9%85%8D%E7%BD%AE/" title="V2ray多用户配置">
+                        <span class="hidden-mobile">V2ray多用户配置</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

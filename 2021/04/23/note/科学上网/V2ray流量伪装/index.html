@@ -1,0 +1,779 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://imgbed.leiting2020.top/img/202305072001738.jpg">
+  <link rel="icon" href="https://imgbed.leiting2020.top/img/202305072001738.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Lei Ting">
+  <meta name="keywords" content="note">
+  
+    <meta name="description" content="前文 “V2Ray教程” 介绍了V2Ray基本用法，本文介绍V2Ray高级使用技巧：流量伪装。客户端下载请访问：V2ray客户端，拯救被墙的服务器请参考：拯救被墙的服务器。 为何需要流量伪装 自设立墙以来，我国的网络封锁技术一直是全球领先的。有方校长等人持续做贡献，封锁和干扰技术也在不断演化和进步。传统的VPN、ssh隧道等科学上网方式渐渐被墙识别和干扰，访问境外网站越来越难，倒逼网民不断推">
+<meta property="og:type" content="article">
+<meta property="og:title" content="V2ray流量伪装">
+<meta property="og:url" content="http://example.com/2021/04/23/note/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/V2ray%E6%B5%81%E9%87%8F%E4%BC%AA%E8%A3%85/index.html">
+<meta property="og:site_name" content="LeiHub">
+<meta property="og:description" content="前文 “V2Ray教程” 介绍了V2Ray基本用法，本文介绍V2Ray高级使用技巧：流量伪装。客户端下载请访问：V2ray客户端，拯救被墙的服务器请参考：拯救被墙的服务器。 为何需要流量伪装 自设立墙以来，我国的网络封锁技术一直是全球领先的。有方校长等人持续做贡献，封锁和干扰技术也在不断演化和进步。传统的VPN、ssh隧道等科学上网方式渐渐被墙识别和干扰，访问境外网站越来越难，倒逼网民不断推">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-23T12:21:00.000Z">
+<meta property="article:modified_time" content="2023-07-07T16:01:10.322Z">
+<meta property="article:author" content="Lei Ting">
+<meta property="article:tag" content="V2ray">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>V2ray流量伪装 - LeiHub</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Lei</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="V2ray流量伪装"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-04-23 20:21" pubdate>
+          2021年4月23日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          50 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">V2ray流量伪装</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>前文 “<a target="_blank" rel="noopener" href="https://tlanyan.me/v2ray-tutorial">V2Ray教程</a>”
+介绍了<code>V2Ray</code>基本用法，本文介绍<code>V2Ray</code>高级使用技巧：流量伪装。客户端下载请访问：<a
+target="_blank" rel="noopener" href="https://tlanyan.me/v2ray-clients-download">V2ray客户端</a>，拯救被墙的服务器请参考：<a
+target="_blank" rel="noopener" href="https://tlanyan.me/recovery-blocked-ip/">拯救被墙的服务器</a>。</p>
+<h2 id="为何需要流量伪装">为何需要流量伪装</h2>
+<p>自设立墙以来，我国的网络封锁技术一直是全球领先的。有方校长等人持续做贡献，封锁和干扰技术也在不断演化和进步。传统的VPN、<a
+target="_blank" rel="noopener" href="https://tlanyan.me/configure-ssh-to-visit-extenal-websites/">ssh隧道</a>等科学上网方式渐渐被墙识别和干扰，访问境外网站越来越难，倒逼网民不断推动穿墙技术的发展。</p>
+<p>科学上网这些年来，见证了诸多技术的兴起和消沉，自架服务器被绊者更是数不胜数。经历过谈笑风生的岁月，才知闷声发大财是人生真理。翻墙技术同样如此，一是不要高调和张扬，否则大概率被打击和屏蔽；其次流量尽量与常见流量接近，不要特立独行，例如使用非常用端口、自定义奇怪的协议。本文介绍的V2ray伪装便是将穿墙流量以常见的HTTPS/TLS包装，大大降低vps被墙或被干扰的可能性，在敏感时期提供稳如狗的上外网体验。</p>
+<blockquote>
+<p>V2ray发布了新版的VLESS协议，强烈推荐使用，详情请参考 <a
+target="_blank" rel="noopener" href="https://tlanyan.me/introduce-v2ray-vless-protocol/">V2ray的VLESS协议介绍和使用教程</a></p>
+<p>推荐使用XTLS+Splice技术的Xray，详情参考：<a
+target="_blank" rel="noopener" href="https://tlanyan.me/xray-tutorial/">Xray教程</a></p>
+</blockquote>
+<h2 id="前提条件">前提条件</h2>
+<p>本文假设读者已经具备以下条件：</p>
+<ol type="1">
+<li>一台境外的vps，购买可参考：<a
+target="_blank" rel="noopener" href="https://tlanyan.me/vps-merchant-collection/">一些VPS商家整理</a>;</li>
+<li>一个域名，无备案要求（备案可使用国内CDN加速，但意味着万一有事，被喝茶更容易）。域名购买可参考：<a
+target="_blank" rel="noopener" href="https://tlanyan.me/namesilo-domain-tutorial/">Namesilo域名注册和使用教程</a>
+或从 <a
+target="_blank" rel="noopener" href="https://tlanyan.me/domain-register-for-mainland/">适合国人的域名注册商推荐</a>
+选购；</li>
+<li>为域名申请一个证书，请参考：<a
+target="_blank" rel="noopener" href="https://tlanyan.me/use-lets-encrypt-certificate/">从Let’s
+Encrypt获取免费证书</a> 或 <a
+target="_blank" rel="noopener" href="https://tlanyan.me/get-free-ssl-certificates-from-aliyun/">从阿里云获取免费SSL证书</a>(伪装域名用来做站推荐使用)；</li>
+<li>有基本linux技巧，能使用vim/nano等编辑器。</li>
+</ol>
+<blockquote>
+<p>新手建议使用一键脚本： <a
+target="_blank" rel="noopener" href="https://tlanyan.me/go.php?key=v2ray-ws-script">v2ray带伪装一键脚本</a></p>
+</blockquote>
+<p>理论上来说，证书不是必须的。但没有tls加持或不做加密，防火墙直接能看出来流量真实意图从而进行干扰，这也是为什么不建议伪装http流量的原因。本文给出的方法采用合法机构签发的证书对流量进行加密，不是做特征混淆得到的TLS流量，从而更难被检测和干扰。</p>
+<p>关于伪装技术的选择，<strong>V2ray web+websocket+tls</strong> 和
+<strong>V2ray web+http2+tls</strong>
+常用来做对比。理论上http2省去了upgrade的请求，性能更好。但实际使用中两者没有明显区别，加之某些web服务器（例如Nginx）不支持后端服务器为http2，所以websocket的方式更流行。如果你要上http2，记得web服务器不能用Nginx，要用支持反代http2的Caddy等软件。</p>
+<p>下文介绍流量伪装的配置步骤，演示域名为<code>tlanyan.me</code>，服务器为Linux(CentOS)，web服务器软件用Nginx，web+websocket+tls组合，最终效果为：http/https方式打开域名，显示正常的网页；<code>V2Ray</code>客户端请求特定的路径，例如<code>https://tlanyan.me/awesomepath</code>，能科学上网；浏览器直接请求<code>https://tlanyan.me/awesomepath</code>，返回”400
+bad
+request”。即外部看起来完全是一个人畜无害的正规网站，特定手段请求特定网址才是科学上网的通道。</p>
+<p><strong>注意：</strong>如果使用伪装后网速慢，可尝试更轻量级的trojan，请参考：<a
+target="_blank" rel="noopener" href="https://tlanyan.me/trojan-tutorial/">trojan教程</a>。</p>
+<h2 id="操作步骤">操作步骤</h2>
+<p>服务端涉及到了Nginx和v2ray，分别介绍其配置。</p>
+<h3 id="配置dns">1. 配置dns</h3>
+<p>先设置dns将域名解析到vps的ip，例如<code>www.tlanyan.me</code>解析到xxx.xxx.xx.xx。</p>
+<p>如果你上了CDN，则dns要解析到cdn给的ip或者别名网址（cname）。使用cdn能隐藏真实vps的ip，避免vps被墙或能拯救被封锁ip的vps。上cdn有好处，但国内cdn要求域名备案，国外cdn基本上会降低网速，而且配置起来稍显麻烦。建议新手先摸透https流量伪装，有特殊需求再考虑上cdn。</p>
+<p><strong>注意：</strong>如果你要用Let’s
+Encrypt签发的证书，并且希望上cdn，那么应该先解析到vps的ip，获取到证书后再解析到cdn。</p>
+<p><strong>更新</strong>：上cdn可参考：<a
+target="_blank" rel="noopener" href="https://tlanyan.me/go.php?key=cloudflare-forward">v2ray使用cloudflare中转流量，拯救被墙ip</a>，请务必记得先让伪装正常工作再上cdn！</p>
+<h3 id="配置nginx">2. 配置Nginx</h3>
+<p>如果你的域名并正确配置了SSL证书，可忽略这一步。</p>
+<p>Nginx是市面上占有率最高的网站服务器软件，Centos
+7系统安装nginx命令：<code>yum install -y epel-release &amp;&amp; yum install -y nginx</code>。</p>
+<p>Linux系统上Nginx默认站点配置文件是<code>/etc/nginx/conf.d/</code>目录下的<code>default.conf</code>，我们对伪装网站进行全站https配置，示例内容如下：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">server</span> &#123;<br>    <span class="hljs-keyword">listen</span> <span class="hljs-number">80</span>;<br>    server_name xxxxx;  # 改成你的域名<br>    rewrite ^(.*) https://$server_name$<span class="language-ruby"><span class="hljs-number">1</span> permanent;</span><br><span class="language-ruby">&#125;</span><br><span class="language-ruby"></span><br><span class="language-ruby">server &#123;</span><br><span class="language-ruby">    listen       <span class="hljs-number">443</span> ssl http2;</span><br><span class="language-ruby">    server_name xxxxx;</span><br><span class="language-ruby">    charset utf-<span class="hljs-number">8</span>;</span><br><span class="language-ruby"></span><br><span class="language-ruby">    <span class="hljs-comment"># ssl配置</span></span><br><span class="language-ruby">    ssl_protocols <span class="hljs-title class_">TLSv1</span>.<span class="hljs-number">2</span> <span class="hljs-title class_">TLSv1</span>.<span class="hljs-number">3</span>; <span class="hljs-comment"># tls 1.3要求nginx 1.13.0及以上版本</span></span><br><span class="language-ruby">    ssl_ciphers <span class="hljs-variable constant_">ECDHE</span>-<span class="hljs-variable constant_">ECDSA</span>-<span class="hljs-variable constant_">AES128</span>-<span class="hljs-variable constant_">GCM</span>-<span class="hljs-variable constant_">SHA256</span><span class="hljs-symbol">:ECDHE-RSA-AES128-GCM-SHA256</span><span class="hljs-symbol">:ECDHE-ECDSA-AES256-GCM-SHA384</span><span class="hljs-symbol">:ECDHE-RSA-AES256-GCM-SHA384</span><span class="hljs-symbol">:ECDHE-ECDSA-CHACHA20-POLY1305</span><span class="hljs-symbol">:ECDHE-RSA-CHACHA20-POLY1305</span><span class="hljs-symbol">:DHE-RSA-AES128-GCM-SHA256</span><span class="hljs-symbol">:DHE-RSA-AES256-GCM-SHA384</span>;</span><br><span class="language-ruby">    ssl_prefer_server_ciphers off;</span><br><span class="language-ruby">    ssl_session_cache <span class="hljs-symbol">shared:</span><span class="hljs-variable constant_">SSL</span><span class="hljs-symbol">:</span>10m;</span><br><span class="language-ruby">    ssl_session_timeout 1d;</span><br><span class="language-ruby">    ssl_session_tickets off;</span><br><span class="language-ruby">    ssl_certificate xxxxx; <span class="hljs-comment"># 改成你的证书地址</span></span><br><span class="language-ruby">    ssl_certificate_key xxxx; <span class="hljs-comment"># 改成证书密钥文件地址</span></span><br><span class="language-ruby"></span><br><span class="language-ruby">    access_log  /var/log/nginx/xxxx.access.log;</span><br><span class="language-ruby">    error_log /var/log/nginx/xxx.error.log;</span><br><span class="language-ruby"></span><br><span class="language-ruby">    root /usr/share/nginx/html;</span><br><span class="language-ruby">    location / &#123;</span><br><span class="language-ruby">        index  index.html;</span><br><span class="language-ruby">    &#125;</span><br><span class="language-ruby">&#125;</span><br></code></pre></td></tr></table></figure>
+<p>配置好用<code>nginx -t</code>命令查看有无错误，没问题的话<code>systemctl restart nginx</code>启动Nginx。打开浏览器在地址栏输入域名，应该能看到https访问的Nginx欢迎页。</p>
+<p>新域名如何快速做一个像模像样的网站？最简单的办法是从网上下载网站模板，上传到web服务器的根目录（默认是<code>/usr/share/nginx/html</code>）。对于伪装站来说，静态站足够。如果你的境外流量比较大，建议用爬虫或者其他手段做一个看起来受欢迎、流量大的站点，例如美食博客，图片站等。</p>
+<h3 id="安装配置v2ray">3. 安装配置V2Ray</h3>
+<p>详细过程可参考上篇：<a
+target="_blank" rel="noopener" href="https://tlanyan.me/v2ray-tutorial">V2Ray教程</a></p>
+<p>到此为止，Nginx和V2ray应该都能各自独立正常工作。如果有一个出现问题，应该先解决再继续下面的操作。</p>
+<h3 id="nginx配置websocket">4. Nginx配置websocket</h3>
+<p>接下来我们让Nginx和v2ray结合，完成服务端的配置。</p>
+<p>首先我们选择一个<strong>伪装路径</strong>，建议为二级或者较长的一级路径，例如<code>/abc/def</code>或<code>/awesomepath</code>。</p>
+<p>配置Nginx将伪装路径的访问都转发到v2ray。编辑<code>/etc/nginx/conf.d/default.conf</code>的第二个<code>server</code>段，增加以下转发配置：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-section">location</span> /awesomepath &#123; <span class="hljs-comment"># 与 V2Ray 配置中的 path 保持一致</span><br>      <span class="hljs-attribute">proxy_redirect</span> <span class="hljs-literal">off</span>;<br>      <span class="hljs-attribute">proxy_pass</span> http://127.0.0.1:12345; <span class="hljs-comment"># 假设v2ray的监听地址是12345</span><br>      <span class="hljs-attribute">proxy_http_version</span> <span class="hljs-number">1</span>.<span class="hljs-number">1</span>;<br>      <span class="hljs-attribute">proxy_set_header</span> Upgrade <span class="hljs-variable">$http_upgrade</span>;<br>      <span class="hljs-attribute">proxy_set_header</span> Connection <span class="hljs-string">&quot;upgrade&quot;</span>;<br>      <span class="hljs-attribute">proxy_set_header</span> Host <span class="hljs-variable">$host</span>;<br>      <span class="hljs-attribute">proxy_set_header</span> X-Real-IP <span class="hljs-variable">$remote_addr</span>;<br>      <span class="hljs-attribute">proxy_set_header</span> X-Forwarded-For <span class="hljs-variable">$proxy_add_x_forwarded_for</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>配置好后重启Nginx：<code>systemctl restart nginx</code>。</p>
+<p>配置v2ray接受Nginx传来的数据。编辑
+<code>/etc/v2ray/config.json</code>
+文件，在“inbounds”中新增“streamSetting”配置，设置传输协议为“websocket”。配置好后<code>config.json</code>文件看起来是：</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs prolog">&#123;<br>  <span class="hljs-string">&quot;log&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;loglevel&quot;</span>: <span class="hljs-string">&quot;warning&quot;</span>,<br>    <span class="hljs-string">&quot;access&quot;</span>: <span class="hljs-string">&quot;/var/log/v2ray/access.log&quot;</span>,<br>    <span class="hljs-string">&quot;error&quot;</span>: <span class="hljs-string">&quot;/var/log/v2ray/error.log&quot;</span><br>   &#125;,<br>  <span class="hljs-string">&quot;inbounds&quot;</span>: [&#123;<br>    <span class="hljs-string">&quot;port&quot;</span>: <span class="hljs-number">12345</span>,<br>    <span class="hljs-string">&quot;protocol&quot;</span>: <span class="hljs-string">&quot;vmess&quot;</span>,<br>    <span class="hljs-string">&quot;settings&quot;</span>: &#123;<br>      <span class="hljs-string">&quot;clients&quot;</span>: [<br>        &#123;<br>          <span class="hljs-string">&quot;id&quot;</span>: <span class="hljs-string">&quot;xxxxx&quot;</span>, # 可以使用/usr/bin/v2ray/v2ctl uuid生成<br>          <span class="hljs-string">&quot;level&quot;</span>: <span class="hljs-number">1</span>,<br>          <span class="hljs-string">&quot;alterId&quot;</span>: <span class="hljs-number">0</span><br>        &#125;<br>      ]<br>    &#125;,<br>    <span class="hljs-string">&quot;streamSettings&quot;</span>: &#123;     # 载体配置段，设置为websocket<br>        <span class="hljs-string">&quot;network&quot;</span>: <span class="hljs-string">&quot;ws&quot;</span>,<br>        <span class="hljs-string">&quot;wsSettings&quot;</span>: &#123;<br>          <span class="hljs-string">&quot;path&quot;</span>: <span class="hljs-string">&quot;/awesomepath&quot;</span>  # 与nginx中的路径保持一致<br>        &#125;<br>      &#125;,<br>    <span class="hljs-string">&quot;listen&quot;</span>: <span class="hljs-string">&quot;127.0.0.1&quot;</span> # 出于安全考虑，建议只接受本地链接<br>  &#125;],<br>  <span class="hljs-string">&quot;outbounds&quot;</span>: [&#123;<br>    <span class="hljs-string">&quot;protocol&quot;</span>: <span class="hljs-string">&quot;freedom&quot;</span>,<br>    <span class="hljs-string">&quot;settings&quot;</span>: &#123;&#125;<br>  &#125;,&#123;<br>    <span class="hljs-string">&quot;protocol&quot;</span>: <span class="hljs-string">&quot;blackhole&quot;</span>,<br>    <span class="hljs-string">&quot;settings&quot;</span>: &#123;&#125;,<br>    <span class="hljs-string">&quot;tag&quot;</span>: <span class="hljs-string">&quot;blocked&quot;</span><br>  &#125;],<br>  <span class="hljs-string">&quot;routing&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;rules&quot;</span>: [<br>      &#123;<br>        <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;field&quot;</span>,<br>        <span class="hljs-string">&quot;ip&quot;</span>: [<span class="hljs-string">&quot;geoip:private&quot;</span>],<br>        <span class="hljs-string">&quot;outboundTag&quot;</span>: <span class="hljs-string">&quot;blocked&quot;</span><br>      &#125;<br>    ]<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>注意：</strong></p>
+<p>\1. json文件不支持注释，上述配置中”#”号及后续内容都要删掉；</p>
+<p>\2.
+因为使用tls加密，<strong>强烈建议alterId改成0</strong>，以节省cpu加快v2ray的速度</p>
+</blockquote>
+<p>配置无误后，重启v2ray服务：<code>systemctl restart v2ray</code>。</p>
+<p>如何测试nginx与v2ray结合没有问题？打开浏览器，输入域名及其他路径，应该显示正常网页或者页面不存在，说明Nginx正常工作；输入域名加v2ray路径，例如<code>https://tlanyan.me/awesomepath</code>，应该出现”Bad
+Request”，说明Nginx将流量转发给了v2ray，并且v2ray收到了请求。</p>
+<h3 id="客户端设置">客户端设置</h3>
+<p>最后是配置客户端，本文以Windows平台的<code>V2RayW</code>软件为例说明使用方法。</p>
+<p>打开<code>V2RayW</code>，右键托盘图标，点击“配置”。在弹框中新建或修改已有的服务器，输入服务器ip，端口写443，把用户id、额外id信息填上，网络类型选择”ws”。接着点“传输设置”，找到“websocket”，路径一栏输入nginx和v2ray中的路径，例如“/awesomepath”；http头部输入：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br><span class="hljs-attr">&quot;Host&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;你的域名，例如www.tlanyan.me&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+<p>截图如下：</p>
+<p><a target="_blank" rel="noopener" href="https://tlanyan.me/v2ray-traffic-mask/v2ray1/"><img
+src="F:\个人\科学上网\file\V2RAY1.png" srcset="/img/loading.gif" lazyload
+alt="v2ray客户端配置websocket" /></a></p>
+<p>接着点击“tls”，勾选“启用传输层加密tls”（同时建议勾选“允许不安全的加密方式”和“允许不安全连接”），在“服务器域名”的输入框中输入域名，截图如下：</p>
+<p><a target="_blank" rel="noopener" href="https://tlanyan.me/v2ray-traffic-mask/v2ray2/"><img
+src="F:\个人\科学上网\file\v2ray2.png" srcset="/img/loading.gif" lazyload
+alt="v2ray客户端配置tls" /></a></p>
+<p>信息填写正确后，点击“保存”。打开浏览器访问google.com，youtube.com等网站，配置无误的话应该都能正常打开。</p>
+<blockquote>
+<p>因为启用了TLS，因此VMESS配置界面的加密方式(security)建议配置为none，以节省cpu，提高设备续航能力</p>
+</blockquote>
+<p>如果对nginx/v2ray以及客户端的配置不熟悉，建议使用这个v2ray配置生成工具：<a
+target="_blank" rel="noopener" href="https://www.veekxt.com/utils/v2ray_gen">v2ray配置生成</a>。</p>
+<h2 id="总结">总结</h2>
+<p>https/tls会加密路径信息，仅靠中间环节捕捉到的流量包极难区分是正常请求还是夹带私货的流量。这也显示了v2ray的强大之处：通过配置不同的协议和载体，就能对进出的流量做定制。从流量伪装、反向代理的功能上看，v2ray毫无疑问的是一个强大的网络框架/工具，科学上网功能只是其一个成功应用。</p>
+<p>比较让人遗憾的是v2ray的ios客户端均收费，客户端下载请访问：<a
+target="_blank" rel="noopener" href="https://tlanyan.me/v2ray-clients-download">V2ray客户端下载</a>。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" class="category-chain-item">科学上网</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/V2ray/" class="category-chain-item">V2ray</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/V2ray/" class="print-no-link">#V2ray</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>V2ray流量伪装</div>
+      <div>http://example.com/2021/04/23/note/科学上网/V2ray流量伪装/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Lei Ting</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年4月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/04/23/note/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/V2ray%E4%B8%80%E4%BB%B6%E4%BC%AA%E8%A3%85%E8%84%9A%E6%9C%AC/" title="V2ray带伪装一键脚本使用教程">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">V2ray带伪装一键脚本使用教程</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/04/23/note/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/V2ray%E7%9A%84VLESS%E5%8D%8F%E8%AE%AE/" title="V2ray的VLESS协议">
+                        <span class="hidden-mobile">V2ray的VLESS协议</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

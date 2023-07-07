@@ -1,0 +1,754 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://imgbed.leiting2020.top/img/202305072001738.jpg">
+  <link rel="icon" href="https://imgbed.leiting2020.top/img/202305072001738.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Lei Ting">
+  <meta name="keywords" content="note">
+  
+    <meta name="description" content="V2ray带伪装一键脚本使用教程  准备一个境外服务器，想服务器速度快请参考 搬瓦工VPS购买教程 或从 CN2 GIA VPS商家推荐 选购，想ip被封后免费换请参考：购买vultr服务器超详细图文教程。  伪装的前提是需要一个域名（例如hijk.art），并且域名的某个主机名（例如www.hijk.art）正确解析到服务器的ip。对域名没有要求，国内&#x2F;国外注册的都可以，不需要备案，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="V2ray带伪装一键脚本使用教程">
+<meta property="og:url" content="http://example.com/2021/04/23/note/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/V2ray%E4%B8%80%E4%BB%B6%E4%BC%AA%E8%A3%85%E8%84%9A%E6%9C%AC/index.html">
+<meta property="og:site_name" content="LeiHub">
+<meta property="og:description" content="V2ray带伪装一键脚本使用教程  准备一个境外服务器，想服务器速度快请参考 搬瓦工VPS购买教程 或从 CN2 GIA VPS商家推荐 选购，想ip被封后免费换请参考：购买vultr服务器超详细图文教程。  伪装的前提是需要一个域名（例如hijk.art），并且域名的某个主机名（例如www.hijk.art）正确解析到服务器的ip。对域名没有要求，国内&#x2F;国外注册的都可以，不需要备案，">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-23T12:21:00.000Z">
+<meta property="article:modified_time" content="2023-07-07T16:01:00.148Z">
+<meta property="article:author" content="Lei Ting">
+<meta property="article:tag" content="V2ray">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>V2ray带伪装一键脚本使用教程 - LeiHub</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Lei</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="V2ray带伪装一键脚本使用教程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-04-23 20:21" pubdate>
+          2021年4月23日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          17 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">V2ray带伪装一键脚本使用教程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="v2ray带伪装一键脚本使用教程">V2ray带伪装一键脚本使用教程</h2>
+<ol type="1">
+<li>准备一个境外服务器，想服务器速度快请参考 <a
+target="_blank" rel="noopener" href="https://v2xtls.org/搬瓦工vps购买教程/">搬瓦工VPS购买教程</a> 或从
+<a target="_blank" rel="noopener" href="https://v2xtls.org/cn2-gia-vps和商家推荐/">CN2 GIA
+VPS商家推荐</a> 选购，想ip被封后免费换请参考：<a
+target="_blank" rel="noopener" href="https://v2raytech.com/vultr-buy-vps-tutorial/">购买vultr服务器超详细图文教程</a>。</li>
+</ol>
+<p><strong>伪装的前提是需要一个域名（例如hijk.art），并且域名的某个主机名（例如www.hijk.art）正确解析到服务器的ip。</strong>对域名没有要求，国内/国外注册的都可以，<strong>不需要备案</strong>，不会影响使用，也不会带来安全/隐私上的问题。购买域名可参考：<a
+target="_blank" rel="noopener" href="https://v2xtls.org/namesilo域名注册和使用教程/">Namesilo购买域名详细教程</a>。不想购买请使用常规版的一键脚本：<a
+target="_blank" rel="noopener" href="https://v2xtls.org/v2ray多合一脚本，支持vmesswebsockettlsnginx、vlesstcpxtls、vlesstcptls等组合/">v2ray一键脚本</a>。</p>
+<p>值得一提的是本V2ray带伪装一键脚本支持ipv6
+only服务器，但是不建议用只有ipv6的VPS用来科学上网。</p>
+<p><strong>如果服务器有在运行网站</strong>，请联系网站运维再执行脚本，否则可能导致原来网站无法访问，本人不负责！</p>
+<ol start="2" type="1">
+<li><p>如果vps运营商开启了防火墙（阿里云、Ucloud、腾讯云、AWS、GCP等商家默认有，搬瓦工/hostdare/vultr等商家默认关闭），请先登录vps管理后台放行80和443端口，否则可能会导致获取证书失败。此外，<strong>本脚本支持上传自定义证书</strong>，可跳过申请证书这一步，也可用在<a
+target="_blank" rel="noopener" href="https://v2xtls.org/tag/nat-vps/">NAT VPS</a>上。</p></li>
+<li><p>ssh连接到服务器。Windows系统请参考 <a
+target="_blank" rel="noopener" href="https://v2xtls.org/bitvise连接linux服务器教程/">Bitvise连接Linux服务器教程</a>，mac用户请参考
+<a
+target="_blank" rel="noopener" href="https://v2xtls.org/mac电脑连接linux教程/">Mac电脑连接Linux教程</a>。</p></li>
+<li><p>复制（或手动输入）下面命令到终端</p></li>
+</ol>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">yum</span> install -y curl<br><span class="hljs-symbol">bash</span> &lt;(curl -<span class="hljs-built_in">sL</span> https:<span class="hljs-comment">//s.hijk.art/centos_install_v2ray2.sh)</span><br></code></pre></td></tr></table></figure>
+<p>按回车键，脚本开始询问你一些信息，请按照提示输入，其中一些问题可直接按回车使用默认值。</p>
+<p>接下来脚本会自动疯狂运行，<strong>如果安装过程卡住，请耐心等待几分钟；</strong>期间网络断开（windows上表现为黑框框中或者顶部标题出现disconnected字样，mac表现为终端出现“closed
+by remote host”或”broken
+pipe”），请重新连接后再次执行命令。脚本运行成功会输出配置信息，截图如下：</p>
+<p><a
+target="_blank" rel="noopener" href="https://v2xtls.org/wp-content/uploads/2020/11/带伪装v2ray配置.png"><img
+src="F:\个人\科学上网\file\带伪装v2ray配置.png" srcset="/img/loading.gif" lazyload
+alt="带伪装v2ray配置" /></a></p>
+<p>带伪装v2ray配置</p>
+<p><strong>到此服务端配置完毕</strong>，服务器可能会自动重启(<strong>没提示重启则不需要</strong>)，windows终端出现“disconnected”，mac出现“closed
+by remote host”说明服务器成功重启了。</p>
+<p>打开浏览器输入伪装域名，<strong>能正常打开伪装站</strong>，说明服务端在正常运行；输入域名加伪装路径，出现”bad
+request”，则说明服务端已经完全没问题。</p>
+<h2 id="v2ray带伪装一键脚本其他事项">V2ray带伪装一键脚本其他事项</h2>
+<ol type="1">
+<li><p>查看v2ray运行状态 /
+配置：<code>bash &lt;(curl -sL https://s.hijk.art/centos_install_v2ray2.sh) info</code></p></li>
+<li><p>v2ray管理命令：启动：<code>systemctl start v2ray</code>，停止：<code>systemctl stop v2ray</code>，重启：<code>systemctl restart v2ray</code>；</p></li>
+<li><p>nginx管理命令：测试配置文件有无错误：<code>nginx -t</code>，启动：<code>systemctl start nginx</code>，停止：<code>systemct stop nginx</code>，重启：<code>systemctl restart nginx</code>；</p></li>
+<li><p>更新v2ray到最新版：<code>bash &lt;(curl -sL https://s.hijk.art/goV2.sh)</code>（提示“装不上daemon”不用管，<code>systemctl restart v2ray</code>重新启动v2ray就好了）</p></li>
+<li><p>伪装网站SSL证书放在配置文件的文件夹下，会自动续期；</p></li>
+<li><p>卸载：
+<code>bash &lt;(curl -sL https://s.hijk.art/centos_install_v2ray2.sh) uninstall</code>；</p></li>
+<li><p>建站/改伪装网站请参考：<a
+target="_blank" rel="noopener" href="https://v2xtls.org/v2ray伪装建站教程/">v2ray伪装建站教程</a></p></li>
+<li><p>搭建TG代理请参考： <a
+target="_blank" rel="noopener" href="https://v2xtls.org/一键搭建telegram的mtproto代理/">一键搭建Telegram的MTProto代理</a></p></li>
+<li><p>希望上cdn，请根据本教程操作完后再阅读：<a
+target="_blank" rel="noopener" href="https://v2xtls.org/v2ray使用cloudflare中转流量，拯救被墙ip/">v2ray使用cloudflare中转流量，拯救被墙ip</a>；</p></li>
+<li><p>理论上只要流量够、服务器扛得住，同一个配置支持无数人、无限设备使用。如果想为不同的人配置不同的id，请参考：<a
+target="_blank" rel="noopener" href="https://v2xtls.org/v2ray多用户配置/">v2ray多用户配置</a>；</p></li>
+<li><p>脚本默认使用BBR技术加速， BBR换成魔改BBR/BBR Plus/锐速清参考：<a
+target="_blank" rel="noopener" href="https://v2xtls.org/安装魔改bbr-bbr-plus-锐速lotserver/">安装魔改BBR/BBR
+Plus/锐速(Lotserver)</a>；</p></li>
+<li><p>搭建好伪装v2ray后建站/改伪装网站请参考：<a
+target="_blank" rel="noopener" href="https://v2xtls.org/v2ray伪装建站教程/">v2ray伪装建站教程</a>；</p></li>
+<li><p>刚搭建好带伪装的v2ray不要猛上流量，否则可能导致被限速、端口被墙，严重可能ip被墙。</p></li>
+</ol>
+<h2 id="v2ray客户端下载">V2ray客户端下载</h2>
+<p>接下来是<strong>科学上网最后一步</strong>：下载客户端，并参考页面中的配置教程进行配置：</p>
+<p><a target="_blank" rel="noopener" href="https://v2xtls.org/v2ray-windows客户端下载/">v2ray
+windows客户端下载</a></p>
+<p><a
+target="_blank" rel="noopener" href="https://v2xtls.org/v2ray安卓客户端下载/">v2ray安卓客户端下载</a></p>
+<p><a target="_blank" rel="noopener" href="https://v2xtls.org/v2ray-mac客户端下载/">v2ray
+mac客户端下载</a></p>
+<p><a target="_blank" rel="noopener" href="https://v2xtls.org/v2ray-ios客户端下载/">v2ray
+ios客户端下载</a></p>
+<p>下载客户端配置好后，就可以愉快的上外网了！</p>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://v2xtls.org/v2ray教程/">V2ray教程</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://v2xtls.org/v2ray高级技巧：流量伪装/">v2ray高级技巧：流量伪装</a></li>
+<li><a target="_blank" rel="noopener" href="https://v2xtls.org/trojan一键脚本/">trojan一键脚本</a></li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" class="category-chain-item">科学上网</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/V2ray/" class="category-chain-item">V2ray</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/V2ray/" class="print-no-link">#V2ray</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>V2ray带伪装一键脚本使用教程</div>
+      <div>http://example.com/2021/04/23/note/科学上网/V2ray一件伪装脚本/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Lei Ting</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年4月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/04/23/note/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/V2ray%E5%A4%9A%E7%94%A8%E6%88%B7%E9%85%8D%E7%BD%AE/" title="V2ray多用户配置">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">V2ray多用户配置</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/04/23/note/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/V2ray%E6%B5%81%E9%87%8F%E4%BC%AA%E8%A3%85/" title="V2ray流量伪装">
+                        <span class="hidden-mobile">V2ray流量伪装</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

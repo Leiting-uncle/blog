@@ -1,0 +1,1005 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://imgbed.leiting2020.top/img/202305072001738.jpg">
+  <link rel="icon" href="https://imgbed.leiting2020.top/img/202305072001738.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Lei Ting">
+  <meta name="keywords" content="note">
+  
+    <meta name="description" content="谱聚类算法：谱指的是某个矩阵的特征值。 谱聚类的思想来源于图论，它把待聚类的数据集中的每一个样本看做是图中一个顶点，这些顶点连接在一起，连接的这些边上有权重，权重的大小表示这些样本之间的相似程度。同一类的顶点它们的相似程度很高，在图论中体现为同一类的顶点中连接它们的边的权重很大；不在同一类的顶点连接它们的边的权重很小。于是谱聚类的最终目标就是找到一种切割图的方法，使得切割之后的各个子图内的权重很">
+<meta property="og:type" content="article">
+<meta property="og:title" content="谱聚类算法">
+<meta property="og:url" content="http://example.com/2023/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="LeiHub">
+<meta property="og:description" content="谱聚类算法：谱指的是某个矩阵的特征值。 谱聚类的思想来源于图论，它把待聚类的数据集中的每一个样本看做是图中一个顶点，这些顶点连接在一起，连接的这些边上有权重，权重的大小表示这些样本之间的相似程度。同一类的顶点它们的相似程度很高，在图论中体现为同一类的顶点中连接它们的边的权重很大；不在同一类的顶点连接它们的边的权重很小。于是谱聚类的最终目标就是找到一种切割图的方法，使得切割之后的各个子图内的权重很">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/202203111026750.jpg">
+<meta property="article:published_time" content="2023-04-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-07T16:08:22.722Z">
+<meta property="article:author" content="Lei Ting">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="聚类算法">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2023/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/202203111026750.jpg">
+  
+  
+  
+  <title>谱聚类算法 - LeiHub</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Lei</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="谱聚类算法"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-23 00:00" pubdate>
+          2023年4月23日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          32 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">谱聚类算法</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><strong>谱聚类算法</strong>：谱指的是某个矩阵的<strong>特征值</strong>。</p>
+<p>谱聚类的思想来源于图论，它把待聚类的数据集中的每一个样本看做是图中一个<strong>顶点</strong>，这些顶点连接在一起，连接的这些<strong>边上有权重</strong>，<strong>权重的大小</strong>表示这些样本之间的<strong>相似程度</strong>。<strong>同一类</strong>的顶点它们的<strong>相似程度很高</strong>，在图论中体现为同一类的顶点中连接它们的边的<strong>权重很大</strong>；<strong>不在同一类</strong>的顶点连接它们的边的<strong>权重很小</strong>。于是谱聚类的<strong>最终目标</strong>就是找到一种<strong>切割图的方法</strong>，使得切割之后的各个子<strong>图内的权重很大</strong>，<strong>子图之间的权重很小</strong>。</p>
+<figure>
+<img src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/202203111026750.jpg" srcset="/img/loading.gif" lazyload
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h1 id="一预备知识">一、预备知识</h1>
+<ul>
+<li><p>假设给定一个数据集<span class="math inline">\(X=\{
+x_1,x_2,...,x_n
+\}\)</span>，我们将这个n个数据向量当做m维空间中某一幅无向图上的一个个点，目的是衡量这些点的相似性。</p></li>
+<li><p>把图叫做相似图，记为<span
+class="math inline">\(G=(V,E)\)</span>，其中<span
+class="math inline">\(V=\{ v_1,v_2...,v_n \}\)</span>表示顶点，<span
+class="math inline">\(E\)</span>表示边的集合。两个顶点<span
+class="math inline">\(v_i,v_j\)</span>的边的权重记为<span
+class="math inline">\(\omega_{ij}\)</span></p></li>
+<li><p>相似性用<span
+class="math inline">\(s_{ij}\)</span>表示，越大表示越相似</p></li>
+<li><p>n个权重点构成一个矩阵<span
+class="math inline">\(W=(\omega_{ij})\)</span></p></li>
+</ul>
+<h2
+id="邻接矩阵度和度矩阵连通子图">1.1<strong>邻接矩阵、度和度矩阵、连通子图</strong></h2>
+<h3 id="邻接矩阵">（1）邻接矩阵</h3>
+<p>所有顶点之间的权重构成一个矩阵，叫<strong>邻接矩阵</strong>，也叫<strong>权重矩阵</strong>。两个顶点互相之间的权重是一样的，因此<span
+class="math inline">\(W\)</span>是对称矩阵。</p>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220311114622575.png" srcset="/img/loading.gif" lazyload
+alt="image-20220311114622575" />
+<figcaption aria-hidden="true">image-20220311114622575</figcaption>
+</figure>
+<h3 id="度矩阵">（2）度矩阵</h3>
+<p>对于某个顶点的<strong>度</strong><span
+class="math inline">\(d_i,i=1,2,...,n\)</span>，定义为</p>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220311115316683.png" srcset="/img/loading.gif" lazyload
+alt="image-20220311115316683" />
+<figcaption aria-hidden="true">image-20220311115316683</figcaption>
+</figure>
+<p>度其实就是邻接矩阵的第<span
+class="math inline">\(i\)</span>行的和。（因为邻接矩阵是对称矩阵，所以第<span
+class="math inline">\(j\)</span>列的和也可以）</p>
+<p><strong>度矩阵</strong>定义为<span
+class="math inline">\(n\)</span>个度构成的<strong>对角矩阵</strong>：</p>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220311115709665.png" srcset="/img/loading.gif" lazyload
+alt="image-20220311115709665" />
+<figcaption aria-hidden="true">image-20220311115709665</figcaption>
+</figure>
+<p>对于给定顶点<span class="math inline">\(V\)</span>的一个子集<span
+class="math inline">\(A\subset V\)</span>，定义它的补为<span
+class="math inline">\(\bar{A}\)</span>。对于某个顶点<span
+class="math inline">\(v_i \in A\)</span>，定义对应的指示向量为<span
+class="math inline">\(1_A = [f_1,f_2...,f_n]^T \in R^n\)</span>，若<span
+class="math inline">\(v_i \in
+A\)</span>，则<strong>指示向量</strong>第i个位置为1，即<span
+class="math inline">\(f_i =
+1\)</span>，否则为0；对于两个子集A和B，我们定义：</p>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220311132125530.png" srcset="/img/loading.gif" lazyload
+alt="image-20220311132125530" />
+<figcaption aria-hidden="true">image-20220311132125530</figcaption>
+</figure>
+<p>公式(4)表示两个子集中顶点之间的权重之和，<strong>注意这里不包含子集内顶点之间的权重</strong>。</p>
+<p><strong>子集大小</strong>有两种定义</p>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220311132240644.png" srcset="/img/loading.gif" lazyload
+alt="image-20220311132240644" />
+<figcaption aria-hidden="true">image-20220311132240644</figcaption>
+</figure>
+<h3 id="连通子图">（3）连通子图</h3>
+<p>如果<span
+class="math inline">\(A\)</span>中的任意两个顶点都至少存在一条路径将他们连接起来，并且<span
+class="math inline">\(A\)</span>中其他顶点也在这条路径上，则<span
+class="math inline">\(A\)</span>是<strong>连接</strong>的。如果子集<span
+class="math inline">\(A\)</span>是连接的，并且与他的补<span
+class="math inline">\(\bar{A}\)</span>不存在任何的连接，则称为<strong>连通子图</strong>。非空子集<span
+class="math inline">\(A_1,A_2,...,A_k\)</span>构成<span
+class="math inline">\(V\)</span>的一个<strong>分割</strong>，即<span
+class="math inline">\(A_1\cup A_2 \cup... \cup A_k=V\)</span></p>
+<h2 id="相似图的衡量方法">1.2 相似图的衡量方法</h2>
+<p>如果度量空间具有距离越远越不相似，越近越相似的特性，通常作为<strong>相似度</strong>的衡量标准。</p>
+<h3 id="近邻法">（1）$ - 近邻法 $</h3>
+<p>采用欧式距离计算两个顶点的距离<span
+class="math inline">\(s_{ij}\)</span>，然后设定一个阈值<span
+class="math inline">\(\epsilon\)</span></p>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312185718753.png" srcset="/img/loading.gif" lazyload
+alt="image-20220312185718753" />
+<figcaption aria-hidden="true">image-20220312185718753</figcaption>
+</figure>
+<h3 id="k-邻近法">（2）k-邻近法</h3>
+<p>利用<strong>KNN算法</strong>遍历所有的样本点，取每个样本最近的k个点作为近邻，取与顶点最近的<span
+class="math inline">\(k\)</span>个顶点，该顶点与<span
+class="math inline">\(k\)</span>个顶点的权重都大于0。但是这种方法不能保证相似矩阵是对称的，因为两个顶点可能不是在互相的近邻中。一般使用两种方法保证相似矩阵的对称。</p>
+<ul>
+<li>两个顶点只要其中一个点在另一个顶点的近邻中，则令<span
+class="math inline">\(\omega_{ij}=\omega_{ji}\)</span></li>
+</ul>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312190301385.png" srcset="/img/loading.gif" lazyload
+alt="image-20220312190301385" />
+<figcaption aria-hidden="true">image-20220312190301385</figcaption>
+</figure>
+<ul>
+<li>两个顶点同时在双方的近邻中，则令<span
+class="math inline">\(\omega_{ij}=\omega_{ji}\)</span>​，否则<span
+class="math inline">\(\omega_{ij}=\omega_{ji}=0\)</span></li>
+</ul>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312190424470.png" srcset="/img/loading.gif" lazyload
+alt="image-20220312190424470" />
+<figcaption aria-hidden="true">image-20220312190424470</figcaption>
+</figure>
+<h3 id="全连接法">（3）全连接法</h3>
+<p>该方法将所有的顶点都连接起来。然后通过度量空间中某种对称度量算子来计算顶点之间的相似度。常用的有<strong>多项式核函数，高斯核函数和Sigmoid核函数</strong>。最常用的是高斯核函数RBF，此时相似矩阵和邻接矩阵相同，比如使用<strong>高斯核函数</strong>计算两个顶点之间的相似度：</p>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312190629703.png" srcset="/img/loading.gif" lazyload
+alt="image-20220312190629703" />
+<figcaption aria-hidden="true">image-20220312190629703</figcaption>
+</figure>
+<p>实际应用中，使用<strong>全连接法</strong>是最普遍的，而在全连接法中使用<strong>高斯径向核RBF</strong>是最普遍的。</p>
+<h2 id="图拉普拉斯矩阵">1.3 图拉普拉斯矩阵</h2>
+<h3 id="非规范化的图拉普拉斯矩阵">1.3.1 非规范化的图拉普拉斯矩阵</h3>
+<p>图拉普拉斯矩阵的定义如下：</p>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312200714522.png" srcset="/img/loading.gif" lazyload
+alt="image-20220312200714522" />
+<figcaption aria-hidden="true">image-20220312200714522</figcaption>
+</figure>
+<p>其中<span
+class="math inline">\(D\)</span>为度矩阵，W为权重（近似）矩阵，所以L也是对称矩阵</p>
+<p><strong>性质：</strong></p>
+<ul>
+<li>对于任意向量$f R^n $</li>
+</ul>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312201051146.png" srcset="/img/loading.gif" lazyload
+alt="image-20220312201051146" />
+<figcaption aria-hidden="true">image-20220312201051146</figcaption>
+</figure>
+<ul>
+<li><p><span
+class="math inline">\(L\)</span>是一个<strong>对称半正定矩阵</strong>。</p>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312201216584.png" srcset="/img/loading.gif" lazyload
+alt="image-20220312201216584" />
+<figcaption aria-hidden="true">image-20220312201216584</figcaption>
+</figure></li>
+<li><p><span
+class="math inline">\(L\)</span>的最小特征值为0，对应的特征向量是全为1的向量<span
+class="math inline">\(1\)</span>。<span class="math inline">\(0 \le
+\lambda_1 \le \lambda_2 ...\le \lambda_n\)</span></p></li>
+<li><p>对于一个对角分块矩阵<span class="math inline">\(A\)</span></p>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312201648665.png" srcset="/img/loading.gif" lazyload
+alt="image-20220312201648665" />
+<figcaption aria-hidden="true">image-20220312201648665</figcaption>
+</figure>
+<p>他的特征值等于各个分块矩阵的特征值。</p></li>
+<li><p>若<span
+class="math inline">\(G\)</span>是一个具有非负权重的无向图，则它对应的图拉普拉斯矩阵L的0<strong>特征值的代数重数</strong>k等于G中<strong>连通子图的个数</strong>，假设k个连通子图记为<span
+class="math inline">\(A_1,A_2,...A_k\)</span>，并且0特征值对应的特征值空间由各个连通子图的指示向量<span
+class="math inline">\(1_{A_i} \in R_n\)</span>。</p></li>
+</ul>
+<h3 id="规范化的图拉普拉斯矩阵">1.3.2规范化的图拉普拉斯矩阵</h3>
+<p>有两种规范化的图拉普拉斯矩阵，他们互相联系。这两种规划化的图拉普拉斯矩阵定义为：</p>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312205724786.png" srcset="/img/loading.gif" lazyload
+alt="image-20220312205724786" />
+<figcaption aria-hidden="true">image-20220312205724786</figcaption>
+</figure>
+<p>公式(19)中的<span
+class="math inline">\(L_{sym}\)</span>是一个对称矩阵，下标sym是单词symmetric的简写，<span
+class="math inline">\(L_{rw}\)</span>不是对称矩阵，该矩阵和随机游走(random
+walk)相关，下标rw就是random walk 的首字母组合。</p>
+<p><span class="math inline">\(L_{sym}\)</span>的性质:</p>
+<ul>
+<li>对于任意向量<span class="math inline">\(f \in R^n\)</span></li>
+</ul>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312205922264.png" srcset="/img/loading.gif" lazyload
+alt="image-20220312205922264" />
+<figcaption aria-hidden="true">image-20220312205922264</figcaption>
+</figure>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312205930303.png" srcset="/img/loading.gif" lazyload
+alt="image-20220312205930303" />
+<figcaption aria-hidden="true">image-20220312205930303</figcaption>
+</figure>
+<ul>
+<li><p><span class="math inline">\(L_{sym}\)</span>和<span
+class="math inline">\(L_{rw}\)</span>具有相同的特征值，对应的特征值向量关系为
+<span class="math display">\[
+\omega = D^{1/2} u
+\]</span></p></li>
+<li></li>
+</ul>
+<h1 id="二切割方法">二、切割方法</h1>
+<p>优化的目标函数为：</p>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312210846810.png" srcset="/img/loading.gif" lazyload
+alt="image-20220312210846810" />
+<figcaption aria-hidden="true">image-20220312210846810</figcaption>
+</figure>
+<h2 id="ratiocut切图">2.1 RatioCut切图</h2>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312211959073.png" srcset="/img/loading.gif" lazyload
+alt="image-20220312211959073" />
+<figcaption aria-hidden="true">image-20220312211959073</figcaption>
+</figure>
+<p>引入指示向量<span
+class="math inline">\(h_j∈{h_1,h_2,..h_k},j=1,2,...k,\)</span>对于任意一个向量<span
+class="math inline">\(h_j\)</span>,
+它是一个n维向量（n为样本数），我们定义</p>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312212210088.png" srcset="/img/loading.gif" lazyload
+alt="image-20220312212210088" />
+<figcaption aria-hidden="true">image-20220312212210088</figcaption>
+</figure>
+<p>对应的<strong>RatioCut函数表达式</strong>为：</p>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312212238622.png" srcset="/img/loading.gif" lazyload
+alt="image-20220312212238622" />
+<figcaption aria-hidden="true">image-20220312212238622</figcaption>
+</figure>
+<p>松弛化的目标函数：</p>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213754655.png" srcset="/img/loading.gif" lazyload
+alt="image-20220312213754655" />
+<figcaption aria-hidden="true">image-20220312213754655</figcaption>
+</figure>
+<p>将图切割为k个分组的问题转换成了求图拉普拉斯矩阵L的<strong>前k个最小特征值对应的特征向量<span
+class="math inline">\(h_j∈{h_1,h_2,..h_k},j=1,2,...k,\)</span></strong>和L二次型之和。</p>
+<p>求出来的<span
+class="math inline">\(h_i\)</span>并不能准确指示顶点所属类别，将矩阵<span
+class="math inline">\(H=
+[h_1,h_2,..h_k]\)</span>当作一个新的具有k个维度特征n个样本的数据集进行<span
+class="math inline">\(k-means\)</span>聚类。是对每一个样本聚类，聚类的类别数是k,也就是对H的每一行进行聚类。</p>
+<h2 id="ncut切图">2.2 Ncut切图</h2>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213256066.png" srcset="/img/loading.gif" lazyload
+alt="image-20220312213256066" />
+<figcaption aria-hidden="true">image-20220312213256066</figcaption>
+</figure>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213419592.png" srcset="/img/loading.gif" lazyload
+alt="image-20220312213419592" />
+<figcaption aria-hidden="true">image-20220312213419592</figcaption>
+</figure>
+<p>优化目标任然是</p>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213433072.png" srcset="/img/loading.gif" lazyload
+alt="image-20220312213433072" />
+<figcaption aria-hidden="true">image-20220312213433072</figcaption>
+</figure>
+<p>松弛化的目标函数：</p>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213820132.png" srcset="/img/loading.gif" lazyload
+alt="image-20220312213820132" />
+<figcaption aria-hidden="true">image-20220312213820132</figcaption>
+</figure>
+<p>令<span class="math inline">\(B= D^{1/2}H\)</span>:</p>
+<figure>
+<img
+src="%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/image-20220312213915761.png" srcset="/img/loading.gif" lazyload
+alt="image-20220312213915761" />
+<figcaption aria-hidden="true">image-20220312213915761</figcaption>
+</figure>
+<p>上式的解<span class="math inline">\(B^*\)</span>也就是矩阵<span
+class="math inline">\(L_{sym}\)</span>的前k个最小特征值对应的特征向量按列排列成<span
+class="math inline">\(B^* = \{ b_1,b_2,...,b_k
+\}\)</span>。反带入可得<span
+class="math inline">\(L_{rw}\)</span>前k个最小特征值对应的特征向量<span
+class="math inline">\(H=\{h_1,h_2,..h_k\}\)</span></p>
+<p>或者矩阵<span class="math inline">\(L\)</span>的前<span
+class="math inline">\(k\)</span>个最小的广义特征值对应的特征向量。</p>
+<h1 id="三算法实现步骤">三、算法实现步骤</h1>
+<p>最常用的相似矩阵的生成方式是基于<strong>高斯核距离</strong>的全连接方式，最常用的<strong>切图方式是Ncut</strong>。而到最后常用的<strong>聚类方法为K-Means</strong>。</p>
+<p>假设聚成<span class="math inline">\(k\)</span>个分组</p>
+<p>（1）计算相似度矩阵<span class="math inline">\(W\)</span></p>
+<p>（2）计算度矩阵<span class="math inline">\(D\)</span></p>
+<p>（3）计算图拉普拉斯矩阵<span
+class="math inline">\(L\)</span>，构建标准化后的图拉普拉斯矩阵<span
+class="math inline">\(D^{-1/2}LD^{-1/2}\)</span></p>
+<p>（4）直接对<span
+class="math inline">\(D^{-1/2}LD^{-1/2}\)</span>进行特征值分解，获取其前<span
+class="math inline">\(k\)</span>个特征值对应的特征向量按照列排成矩阵<span
+class="math inline">\(Q=[q_1,q_2,...,q_k]\)</span></p>
+<p>（5）对矩阵<span class="math inline">\(Q\)</span>的 所有行<span
+class="math inline">\(r_1,r_2,...r_n\)</span>标准化，组成<span
+class="math inline">\(n*k\)</span>进行聚类，如使用<span
+class="math inline">\(k-means\)</span>方法或者别的方法进行聚类得到<span
+class="math inline">\(C_1,C_2,...,C_k\)</span></p>
+<p>（6）输出原始数据的分组<span
+class="math inline">\(A_1,A_2,...,A_k\)</span>，其中<span
+class="math inline">\(A_i=\{v_j|r_j \in C_i \}\)</span></p>
+<p>注意：在第(4)步也可以再计算规范化的矩阵<span
+class="math inline">\(L_{sym}\)</span>，在对这个矩阵做特征分解或者做广义特征值分解，后面步骤相同。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" class="category-chain-item">学习记录</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="category-chain-item">机器学习</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="print-no-link">#机器学习</a>
+      
+        <a href="/tags/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/" class="print-no-link">#聚类算法</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>谱聚类算法</div>
+      <div>http://example.com/2023/04/23/note/学习记录/机器学习/聚类算法/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Lei Ting</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%BD%A8%E8%BF%B9%E8%BD%AC%E6%8D%A2/" title="机器人轨迹转换">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">机器人轨迹转换</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/07/21/note/%E6%B8%B8%E6%88%8F/Mcsmanager/" title="Mcsmanager">
+                        <span class="hidden-mobile">Mcsmanager</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

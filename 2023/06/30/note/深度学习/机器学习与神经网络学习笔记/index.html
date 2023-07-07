@@ -1,0 +1,886 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://imgbed.leiting2020.top/img/202305072001738.jpg">
+  <link rel="icon" href="https://imgbed.leiting2020.top/img/202305072001738.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Lei Ting">
+  <meta name="keywords" content="note">
+  
+    <meta name="description" content="机器学习与神经网络学习笔记 这几天在看吴恩达的深度学习视频，记不清已经是第几次捡起来了，之前每次都没看完，希望在正式上班之前把这部分看完吧 神经网络基础 神经网络是深度学习的基本组成部分。它由多个神经元和层级组成，每个神经元通过激活函数对输入进行处理，并将输出传递给下一层。神经网络通过学习权重和偏置来逼近目标函数。 下图是一个简单的逻辑回归模型，首先需要输入特征\(x\)，通过特征\(W\">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习与神经网络学习笔记">
+<meta property="og:url" content="http://example.com/2023/06/30/note/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="LeiHub">
+<meta property="og:description" content="机器学习与神经网络学习笔记 这几天在看吴恩达的深度学习视频，记不清已经是第几次捡起来了，之前每次都没看完，希望在正式上班之前把这部分看完吧 神经网络基础 神经网络是深度学习的基本组成部分。它由多个神经元和层级组成，每个神经元通过激活函数对输入进行处理，并将输出传递给下一层。神经网络通过学习权重和偏置来逼近目标函数。 下图是一个简单的逻辑回归模型，首先需要输入特征\(x\)，通过特征\(W\">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://imgbed.leiting2020.top//img/202306301953647.png">
+<meta property="og:image" content="http://imgbed.leiting2020.top//img/202306301959456.png">
+<meta property="og:image" content="http://imgbed.leiting2020.top//img/202306302001630.png">
+<meta property="article:published_time" content="2023-06-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-07T16:03:55.030Z">
+<meta property="article:author" content="Lei Ting">
+<meta property="article:tag" content="神经网络">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://imgbed.leiting2020.top//img/202306301953647.png">
+  
+  
+  
+  <title>机器学习与神经网络学习笔记 - LeiHub</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Lei</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="机器学习与神经网络学习笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-06-30 00:00" pubdate>
+          2023年6月30日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          74 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">机器学习与神经网络学习笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="机器学习与神经网络学习笔记">机器学习与神经网络学习笔记</h1>
+<p>这几天在看吴恩达的深度学习视频，记不清已经是第几次捡起来了，之前每次都没看完，希望在正式上班之前把这部分看完吧</p>
+<h3 id="神经网络基础">神经网络基础</h3>
+<p>神经网络是深度学习的基本组成部分。它由多个神经元和层级组成，每个神经元通过激活函数对输入进行处理，并将输出传递给下一层。神经网络通过学习权重和偏置来逼近目标函数。</p>
+<p>下图是一个简单的逻辑回归模型，首先需要输入特征<span
+class="math inline">\(x\)</span>，通过特征<span
+class="math inline">\(W\)</span>和<span
+class="math inline">\(b\)</span>计算出<span
+class="math inline">\(z\)</span>，接下来使用<span
+class="math inline">\(𝑧\)</span>就可以计算出<span
+class="math inline">\(𝑎\)</span>，然后可以计算 出 loss function 𝐿(𝑎,
+𝑦)</p>
+<figure>
+<img src="http://imgbed.leiting2020.top//img/202306301953647.png" srcset="/img/loading.gif" lazyload
+alt="image-20230630195352602" />
+<figcaption aria-hidden="true">image-20230630195352602</figcaption>
+</figure>
+<p>神经网络看起来是如下这个样子。可以把许多 sigmoid
+单元堆叠起来形成一个神经网络。它包含了之前讲的计算的
+两个步骤：首先计算出值𝑧，然后通过𝜎(𝑧)计算值𝑎。</p>
+<figure>
+<img src="http://imgbed.leiting2020.top//img/202306301959456.png" srcset="/img/loading.gif" lazyload
+alt="image-20230630195927387" />
+<figcaption aria-hidden="true">image-20230630195927387</figcaption>
+</figure>
+<p>在这个神经网络对应的 3
+个节点，首先计算第一层网络中的各个节点相关的数𝑧 [1]，接着计算𝛼
+[1]，在计算下一层网络同理； 我们会使用符号 [𝑚]表示第𝑚层网络中
+节点相关的数，这些节点的集合被称为第𝑚层网络。</p>
+<p>我们有输入特征𝑥1、𝑥2、𝑥3，它们被竖直地堆叠起来，这叫做神经网络的<strong>输入层</strong>。它包含了神经网络的输入；然后这里有另外一层我们称之为<strong>隐藏层</strong>（图中的四个结点），最后一层只由一个结点构成，而这个只
+有一个结点的层被称为<strong>输出层</strong>，它负责产生预测值。解释隐藏层的含义：在一个神经网络中，
+当你使用监督学习训练它的时候，训练集包含了输入𝑥也包含了目标输出𝑦，所以术语隐藏层
+的含义是在训练集中，这些中间结点的准确值我们是不知道到的，也就是说你看不见它们在
+训练集中应具有的值。你能看见输入的值，你也能看见输出的值，但是隐藏层中的东西，在训练集中你是无法看到的。所以这也解释了词语隐藏层，只是表示你无法在训练集中看到他
+们。</p>
+<figure>
+<img src="http://imgbed.leiting2020.top//img/202306302001630.png" srcset="/img/loading.gif" lazyload
+alt="image-20230630200137512" />
+<figcaption aria-hidden="true">image-20230630200137512</figcaption>
+</figure>
+<p>神经元模型是神经网络中的基本单元，它接收输入信号并通过激活函数进行非线性变换。</p>
+<ul>
+<li>输入<span
+class="math inline">\(A\)</span>：神经元接收来自上一层的输入信号。</li>
+<li>权重<span
+class="math inline">\(W\)</span>：每个输入信号都与一个权重相关联，权重决定了输入对神经元的影响程度。</li>
+<li>偏置<span
+class="math inline">\(b\)</span>：每个神经元还有一个偏置，它相当于一个常数项，可以调整神经元的输出。</li>
+</ul>
+<p>神经网络的训练通常涉及以下步骤：</p>
+<ol type="1">
+<li><strong>数据准备</strong>：收集和准备用于训练神经网络的数据集。这包括对数据进行清洗、划分训练集和测试集，并进行必要的预处理步骤，例如标准化或归一化。</li>
+<li><strong>定义网络结构</strong>：确定神经网络的结构，包括层数、每层的神经元数量以及激活函数的选择。这些决定将根据特定问题和数据集的需求进行调整。</li>
+<li><strong>参数初始化</strong>：初始化神经网络的参数，例如权重和偏置项。常见的初始化方法包括零初始化、随机初始化和He初始化等。</li>
+<li><strong>前向传播</strong>：执行前向传播算法，将输入数据通过神经网络进行推理，计算每一层的激活值（输出）。</li>
+<li><strong>计算损失</strong>：使用定义的损失函数（例如交叉熵损失）计算预测结果与真实标签之间的差异，衡量模型的性能。</li>
+<li><strong>反向传播</strong>：通过反向传播算法计算每一层的梯度，根据损失函数的梯度信息更新参数，以便减少损失。</li>
+<li><strong>参数更新</strong>：根据反向传播计算得到的梯度信息，使用优化算法（如梯度下降）更新神经网络的参数。</li>
+<li><strong>重复迭代</strong>：重复执行步骤4到步骤7，直到达到指定的训练迭代次数或满足停止条件。</li>
+<li><strong>模型评估</strong>：使用测试集或交叉验证集对训练后的神经网络进行评估，计算准确率、精确率、召回率等指标，评估模型的性能。</li>
+<li><strong>预测</strong>：使用训练好的神经网络对新的未见过的数据进行预测。</li>
+</ol>
+<h3 id="参数初始化">参数初始化</h3>
+<p>当你训练神经网络时，权重随机初始化是很重要的。对于逻辑回归，把权重初始化为
+0 当然也是可以的。但是对于一个神经网络，如果你把权重或者参数都初始化为
+0，那么梯度下降将不会起作用。因此，一般把<span
+class="math inline">\(W\)</span>初 始化为很小的随机数。然后<span
+class="math inline">\(𝑏\)</span>没有这个对称的问题（叫做 symmetry
+breaking problem），所以可以把$ 𝑏 $初始化为 0。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">initialize_parameters_random</span>(<span class="hljs-params">layers_dims</span>):<br>    parameters = &#123;&#125;<br>    L = <span class="hljs-built_in">len</span>(layers_dims) - <span class="hljs-number">1</span>  <span class="hljs-comment"># 网络层数</span><br><br>    <span class="hljs-keyword">for</span> l <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, L + <span class="hljs-number">1</span>):<br>        parameters[<span class="hljs-string">f&quot;W<span class="hljs-subst">&#123;l&#125;</span>&quot;</span>] = np.random.randn(layers_dims[l], layers_dims[l-<span class="hljs-number">1</span>]) * <span class="hljs-number">0.01</span><br>        parameters[<span class="hljs-string">f&quot;b<span class="hljs-subst">&#123;l&#125;</span>&quot;</span>] = np.zeros((layers_dims[l], <span class="hljs-number">1</span>))<br>    <br>    <span class="hljs-keyword">return</span> parameters<br><br></code></pre></td></tr></table></figure>
+<h3 id="前向传播">前向传播</h3>
+<p>神经网络的前向传播过程是从输入层到输出层的计算过程。对于每一层，输入经过权重和偏置的线性变换，然后通过激活函数进行非线性变换，得到输出。</p>
+<h4 id="计算流程">计算流程</h4>
+<p>前向传播的计算流程为：</p>
+<p><span class="math inline">\(Z^{[1]} = W^{[1]}X + b^{[1]}\)</span></p>
+<p><span class="math inline">\(A^{[1]} = g^{[1]}(Z^{[1]})\)</span></p>
+<p><span class="math inline">\(Z^{[2]} = W^{[2]}A^{[1]} +
+b^{[2]}\)</span></p>
+<p><span class="math inline">\(A^{[2]} = g^{[2]}(Z^{[2]})\)</span></p>
+<p>...</p>
+<p><span class="math inline">\(Z^{[L-1]} = W^{[L-1]}A^{[L-2]} +
+b^{[L-1]}\)</span></p>
+<p><span class="math inline">\(A^{[L-1]} =
+g^{[L-1]}(Z^{[L-1]})\)</span></p>
+<p><span class="math inline">\(Z^{[L]} = W^{[L]}A^{[L-1]} +
+b^{[L]}\)</span></p>
+<p><span class="math inline">\(A^{[L]} = g^{[L]}(Z^{[L]})\)</span></p>
+<p>其中，<span class="math inline">\(X\)</span> 表示输入数据，<span
+class="math inline">\(A^{[l]}\)</span> 表示第 l 层的输出，<span
+class="math inline">\(W^{[l]}\)</span> 和 <span
+class="math inline">\(b^{[l]}\)</span> 分别表示第 l
+层的权重和偏置，<span class="math inline">\(g^{[l]}\)</span> 表示第 l
+层的激活函数。</p>
+<h4 id="激活函数">激活函数</h4>
+<p>激活函数引入了非线性特性，使神经网络能够学习复杂的非线性关系。常见的激活函数有sigmoid函数、ReLU函数和tanh函数。</p>
+<p><strong>sigmoid函数</strong> <span class="math display">\[
+A = \frac{1}{1 + e^{-Z}}
+\]</span> <strong>tanh激活函数</strong> <span class="math display">\[
+A = \tanh(Z)
+\]</span> <strong>ReLU函数</strong> <span class="math display">\[
+A = \max(0, Z)
+\]</span></p>
+<p>sigmoid 激活函数：除了输出层是一个二分类问题基本不会用它。</p>
+<p>tanh 激活函数：tanh 是非常优秀的，几乎适合所有场合。</p>
+<p>ReLu 激活函数：最常用的默认函数，如果不确定用哪个激活函数，就使用
+ReLu 或者 Leaky ReLu。</p>
+<h4 id="代码实现">代码实现</h4>
+<ul>
+<li>在以下代码中，<code>forward_propagation</code>函数接受输入特征数据<code>X</code>和包含参数的字典<code>parameters</code>作为输入，执行n层神经网络的前向传播计算。</li>
+<li>根据网络的层数L，依次从参数字典中提取权重矩阵和偏置向量，并根据前向传播的计算公式，计算每一层的加权输入Z和激活值A。</li>
+<li>中间计算结果以元组形式保存在<code>caches</code>列表中，用于后续的后向传播计算。</li>
+<li>最后，返回输出层的激活值AL和中间计算结果的缓存<code>caches</code>。这些结果可以用于损失计算和反向传播过程。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">forward_propagation</span>(<span class="hljs-params">X, parameters</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    前向传播计算</span><br><span class="hljs-string"></span><br><span class="hljs-string">    参数：</span><br><span class="hljs-string">    X - 输入特征数据，维度为（特征数量，样本数量）</span><br><span class="hljs-string">    parameters - 包含参数的字典，参数命名规则为&quot;Wl&quot;和&quot;bl&quot;，表示第l层的权重矩阵和偏置向量</span><br><span class="hljs-string"></span><br><span class="hljs-string">    返回：</span><br><span class="hljs-string">    AL - 输出层的激活值</span><br><span class="hljs-string">    caches - 包含每一层的中间计算结果的字典列表，用于后向传播</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br><br>    L = <span class="hljs-built_in">len</span>(parameters) // <span class="hljs-number">2</span>  <span class="hljs-comment"># 神经网络的层数</span><br>    caches = []<br>    A = X<br><br>    <span class="hljs-comment"># 前L-1层的前向传播（使用ReLU激活函数）</span><br>    <span class="hljs-keyword">for</span> l <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, L):<br>        W = parameters[<span class="hljs-string">&#x27;W&#x27;</span> + <span class="hljs-built_in">str</span>(l)]<br>        b = parameters[<span class="hljs-string">&#x27;b&#x27;</span> + <span class="hljs-built_in">str</span>(l)]<br>        Z = np.dot(W, A) + b<br>        A = relu(Z)<br>        cache = (Z, A)<br>        caches.append(cache)<br><br>    <span class="hljs-comment"># 输出层的前向传播（使用Sigmoid激活函数）</span><br>    WL = parameters[<span class="hljs-string">&#x27;W&#x27;</span> + <span class="hljs-built_in">str</span>(L)]<br>    bL = parameters[<span class="hljs-string">&#x27;b&#x27;</span> + <span class="hljs-built_in">str</span>(L)]<br>    ZL = np.dot(WL, A) + bL<br>    AL = sigmoid(ZL)<br>    cacheL = (ZL, AL)<br>    caches.append(cacheL)<br><br>    <span class="hljs-keyword">return</span> AL, caches<br></code></pre></td></tr></table></figure>
+<h3 id="损失函数">损失函数</h3>
+<p>计算损失函数是深度学习中的重要步骤，它用于衡量模型的预测结果与实际标签之间的差异。损失函数的作用是量化模型的预测误差，并通过最小化损失函数来优化模型的参数。</p>
+<p>在分类问题中，常用的损失函数是交叉熵损失函数（Cross Entropy
+Loss）。交叉熵损失函数可以有效地衡量两个概率分布之间的差异，用于衡量模型的输出与实际标签之间的差异。常见的损失函数有均方误差损失函数和交叉熵损失函数。对于二分类问题，交叉熵损失函数的计算公式如下：</p>
+<ul>
+<li>均方误差损失函数公式：</li>
+</ul>
+<p><span class="math display">\[
+\text{MSE} = \frac{1}{m} \sum_{i=1}^{m}(y_i - \hat{y}_i)^2
+\]</span></p>
+<ul>
+<li>交叉熵损失函数公式：</li>
+</ul>
+<p><span class="math display">\[
+BinaryCrossEntropy = -\frac{1}{m} \sum_{i=1}^{m}(y_i \log(\hat{y}_i) +
+(1-y_i) \log(1-\hat{y}_i))
+\]</span></p>
+<h4 id="代码实现-1">代码实现</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">compute_loss</span>(<span class="hljs-params">AL, Y</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    计算交叉熵损失函数</span><br><span class="hljs-string"></span><br><span class="hljs-string">    参数：</span><br><span class="hljs-string">    AL - 输出层的激活值，维度为（1，样本数量）</span><br><span class="hljs-string">    Y - 实际标签，维度为（1，样本数量）</span><br><span class="hljs-string"></span><br><span class="hljs-string">    返回：</span><br><span class="hljs-string">    loss - 交叉熵损失</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    m = Y.shape[<span class="hljs-number">1</span>]  <span class="hljs-comment"># 样本数量</span><br><br>    <span class="hljs-comment"># 计算交叉熵损失</span><br>    loss = -<span class="hljs-number">1</span> / m * np.<span class="hljs-built_in">sum</span>(Y * np.log(AL) + (<span class="hljs-number">1</span> - Y) * np.log(<span class="hljs-number">1</span> - AL))<br><br>    <span class="hljs-keyword">return</span> loss<br><br></code></pre></td></tr></table></figure>
+<p>以上代码中，<code>compute_loss</code>函数接受输出层的激活值<code>AL</code>和实际标签<code>Y</code>作为输入，通过交叉熵损失函数的计算公式，计算出交叉熵损失值。最后，返回计算得到的交叉熵损失值<code>loss</code>。</p>
+<h3 id="反向传播">反向传播</h3>
+<p>反向传播是神经网络中的一种训练算法，通过计算梯度来更新权重和偏置。它利用链式法则将误差从输出层传播回输入层，并根据梯度下降算法更新模型参数。</p>
+<p>反向传播的计算流程为：</p>
+<p><span class="math inline">\(dZ^{[L]} = A^{[L]} - Y\)</span></p>
+<p><span class="math inline">\(dW^{[L]} = \frac{1}{m} dZ^{[L]}
+A^{[L-1]T}\)</span></p>
+<p><span class="math inline">\(db^{[L]} = \frac{1}{m} \sum
+dZ^{[L]}\)</span></p>
+<p><span class="math inline">\(dZ^{[L-1]} = W^{[L]T} dZ^{[L]} *
+g^{[L-1]&#39;}(Z^{[L-1]})\)</span></p>
+<p><span class="math inline">\(dW^{[L-1]} = \frac{1}{m} dZ^{[L-1]}
+A^{[L-2]T}\)</span></p>
+<p><span class="math inline">\(db^{[L-1]} = \frac{1}{m} \sum
+dZ^{[L-1]}\)</span></p>
+<p>...</p>
+<p><span class="math inline">\(dZ^{[1]} = W^{[2]T} dZ^{[2]} *
+g^{[1]&#39;}(Z^{[1]})\)</span></p>
+<p><span class="math inline">\(dW^{[1]} = \frac{1}{m} dZ^{[1]}
+X^T\)</span></p>
+<p><span class="math inline">\(db^{[1]} = \frac{1}{m} \sum
+dZ^{[1]}\)</span></p>
+<p>其中，<span class="math inline">\(dZ^{[l]}\)</span> 表示第 l
+层的梯度，<span class="math inline">\(dW^{[l]}\)</span> 和 <span
+class="math inline">\(db^{[l]}\)</span> 分别表示第 l
+层的权重和偏置的梯度，<span class="math inline">\(g^{[l]&#39;}\)</span>
+表示第 l 层激活函数的导数，<span class="math inline">\(W^{[l]}\)</span>
+表示第 l 层的权重。</p>
+<h4 id="代码实现-2">代码实现</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">backward_propagation</span>(<span class="hljs-params">AL, Y, caches</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    N层神经网络的反向传播</span><br><span class="hljs-string"></span><br><span class="hljs-string">    参数：</span><br><span class="hljs-string">    AL - 神经网络的输出，维度为（输出层大小，样本数量）</span><br><span class="hljs-string">    Y - 实际标签，维度为（输出层大小，样本数量）</span><br><span class="hljs-string">    caches - 包含前向传播过程中的缓存值的列表</span><br><span class="hljs-string"></span><br><span class="hljs-string">    返回：</span><br><span class="hljs-string">    grads - 包含模型参数相对于损失函数的梯度的字典</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    grads = &#123;&#125;<br>    L = <span class="hljs-built_in">len</span>(caches)  <span class="hljs-comment"># 网络层数</span><br>    m = AL.shape[<span class="hljs-number">1</span>]  <span class="hljs-comment"># 样本数量</span><br>    Y = Y.reshape(AL.shape)  <span class="hljs-comment"># 保证Y和AL维度相同</span><br><br>    <span class="hljs-comment"># 计算输出层的梯度</span><br>    dAL = - (np.divide(Y, AL) - np.divide(<span class="hljs-number">1</span> - Y, <span class="hljs-number">1</span> - AL))<br><br>    <span class="hljs-comment"># 反向传播</span><br>    current_cache = caches[L - <span class="hljs-number">1</span>]  <span class="hljs-comment"># 最后一层的缓存值</span><br>    grads[<span class="hljs-string">&quot;dA&quot;</span> + <span class="hljs-built_in">str</span>(L)], grads[<span class="hljs-string">&quot;dW&quot;</span> + <span class="hljs-built_in">str</span>(L)], grads[<span class="hljs-string">&quot;db&quot;</span> + <span class="hljs-built_in">str</span>(L)] = linear_activation_backward(dAL, current_cache, activation=<span class="hljs-string">&quot;sigmoid&quot;</span>)<br><br>    <span class="hljs-comment"># 从倒数第二层开始反向传播</span><br>    <span class="hljs-keyword">for</span> l <span class="hljs-keyword">in</span> <span class="hljs-built_in">reversed</span>(<span class="hljs-built_in">range</span>(L - <span class="hljs-number">1</span>)):<br>        current_cache = caches[l]  <span class="hljs-comment"># 当前层的缓存值</span><br>        dA_prev_temp, dW_temp, db_temp = linear_activation_backward(grads[<span class="hljs-string">&quot;dA&quot;</span> + <span class="hljs-built_in">str</span>(l + <span class="hljs-number">2</span>)], current_cache, activation=<span class="hljs-string">&quot;relu&quot;</span>)<br>        grads[<span class="hljs-string">&quot;dA&quot;</span> + <span class="hljs-built_in">str</span>(l + <span class="hljs-number">1</span>)] = dA_prev_temp<br>        grads[<span class="hljs-string">&quot;dW&quot;</span> + <span class="hljs-built_in">str</span>(l + <span class="hljs-number">1</span>)] = dW_temp<br>        grads[<span class="hljs-string">&quot;db&quot;</span> + <span class="hljs-built_in">str</span>(l + <span class="hljs-number">1</span>)] = db_temp<br><br>    <span class="hljs-keyword">return</span> grads<br><br></code></pre></td></tr></table></figure>
+<p>在上述代码中，<code>backward_propagation</code>函数接受神经网络的输出<code>AL</code>、实际标签<code>Y</code>和前向传播过程中的缓存值<code>caches</code>作为输入。根据反向传播的计算公式，首先计算输出层的梯度<code>dAL</code>，然后从最后一层开始，依次进行反向传播，计算每一层的梯度<code>dA_prev</code>、<code>dW</code>和<code>db</code>。其中，<code>linear_activation_backward</code>函数用于计算每一层的线性部分和激活函数的梯度。</p>
+<p>最后，将计算得到的梯度保存到字典 <code>grads</code>
+中并返回。这些梯度可以用于更新模型的参数。通过反向传播，梯度会从输出层逐渐传播回输入层，从而计算模型参数的梯度。</p>
+<h3 id="参数更新">参数更新</h3>
+<p>在神经网络中，通常使用梯度下降法来更新参数。 <span
+class="math display">\[
+\theta = \theta - \alpha \cdot \nabla J(\theta)
+\]</span> 其中，<span
+class="math inline">\(\theta\)</span>表示参数，<span
+class="math inline">\(\alpha\)</span>表示学习率，<span
+class="math inline">\(\nabla J(\theta)\)</span>表示损失函数<span
+class="math inline">\(J(\theta)\)</span>关于参数<span
+class="math inline">\(\theta\)</span>的梯度。</p>
+<h4 id="代码实现-3">代码实现</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">update_parameters</span>(<span class="hljs-params">parameters, grads, learning_rate</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    使用梯度下降更新模型参数</span><br><span class="hljs-string"></span><br><span class="hljs-string">    参数：</span><br><span class="hljs-string">    parameters - 包含模型参数的字典</span><br><span class="hljs-string">    grads - 包含模型参数相对于损失函数的梯度的字典</span><br><span class="hljs-string">    learning_rate - 学习率</span><br><span class="hljs-string"></span><br><span class="hljs-string">    返回：</span><br><span class="hljs-string">    parameters - 更新后的模型参数字典</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    L = <span class="hljs-built_in">len</span>(parameters) // <span class="hljs-number">2</span>  <span class="hljs-comment"># 网络层数</span><br><br>    <span class="hljs-comment"># 更新每一层的参数</span><br>    <span class="hljs-keyword">for</span> l <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(L):<br>        parameters[<span class="hljs-string">&quot;W&quot;</span> + <span class="hljs-built_in">str</span>(l + <span class="hljs-number">1</span>)] = parameters[<span class="hljs-string">&quot;W&quot;</span> + <span class="hljs-built_in">str</span>(l + <span class="hljs-number">1</span>)] - learning_rate * grads[<span class="hljs-string">&quot;dW&quot;</span> + <span class="hljs-built_in">str</span>(l + <span class="hljs-number">1</span>)]<br>        parameters[<span class="hljs-string">&quot;b&quot;</span> + <span class="hljs-built_in">str</span>(l + <span class="hljs-number">1</span>)] = parameters[<span class="hljs-string">&quot;b&quot;</span> + <span class="hljs-built_in">str</span>(l + <span class="hljs-number">1</span>)] - learning_rate * grads[<span class="hljs-string">&quot;db&quot;</span> + <span class="hljs-built_in">str</span>(l + <span class="hljs-number">1</span>)]<br><br>    <span class="hljs-keyword">return</span> parameters<br><br></code></pre></td></tr></table></figure>
+<p>在上述代码中，<code>update_parameters</code>函数接受模型的参数字典<code>parameters</code>、模型参数相对于损失函数的梯度字典<code>grads</code>和学习率<code>learning_rate</code>作为输入。根据梯度下降的更新规则，对每一层的参数进行更新。</p>
+<p>通过循环遍历每一层，更新参数<code>W</code>和<code>b</code>。更新公式为
+<code>parameter = parameter - learning_rate * gradient</code>，其中<code>parameter</code>表示参数，<code>learning_rate</code>表示学习率，<code>gradient</code>表示对应的梯度。</p>
+<p>最后，返回更新后的模型参数字典<code>parameters</code>。这些更新后的参数可以用于下一轮的前向传播和反向传播过程。</p>
+<p>参数更新是神经网络训练的关键步骤，通过不断更新参数，使模型逐渐优化，减小损失函数，提高预测准确率。学习率<code>learning_rate</code>控制着每次更新的步长，需要合适的学习率来保证模型能够收敛到最优解。</p>
+<h3 id="构建深层神经网络模型">构建深层神经网络模型</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs python">layers_dims = [<span class="hljs-number">12288</span>, <span class="hljs-number">20</span>, <span class="hljs-number">7</span>, <span class="hljs-number">5</span>, <span class="hljs-number">1</span>] <span class="hljs-comment">#  5-layer model</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">L_layer_model</span>(<span class="hljs-params">X, Y, layers_dims, learning_rate=<span class="hljs-number">0.0075</span>, num_iterations=<span class="hljs-number">3000</span>, print_cost=<span class="hljs-literal">False</span></span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    实现一个L层神经网络模型的训练</span><br><span class="hljs-string"></span><br><span class="hljs-string">    参数：</span><br><span class="hljs-string">    X - 输入特征数据，维度为 (输入特征数, 样本数)</span><br><span class="hljs-string">    Y - 标签数据，维度为 (1, 样本数)</span><br><span class="hljs-string">    layers_dims - 列表，包含输入层、隐藏层和输出层的神经元数量</span><br><span class="hljs-string">    learning_rate - 学习率</span><br><span class="hljs-string">    num_iterations - 迭代次数</span><br><span class="hljs-string">    print_cost - 是否打印成本值</span><br><span class="hljs-string"></span><br><span class="hljs-string">    返回：</span><br><span class="hljs-string">    parameters - 训练后的模型参数</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    np.random.seed(<span class="hljs-number">1</span>)<br>    costs = []  <span class="hljs-comment"># 用于保存成本值</span><br><br>    <span class="hljs-comment"># 初始化参数</span><br>    parameters = initialize_parameters_random(layers_dims)<br><br>    <span class="hljs-comment"># 迭代训练</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(num_iterations):<br>        <span class="hljs-comment"># 前向传播</span><br>        AL, caches = forward_propagation(X, parameters)<br><br>        <span class="hljs-comment"># 计算成本</span><br>        cost = compute_loss(AL, Y)<br><br>        <span class="hljs-comment"># 反向传播</span><br>        grads = backward_propagation(AL, Y, caches)<br><br>        <span class="hljs-comment"># 参数更新</span><br>        parameters = update_parameters(parameters, grads, learning_rate)<br><br>        <span class="hljs-comment"># 打印成本值</span><br>        <span class="hljs-keyword">if</span> print_cost <span class="hljs-keyword">and</span> i % <span class="hljs-number">100</span> == <span class="hljs-number">0</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Cost after iteration &#123;&#125;: &#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(i, cost))<br>        <span class="hljs-keyword">if</span> i % <span class="hljs-number">100</span> == <span class="hljs-number">0</span>:<br>            costs.append(cost)<br><br>    <span class="hljs-comment"># 绘制成本曲线</span><br>    plt.plot(np.squeeze(costs))<br>    plt.ylabel(<span class="hljs-string">&#x27;Cost&#x27;</span>)<br>    plt.xlabel(<span class="hljs-string">&#x27;Iterations (per tens)&#x27;</span>)<br>    plt.title(<span class="hljs-string">&quot;Learning rate =&quot;</span> + <span class="hljs-built_in">str</span>(learning_rate))<br>    plt.show()<br><br>    <span class="hljs-keyword">return</span> parameters<br><br>parameters = L_layer_model(train_x, train_y, layers_dims, num_iterations = <span class="hljs-number">2500</span>, print_cost = <span class="hljs-literal">True</span>)<span class="hljs-comment">#训练模型</span><br>pred_train = predict(train_x, train_y, parameters)<span class="hljs-comment">#训练集验证</span><br>pred_test = predict(test_x, test_y, parameters)<span class="hljs-comment">#测试集验证</span><br></code></pre></td></tr></table></figure>
+<p>该函数接受输入特征数据 <code>X</code>，标签数据
+<code>Y</code>，神经网络层的维度 <code>layers_dims</code>，学习率
+<code>learning_rate</code>，迭代次数 <code>num_iterations</code>
+和是否打印成本值 <code>print_cost</code> 作为参数。</p>
+<p>函数首先初始化模型的参数，然后通过迭代训练的方式进行模型优化。在每次迭代中，函数执行以下步骤：</p>
+<ol type="1">
+<li>前向传播：通过调用 <code>L_model_forward</code> 函数实现，计算预测值
+<code>AL</code> 和缓存值 <code>caches</code>。</li>
+<li>计算成本：通过调用 <code>compute_cost</code>
+函数实现，计算模型的损失函数成本。</li>
+<li>反向传播：通过调用 <code>L_model_backward</code>
+函数实现，计算模型参数相对于损失函数的梯度。</li>
+<li>参数更新：通过调用 <code>update_parameters</code>
+函数实现，根据梯度下降的更新规则更新模型的参数。</li>
+<li>打印成本值：根据设定的条件，打印每一百次迭代的成本值。</li>
+<li>绘制成本</li>
+</ol>
+<p>这样就完成了深度神经网络的构建。</p>
+<p>学习视频：https://www.coursera.org/deeplearning-ai</p>
+<p>笔记资料：<a
+target="_blank" rel="noopener" href="https://github.com/fengdu78/deeplearning_ai_books">fengdu78/deeplearning_ai_books:
+deeplearning.ai（吴恩达老师的深度学习课程笔记及资源）
+(github.com)</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="category-chain-item">深度学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="category-chain-item">神经网络</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="print-no-link">#神经网络</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>机器学习与神经网络学习笔记</div>
+      <div>http://example.com/2023/06/30/note/深度学习/机器学习与神经网络学习笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Lei Ting</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年6月30日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/07/08/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6/" title="机器人学">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">机器人学</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90/" title="机器人轨迹生成">
+                        <span class="hidden-mobile">机器人轨迹生成</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

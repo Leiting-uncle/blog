@@ -1,0 +1,2051 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://imgbed.leiting2020.top/img/202305072001738.jpg">
+  <link rel="icon" href="https://imgbed.leiting2020.top/img/202305072001738.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Lei Ting">
+  <meta name="keywords" content="note">
+  
+    <meta name="description" content="一、机器人学 1.POE （1） （2） （3）刚体运动 3.1旋转与角速度 1.旋转矩阵 \[ R&#x3D;Rot(\hat{\omega},\theta) \] 满足以下条件  正则条件 正交条件 坐标系三个坐标轴遵循右手定则  3*3旋转矩阵组成的集合被称为特殊正交群SO(3) 特性  封闭性 结合律 幺元性 可逆性  用途  表示姿态 进行坐标">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器人运动学笔记">
+<meta property="og:url" content="http://example.com/2020/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%BF%90%E5%8A%A8%E5%AD%A6%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="LeiHub">
+<meta property="og:description" content="一、机器人学 1.POE （1） （2） （3）刚体运动 3.1旋转与角速度 1.旋转矩阵 \[ R&#x3D;Rot(\hat{\omega},\theta) \] 满足以下条件  正则条件 正交条件 坐标系三个坐标轴遵循右手定则  3*3旋转矩阵组成的集合被称为特殊正交群SO(3) 特性  封闭性 结合律 幺元性 可逆性  用途  表示姿态 进行坐标">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="file:///F:/SynologyDrive/nas_cloud/%E6%9C%BA%E5%99%A8%E4%BA%BA/%E8%AE%B0%E5%BD%95/imagebed-master/images/202203051901311.jpg">
+<meta property="article:published_time" content="2020-04-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-07T16:09:24.529Z">
+<meta property="article:author" content="Lei Ting">
+<meta property="article:tag" content="机器人">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="file:///F:/SynologyDrive/nas_cloud/%E6%9C%BA%E5%99%A8%E4%BA%BA/%E8%AE%B0%E5%BD%95/imagebed-master/images/202203051901311.jpg">
+  
+  
+  
+  <title>机器人运动学笔记 - LeiHub</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Lei</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="机器人运动学笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-04-23 00:00" pubdate>
+          2020年4月23日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          36k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          301 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">机器人运动学笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="一机器人学">一、机器人学</h1>
+<h2 id="poe">1.POE</h2>
+<p>（1）</p>
+<p>（2）</p>
+<h3 id="刚体运动">（3）刚体运动</h3>
+<h4 id="旋转与角速度">3.1旋转与角速度</h4>
+<h5 id="旋转矩阵">1.旋转矩阵</h5>
+<p><span class="math display">\[
+R=Rot(\hat{\omega},\theta)
+\]</span></p>
+<p>满足以下条件</p>
+<ul>
+<li>正则条件</li>
+<li>正交条件</li>
+<li>坐标系三个坐标轴遵循右手定则</li>
+</ul>
+<p>3*3旋转矩阵组成的集合被称为<strong>特殊正交群SO(3)</strong></p>
+<p><strong>特性</strong></p>
+<ul>
+<li>封闭性</li>
+<li>结合律</li>
+<li>幺元性</li>
+<li>可逆性</li>
+</ul>
+<p><strong>用途</strong></p>
+<ol type="1">
+<li>表示姿态</li>
+<li>进行坐标系转换</li>
+<li>对向量和坐标系进行旋转变换</li>
+</ol>
+<p><strong>左乘</strong>旋转矩阵会得到绕固定坐标系中的转轴转动，<strong>右乘</strong>会得到绕<strong>物体坐标系</strong>中转轴的转动。</p>
+<h5 id="角速度">2.角速度</h5>
+<p><span class="math display">\[
+\omega=\hat{\omega}\dot{\theta}
+\]</span></p>
+<p><strong>反对称矩阵</strong></p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/13/202201131149688.png" srcset="/img/loading.gif" lazyload
+alt="image-20220113114954584" />
+<figcaption aria-hidden="true">image-20220113114954584</figcaption>
+</figure>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/13/202201131154664.png" srcset="/img/loading.gif" lazyload
+alt="image-20220113115432581" />
+<figcaption aria-hidden="true">image-20220113115432581</figcaption>
+</figure>
+<p>在<strong>空间坐标系中的角速度</strong></p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/13/202201131156862.png" srcset="/img/loading.gif" lazyload
+alt="image-20220113115601787" />
+<figcaption aria-hidden="true">image-20220113115601787</figcaption>
+</figure>
+<p><strong>物体坐标系下的角速度</strong> <span class="math display">\[
+[\omega_b]=R^{-1}\dot{R}
+\]</span> <span class="math inline">\(\omega \in
+R^3\)</span>是角速度的向量表达形式，<span
+class="math inline">\([\omega]\in so(3)\)</span>是3*3矩阵表示形式。</p>
+<h5 id="转动的指数坐标表示">3.转动的指数坐标表示</h5>
+<p><strong>转动的三参数指数坐标</strong></p>
+<p>向量<span class="math inline">\(\dot\omega \theta \in
+R^3\)</span>就是转动的三参数指数坐标形式，单独写就是<strong>转动的轴-角表示法</strong></p>
+<p><strong>刚体转动的指数坐标</strong></p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/13/202201131206828.png" srcset="/img/loading.gif" lazyload
+alt="image-20220113120650698" />
+<figcaption aria-hidden="true">image-20220113120650698</figcaption>
+</figure>
+<p><strong>刚体转动的矩阵对数</strong></p>
+<p>若<span class="math inline">\(\dot\omega \theta \in
+R^3\)</span>表示旋转矩阵R的指数坐标，那么反对称矩阵<span
+class="math inline">\([\hat{\omega }\theta]=[\hat{\omega }]\theta \in
+so(3)\)</span>就是矩阵R的矩阵对数。矩阵对数是矩阵指数的可逆形式。正像矩阵指数是矩阵形式的角速度<span
+class="math inline">\([\hat{\omega }]\theta \in
+so(3)\)</span>在单位时间（ 1秒）内的定积分，使刚体运动到给定姿态<span
+class="math inline">\(R\in
+SO(3)\)</span>—样，矩阵对数则是对R进行微分，以找到一个常值角速度<span
+class="math inline">\([\hat{\omega }]\theta \in
+so(3)\)</span>的矩阵表示形式。</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/13/202201131209425.png" srcset="/img/loading.gif" lazyload
+alt="image-20220113120944350" />
+<figcaption aria-hidden="true">image-20220113120944350</figcaption>
+</figure>
+<h4 id="刚体运动与运动旋量">3.2刚体运动与运动旋量</h4>
+<p><strong>齐次变换矩阵T</strong>与旋转矩阵R相对应，螺旋轴S与旋转轴<span
+class="math inline">\(\hat\omega\)</span>相对应，运动旋量V(可表示成<span
+class="math inline">\(S\dot\theta\)</span>）与角速度<span
+class="math inline">\([\hat{\omega }\theta]=[\hat{\omega }]\theta \in
+so(3)\)</span>相对应，而用于描述刚体位移的指数坐标<span
+class="math inline">\(S\theta \in R^6\)</span>与刚体转动的指数坐标<span
+class="math inline">\(\hat \omega \theta \in R^3\)</span>相对应。</p>
+<p><strong>特殊欧氏群SE(3)</strong>亦称刚体运动群或齐次变换矩阵群，是所有4×4实矩阵T的集合
+。</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/13/202201131220066.png" srcset="/img/loading.gif" lazyload
+alt="image-20220113122058967" />
+<figcaption aria-hidden="true">image-20220113122058967</figcaption>
+</figure>
+<h5 id="运动旋量">运动旋量</h5>
+<p>将<span
+class="math inline">\(\omega_b、v_b\)</span>合在一起组成一个六维向量形式。为此定义为物体坐标系中的速度，简称为物体运动旋量。</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/13/202201131223399.png" srcset="/img/loading.gif" lazyload
+alt="image-20220113122343318" />
+<figcaption aria-hidden="true">image-20220113122343318</figcaption>
+</figure>
+<p>如前所述，角速度可以很方便的写成反对称矩阵形式，同样，运动旋量也能写成矩阵形式。</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/13/202201131224771.png" srcset="/img/loading.gif" lazyload
+alt="image-20220113122453691" />
+<figcaption aria-hidden="true">image-20220113122453691</figcaption>
+</figure>
+<p>同样，基于空间坐标系，写出<strong>空间运动旋量</strong></p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/13/202201131225887.png" srcset="/img/loading.gif" lazyload
+alt="image-20220113122557812" />
+<figcaption aria-hidden="true">image-20220113122557812</figcaption>
+</figure>
+<p><strong>物体运动旋量和空间运动旋量的关系</strong></p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/13/202201131912510.png" srcset="/img/loading.gif" lazyload
+alt="image-20220113191257419" />
+<figcaption aria-hidden="true">image-20220113191257419</figcaption>
+</figure>
+<h5 id="运动旋量的螺旋释义">运动旋量的螺旋释义</h5>
+<p>运动旋量<span class="math inline">\(V\)</span>也可以写成螺旋轴<span
+class="math inline">\(S\)</span>与绕该轴转动的速度<span
+class="math inline">\(\dot\theta\)</span>组合形式</p>
+<p><span class="math inline">\(S=(\omega,v)\)</span>的矩阵表达式为</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/13/202201131919608.png" srcset="/img/loading.gif" lazyload
+alt="image-20220113191916493" />
+<figcaption aria-hidden="true">image-20220113191916493</figcaption>
+</figure>
+<h4 id="刚体运动的指数坐标表达">3.3刚体运动的指数坐标表达</h4>
+<p>Chasles_Mozzi定理:任何刚体运动都可通过绕空间某—固定螺旋轴S的运动来实现
+。</p>
+<p>类似转动情况，定义矩阵指数和矩阵对数</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/13/202201132009805.png" srcset="/img/loading.gif" lazyload
+alt="image-20220113200946730" />
+<figcaption aria-hidden="true">image-20220113200946730</figcaption>
+</figure>
+<p>将<strong>矩阵指数</strong>进行级数展开</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/13/202201132010299.png" srcset="/img/loading.gif" lazyload
+alt="image-20220113201053208" />
+<figcaption aria-hidden="true">image-20220113201053208</figcaption>
+</figure>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/13/202201132011775.png" srcset="/img/loading.gif" lazyload
+alt="image-20220113201119701" />
+<figcaption aria-hidden="true">image-20220113201119701</figcaption>
+</figure>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/13/202201132011509.png" srcset="/img/loading.gif" lazyload
+alt="image-20220113201152416" />
+<figcaption aria-hidden="true">image-20220113201152416</figcaption>
+</figure>
+<p><strong>矩阵对数</strong></p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/13/202201132012511.png" srcset="/img/loading.gif" lazyload
+alt="image-20220113201249415" />
+<figcaption aria-hidden="true">image-20220113201249415</figcaption>
+</figure>
+<h4 id="力旋量">3.4力旋量</h4>
+<p>将力矩与力合成为—个六维的空间力（spatial
+lOrce）,称为力旋量（wrench）。</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/13/202201132014522.png" srcset="/img/loading.gif" lazyload
+alt="image-20220113201406454" />
+<figcaption aria-hidden="true">image-20220113201406454</figcaption>
+</figure>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/13/202201132015219.png" srcset="/img/loading.gif" lazyload
+alt="image-20220113201507129" />
+<figcaption aria-hidden="true">image-20220113201507129</figcaption>
+</figure>
+<h4 id="函数">3.5函数</h4>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-number">1.</span>计算旋转矩阵的逆<br>invR = <span class="hljs-constructor">RotInv(R)</span><br><br><span class="hljs-number">2.</span>将三维向量转换为<span class="hljs-number">3</span>*<span class="hljs-number">3</span>反对称矩阵<br>so3mat = <span class="hljs-constructor">VecToso3(<span class="hljs-params">omg</span>)</span><br><br><span class="hljs-number">3.</span>将<span class="hljs-number">3</span>*<span class="hljs-number">3</span>反对称矩阵转换为三维向量<br>omg = so3<span class="hljs-constructor">ToVec(<span class="hljs-params">so3mat</span>)</span><br><br><span class="hljs-number">4.</span>从旋转的三维指数坐标中提取出轴线和角度<br><span class="hljs-literal">[<span class="hljs-identifier">omghat</span>,<span class="hljs-identifier">theta</span>]</span> = <span class="hljs-constructor">AxisAng3(<span class="hljs-params">expc3</span>)</span><br><br><span class="hljs-number">5.</span>计算矩阵指数对应的旋转矩阵<br>R = <span class="hljs-constructor">MatrixExp3(<span class="hljs-params">so3mat</span>)</span><br><br><span class="hljs-number">6.</span>计算旋转矩阵对应的矩阵对数<br>so3mat = <span class="hljs-constructor">MatrixLog3(R)</span><br><br><span class="hljs-number">7.</span>M到SO（<span class="hljs-number">3</span>）旋转矩阵的空间距离的度量<br>d = <span class="hljs-constructor">DistanceToSO3(<span class="hljs-params">mat</span>)</span><br><br><span class="hljs-number">8.</span>判断M是否为旋转矩阵<br>judge = <span class="hljs-constructor">TestIfSO3(<span class="hljs-params">mat</span>)</span><br><br><span class="hljs-number">9.</span>返回与M最近的旋转矩阵<br>R = <span class="hljs-constructor">ProjectToSO3(<span class="hljs-params">mat</span>)</span><br><br><span class="hljs-number">10.</span>将旋转矩阵和位置向量转换wei<br>T = <span class="hljs-constructor">RpToTrans(R,<span class="hljs-params">p</span>)</span><br><br><span class="hljs-number">11.</span>从变换矩阵中分离出旋转矩阵和位置向量<br><span class="hljs-literal">[R,<span class="hljs-identifier">p</span>]</span> = <span class="hljs-constructor">TransToRp(T)</span><br><br><span class="hljs-number">12.</span>变换矩阵求逆<br>invT = <span class="hljs-constructor">TransInv(T)</span><br><br><span class="hljs-number">13.</span>构造与六维向量形式的运动旋量V对应的<br>se3mat = <span class="hljs-constructor">VecTose3(V)</span><br><br><span class="hljs-number">14.</span>构造与se(<span class="hljs-number">3</span>)矩阵对应的六维向量形式的运动旋量V<br>V = se3<span class="hljs-constructor">ToVec(<span class="hljs-params">se3mat</span>)</span><br><br><span class="hljs-number">15.</span>计算变换矩阵T的<span class="hljs-number">6</span>*<span class="hljs-number">6</span>的伴随矩阵<br>AdT = <span class="hljs-constructor">Adjoint(T)</span><br><br><span class="hljs-number">16.</span>返回正则化的螺旋轴表达式<br>S = <span class="hljs-constructor">ScrewToAxis(<span class="hljs-params">q</span>,<span class="hljs-params">s</span>,<span class="hljs-params">h</span>)</span><br><br><span class="hljs-number">17.</span>从六位向量形式的指数坐标中提取出螺旋轴和沿轴线移动的距离<br><span class="hljs-literal">[S,<span class="hljs-identifier">theta</span>]</span> = <span class="hljs-constructor">AxisAng6(<span class="hljs-params">expc6</span>)</span><br><br><span class="hljs-number">18.</span>计算矩阵指数对应的变换矩阵<br>T = <span class="hljs-constructor">MatrixExp6(<span class="hljs-params">se3mat</span>)</span><br><br><span class="hljs-number">19.</span>计算变换矩阵对应的矩阵对数<br>se3mat = <span class="hljs-constructor">MatrixLog6(T)</span><br><br><span class="hljs-number">20.</span>M到变换矩阵的空间距离<br>d = <span class="hljs-constructor">DistanceToSE3(<span class="hljs-params">mat</span>)</span><br><br><span class="hljs-number">21.</span>判断是否为SE3变换矩阵<br>judge = <span class="hljs-constructor">TestIfSE3(<span class="hljs-params">mat</span>)</span><br><br><span class="hljs-number">22.</span>离M最近的变换矩阵<br>T = <span class="hljs-constructor">ProjectToSE3(<span class="hljs-params">mat</span>)</span><br></code></pre></td></tr></table></figure>
+<h3 id="正向运动学">（4）正向运动学</h3>
+<h4 id="指数积公式">4.1指数积公式</h4>
+<p>现在假定关节<span
+class="math inline">\(n\)</span>对应的关节变量为<span
+class="math inline">\(\theta\)</span>末端坐标系<span
+class="math inline">\(M\)</span>的位移可写成</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/13/202201132024851.png" srcset="/img/loading.gif" lazyload
+alt="image-20220113202419767" />
+<figcaption aria-hidden="true">image-20220113202419767</figcaption>
+</figure>
+<p>式中，<span class="math inline">\(T \in
+SO(3)\)</span>为末端的新位形’，<span
+class="math inline">\(S=(\omega_n，v_n)\)</span>为表示在基坐标系中的关节<span
+class="math inline">\(n\)</span>的旋量坐标。若关节<span
+class="math inline">\(n\)</span>是转动副（对应的是零节距的螺旋运动），则叫<span
+class="math inline">\(\omega_n \in
+R^3\)</span>是沿关节轴正向的单位向量，<span
+class="math inline">\(v_n=-\omega_n\times q_n\)</span>，<span
+class="math inline">\(q_n\)</span>为关节轴上任一点，坐标值在基坐标系中进行度量。若关节<span
+class="math inline">\(n\)</span> 是移动副，则叫<span
+class="math inline">\(\omega_n=0 ，v_n\in
+R^3\)</span>是沿关节轴正向的单位向量，<span
+class="math inline">\(\theta_n\)</span>表示移动的距离。</p>
+<p><img
+src="http://pic.leiting2020.top:5050/images/2022/01/13/202201132057833.png" srcset="/img/loading.gif" lazyload /></p>
+<p>上述方程就是指数积公式的<strong>空间坐标表达形式</strong></p>
+<p>同样也可以导出<strong>物体坐标系的指数积公式</strong></p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/13/202201132059436.png" srcset="/img/loading.gif" lazyload
+alt="image-20220113205917313" />
+<figcaption aria-hidden="true">image-20220113205917313</figcaption>
+</figure>
+<h4 id="函数-1">4.2函数</h4>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">末端坐标系下。给定初始形位，关节旋量以及关节值，计算末端坐标系<br>T = <span class="hljs-constructor">FKinBody(M,Blist,<span class="hljs-params">thetalist</span>)</span><br>空间坐标系下。给定初始形位，关节旋量以及关节值，计算末端坐标系<br>T = <span class="hljs-constructor">FKinSpace(M,Slist,<span class="hljs-params">thetalist</span>)</span><br></code></pre></td></tr></table></figure>
+<h4 id="库卡kr60-3运动学建模">4.3库卡KR60-3运动学建模</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> modern_robotics <span class="hljs-keyword">as</span> mr<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">from</span> math <span class="hljs-keyword">import</span> pi<br><br><br>omega_1 = np.array([<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,-<span class="hljs-number">1</span>])<br>omega_2=np.array([<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>])<br>omega_3=np.array([<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>])<br>omega_4=np.array([-<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>])<br>omega_5=np.array([<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>])<br>omega_6=np.array([-<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>])<br><br>q1=np.array([<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>])<br>q2=np.array([<span class="hljs-number">350</span>,<span class="hljs-number">0</span>,<span class="hljs-number">815</span>])<br>q3=np.array([<span class="hljs-number">1200</span>,<span class="hljs-number">0</span>,<span class="hljs-number">815</span>])<br>q4=np.array([<span class="hljs-number">2020</span>,<span class="hljs-number">0</span>,<span class="hljs-number">960</span>])<br>q5=np.array([<span class="hljs-number">2020</span>,<span class="hljs-number">0</span>,<span class="hljs-number">960</span>])<br>q6=np.array([<span class="hljs-number">2020</span>,<span class="hljs-number">0</span>,<span class="hljs-number">960</span>])<br><br>M=np.array([[ <span class="hljs-number">0</span>,    <span class="hljs-number">0</span>,    <span class="hljs-number">1</span>,  <span class="hljs-number">2190</span>],<br>            [ <span class="hljs-number">0</span>,    <span class="hljs-number">1</span>,    <span class="hljs-number">0</span>,     <span class="hljs-number">0</span>],<br>            [-<span class="hljs-number">1</span>,    <span class="hljs-number">0</span>,    <span class="hljs-number">0</span>,   <span class="hljs-number">960</span>],<br>            [ <span class="hljs-number">0</span>,    <span class="hljs-number">0</span>,    <span class="hljs-number">0</span>,     <span class="hljs-number">1</span>]])<br><br><span class="hljs-comment"># thetalist = np.array([0,-pi/2,pi/2,0,0,0])</span><br>thetalist = np.array([-<span class="hljs-number">2.410000</span> / <span class="hljs-number">180</span> * pi, -<span class="hljs-number">57.230000</span> / <span class="hljs-number">180</span> * pi, <span class="hljs-number">112.080000</span> / <span class="hljs-number">180</span> * pi, -<span class="hljs-number">0.780000</span> / <span class="hljs-number">180</span> * pi, -<span class="hljs-number">54.890000</span> / <span class="hljs-number">180</span> * pi,<br>     <span class="hljs-number">1.440000</span> / <span class="hljs-number">180</span> * pi])<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">vcaculate</span>(<span class="hljs-params">omega,q</span>):<br>    v=np.cross(-omega,q)<br>    <span class="hljs-keyword">return</span> v<br>v1=vcaculate(omega_1,q1)<br>v2=vcaculate(omega_2,q2)<br>v3=vcaculate(omega_3,q3)<br>v4=vcaculate(omega_4,q4)<br>v5=vcaculate(omega_5,q5)<br>v6=vcaculate(omega_6,q6)<br><br>s1=np.append(omega_1,v1)<br>s2=np.append(omega_2,v2)<br>s3=np.append(omega_3,v3)<br>s4=np.append(omega_4,v4)<br>s5=np.append(omega_5,v5)<br>s6=np.append(omega_6,v6)<br><br>Slist=np.array([s1,s2,s3,s4,s5,s6]).T<br><span class="hljs-comment"># print(M)</span><br><span class="hljs-comment"># print(v)</span><br><span class="hljs-comment"># print(thetalist)</span><br><br><br><br>T = mr.FKinSpace(M,Slist,thetalist)<br><span class="hljs-built_in">print</span>(T)<br></code></pre></td></tr></table></figure>
+<h3 id="一阶运动学和静力学">（5）一阶运动学和静力学</h3>
+<p>机器人正运动学可以写成 <span class="math display">\[
+x(t)=f(\theta(t))
+\]</span> 对上式关于时间t求导 <span class="math display">\[
+\dot{x}=\frac {\partial f(\theta) } {\partial \theta }\frac
+{d(\theta(t)) } {dt }=\frac{\partial f(\theta)} {\partial \theta} =
+J(\theta)\dot{\theta}
+\]</span></p>
+<p>式中，<span
+class="math inline">\(J(\theta)\)</span>被称为雅可比，表示末端执行器速度相对关节速度的线性敏感度，时关于关节变量<span
+class="math inline">\(\theta\)</span>的函数。在某些形位上，雅可比矩阵会变成奇异阵，相应的形位被称为奇异形位，特征主要表现在机器人在末端的某些方向上的速度不能实现。</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/11/202201121058202.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112105856088" />
+<figcaption aria-hidden="true">image-20220112105856088</figcaption>
+</figure>
+<p>雅可比矩阵可以用来将关节转速的边界映射到<span
+class="math inline">\(v_{tip}\)</span>的边界中，如图5.2所示。不是如图那样将关节速度通过雅可比矩阵映射成多边形，而是在<span
+class="math inline">\(\dot{\theta}_1-\dot{\theta}_2\)</span>平面内将关节速度映射成—个单位圆。这个圆表示关节速度空间的等廓线，其中驱动器的共同作用可考虑为关节速度的平方和。通过映射，单位圆映射成末端速度的—个椭球，这个椭球称为<strong>可操作度椭球</strong>。当操作手的位形接近奇异位形时，椭球将退化成一个线
+段，末端沿某方向运动的能力将会丧失。</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/11/202201121059357.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112105936263" />
+<figcaption aria-hidden="true">image-20220112105936263</figcaption>
+</figure>
+<p>假设用于机器人运动的功忽略不计，机器人末端施加的功应与关节处产生的功相等，末端力向量记作<span
+class="math inline">\(f_{tip}\)</span>关节力矩向量记作<span
+class="math inline">\(\tau\)</span> 根据能量守恒定律可得</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201121101165.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112110135107" />
+<figcaption aria-hidden="true">image-20220112110135107</figcaption>
+</figure>
+<p>由于<span
+class="math inline">\(v_{tip}=J(\theta)\dot{\theta}\)</span>，因此等式改写为</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201121103149.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112110301093" />
+<figcaption aria-hidden="true">image-20220112110301093</figcaption>
+</figure>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201121103392.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112110319339" />
+<figcaption aria-hidden="true">image-20220112110319339</figcaption>
+</figure>
+<p>用于生成末端力<span
+class="math inline">\(f_{tip}\)</span>的关节力矩<span
+class="math inline">\(\tau\)</span>可以通过上式计算得到。如果机器人处于非奇异形位，雅可比矩阵及其转置矩阵可逆，可以写成</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201121105901.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112110510849" />
+<figcaption aria-hidden="true">image-20220112110510849</figcaption>
+</figure>
+<p>同样，类似于可操作度椭球，可以通过雅可比矩阵的逆转置，将<span
+class="math inline">\(\tau_{1}-\tau_{2}\)</span>平面内的一个等廓单位圆映射成<span
+class="math inline">\(f_{1}-f_{2}\)</span>末端力平面的一个椭球，这个椭球被称为<strong>力椭球</strong>。表示生成不同方向力的难易程度。</p>
+<p>由可操作度椭球和力椭球明显可以看出，若在某—方向上比较容易地产生末端速度，该方向产生力就变得比较困难，反之亦然，具体如图5.6所示。事实上，对于给定的机器人位形，可操作度椭球与力椭球的主轴方问完全重合，但力椭球的主轴长度与可操作度椭球的主轴长度正好相反</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201121111698.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112111100587" />
+<figcaption aria-hidden="true">image-20220112111100587</figcaption>
+</figure>
+<h4 id="机器人雅可比">5.1机器人雅可比</h4>
+<h5 id="空间雅可比">5.1.1空间雅可比</h5>
+<p>考虑一个n杆的开链机器人，其正向运动学的指数积公式为</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201121120401.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112112031348" />
+<figcaption aria-hidden="true">image-20220112112031348</figcaption>
+</figure>
+<p>空间速度<span class="math inline">\(V_S\)</span>可以写成<span
+class="math inline">\([V_S]=\dot{T}T^{-1}\)</span>，其中</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201121123354.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112112305290" />
+<figcaption aria-hidden="true">image-20220112112305290</figcaption>
+</figure>
+<p>可计算得</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201121123837.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112112349776" />
+<figcaption aria-hidden="true">image-20220112112349776</figcaption>
+</figure>
+<p>可通过伴随映射写成向量形式</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201121125669.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112112525617" />
+<figcaption aria-hidden="true">image-20220112112525617</figcaption>
+</figure>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201121126434.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112112612377" />
+<figcaption aria-hidden="true">image-20220112112612377</figcaption>
+</figure>
+<p>矩阵<span
+class="math inline">\(J_S(\theta)\)</span>即为空间固定坐标形式下得雅可比矩阵，简称为<strong>空间雅可比</strong>。</p>
+<p><span class="math inline">\(J_{si}(\theta)\)</span>得第i列为</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201121131118.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112113104059" />
+<figcaption aria-hidden="true">image-20220112113104059</figcaption>
+</figure>
+<p>​ 第<span class="math inline">\(i\)</span>列的结构形式为<span
+class="math inline">\(J_{si}(\theta)=Ad_{T_{i-1}}(S_{i})\)</span>其中<span
+class="math inline">\(T_{i-1}=e^{[S_1\theta_1]}\cdots
+e^{[S_{i-1}\theta_{i-1}]}\)</span>。回顾<span
+class="math inline">\(S_i\)</span>为机器人处于零位时第i个关节相对固定坐标系的旋量坐标，因此<span
+class="math inline">\(Ad_{T_{i-1}}(S_{i})\)</span>为该机器人经历刚体位移<span
+class="math inline">\(T_{i-1}\)</span>之后的第i个关节相对固定坐标系的旋量坐标。物理上，这与前面的i-l个关节从零位到当前值theta1...theta_i-1时的旋量坐标是等效的。因此,<span
+class="math inline">\(J_{s}(\theta)\)</span>的第i列<span
+class="math inline">\(J_{si}(\theta)\)</span>只是描述第i个关节轴相对固定坐标系的旋量，同时也是关节变量theta1...theta_i-1的函数。不过是取任意的<span
+class="math inline">\(\theta\)</span>值而不是<span
+class="math inline">\(\theta\)</span>＝0。</p>
+<h5 id="物体雅可比">5.1.2物体雅可比</h5>
+<p>物体坐标系下，<span
+class="math inline">\([V_b]=T^{-1}\dot{T}\)</span>，正运动学公式为</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201121526689.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112152636620" />
+<figcaption aria-hidden="true">image-20220112152636620</figcaption>
+</figure>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201121527403.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112152702328" />
+<figcaption aria-hidden="true">image-20220112152702328</figcaption>
+</figure>
+<p>由此计算可得</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201121527124.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112152734065" />
+<figcaption aria-hidden="true">image-20220112152734065</figcaption>
+</figure>
+<p>以矩阵形式表示</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201121528730.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112152800670" />
+<figcaption aria-hidden="true">image-20220112152800670</figcaption>
+</figure>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201121528944.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112152824883" />
+<figcaption aria-hidden="true">image-20220112152824883</figcaption>
+</figure>
+<p>矩阵<span
+class="math inline">\(J_{b}(\theta)\)</span>即为物体坐标系下得雅可比行列式，简称<strong>物体雅可比</strong></p>
+<h5 id="几何解释">5.1.3几何解释</h5>
+<h5
+id="空间雅可比和物体雅可比的关系">5.1.4空间雅可比和物体雅可比的关系</h5>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201121550301.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112155025242" />
+<figcaption aria-hidden="true">image-20220112155025242</figcaption>
+</figure>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201121550487.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112155033433" />
+<figcaption aria-hidden="true">image-20220112155033433</figcaption>
+</figure>
+<h5
+id="几何雅可比和解析雅可比的关系">5.1.5几何雅可比和解析雅可比的关系</h5>
+<h4 id="开链机器人静力学">5.2开链机器人静力学</h4>
+<h4 id="奇异性分析">5.3奇异性分析</h4>
+<p>​
+如在某个或者多个方向同时失去运动能力的位姿，我们称之为运动学奇异（kinematicsingularjty），或者简称为奇
+异（singularity）。数学上,奇异位姿意味着雅可比矩阵<span
+class="math inline">\(J(\theta)\)</span>不再满秩 。</p>
+<p>​ 当<span
+class="math inline">\(J(\theta)\)</span>的阶数降到最大值以下，奇异位姿对应此时的<span
+class="math inline">\(\theta\)</span>。奇异位姿下末端坐标系丧失掉在某—维或多维方向的瞬时空间速度，这种奇异下损失的自由度同时伴随产生了与之对应方向上的约束力旋量
+。</p>
+<ul>
+<li>2个旋转轴共轴</li>
+<li>3各平面转动副轴线平行</li>
+<li>4各转动副轴线共点</li>
+<li>4个转动副轴线共面</li>
+<li>6个转动副都与一条线相交</li>
+</ul>
+<h4 id="可操作度">5.4 可操作度</h4>
+<p>对于一个通用的″关节开链机器人，任务空间的坐标为q，可操作度椭球对应的是当关节速率满足<span
+class="math inline">\(|\dot{\theta}|=1\)</span>时末端执行器的速度。在n维关节速度空间内的一个单元球。假设<span
+class="math inline">\(J\)</span>可逆,单位关节速度条件数可以写成</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201121606174.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112160630103" />
+<figcaption aria-hidden="true">image-20220112160630103</figcaption>
+</figure>
+<p>由线性代数可知，上式定义m维空间椭球。椭球主轴方向为<span
+class="math inline">\(v_i\)</span>，主轴半径长为<span
+class="math inline">\(\sqrt{\lambda_i}\)</span>。<strong>椭球的体积</strong>V与主轴半径长的乘积成正比。</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201121613793.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112161318734" />
+<figcaption aria-hidden="true">image-20220112161318734</figcaption>
+</figure>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201121614018.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112161412935" />
+<figcaption aria-hidden="true">image-20220112161412935</figcaption>
+</figure>
+<p>角速度与线速度的量纲不同，于是将雅可比矩阵分开。由此可以得到两个三维可操作度椭球:一个表示角速度,另—个表示线速度。这两个可操作度椭球都有与A的特征向量相对应的主轴，长度为其特征值的平方根。其中，对于角速度可操作度椭球<span
+class="math inline">\(J=J_\omega
+J_\omega^T\)</span>，对于线速度可操作度椭球,<span
+class="math inline">\(J=J_v J_v^T\)</span></p>
+<p>当在计算线速度可操作度椭球时’使用<strong>物体雅可比<span
+class="math inline">\(J_b\)</span></strong>更合适些,因为我们<strong>通常对末端坐标系原点的速度更感兴趣</strong>而非固定坐标系原点的速度。</p>
+<p>除了可操作度椭球的几何特征之外,还有一种方法是定义可操作度椭球的<strong>最长轴半径与最短轴半径的比值</strong></p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201121658649.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112165811585" />
+<figcaption aria-hidden="true">image-20220112165811585</figcaption>
+</figure>
+<p>当<span
+class="math inline">\(\mu_1(A)\)</span>接近1时,可操作度椭球接近球形或者各向同性。意味着该机器人沿任何方向都同样容易，这是理想情况。相反,当机器人接近奇异时<span
+class="math inline">\(\mu_1(A)\)</span>趋于无穷大 。</p>
+<p>类似的，可以定义<span class="math inline">\(\mu_2(A)\)</span>为<span
+class="math inline">\(\mu_1(A)\)</span>的平方，又称为矩阵A的<strong>条件数</strong>
+，该值越小越理想。矩阵的条件数普遍用于衡量矩阵与向量相乘后的敏感度误差减少的程度
+。</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201121701971.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112170104912" />
+<figcaption aria-hidden="true">image-20220112170104912</figcaption>
+</figure>
+<p>最后一种度量方法是简单利用<strong>可操作度椭球的体积</strong>，这种情况是越大越好。</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201121702087.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112170213023" />
+<figcaption aria-hidden="true">image-20220112170213023</figcaption>
+</figure>
+<p>与可操作度椭球类似，可以定义<strong>力椭球</strong>。
+由单位关节力矩满足<span class="math inline">\(||{\tau}
+||=1\)</span>，得到与上述类似的结果</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201121705838.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112170545776" />
+<figcaption aria-hidden="true">image-20220112170545776</figcaption>
+</figure>
+<p>因此，力椭球的主轴长度为可操作椭球长度的倒数。</p>
+<h4 id="软件函数">5.5软件函数</h4>
+<p>给定物体坐标系下描述的各关节旋量<span
+class="math inline">\(B_i\)</span>及关节角，计算物体雅可比<span
+class="math inline">\(J_B(\theta)\)</span></p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">Jb</span>=JacobianBody(Blist,thetalist)<br></code></pre></td></tr></table></figure>
+<p>给定物体坐标系下描述的各关节旋量$ S_i<span
+class="math inline">\(及关节角，计算物体雅可比\)</span>J_S()$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">J=JacobianBody(Slist,thetalist)<br></code></pre></td></tr></table></figure>
+<h3 id="逆运动学">（6）逆运动学</h3>
+<h4 id="解析解">6.1解析解</h4>
+<h5 id="几何法">6.1.1几何法</h5>
+<h4 id="section"></h4>
+<p>1.求解<span class="math inline">\(\theta_1 、\theta_2
+、\theta_3\)</span> <span class="math display">\[
+g_s(\theta)=e^{[S_1]\theta_1}\cdots e^{[S_{6}]\theta_{6}}M
+\]</span> 右乘初始位姿<span
+class="math inline">\(M\)</span>的逆矩阵，设<span
+class="math inline">\(g_s(\theta)*M^{-1}=g\)</span>，得到 <span
+class="math display">\[
+g=e^{[S_1]\theta_1}\cdots e^{[S_{6}]\theta_{6}}
+\]</span> 根据螺旋理论，位于螺旋轴上的<span
+class="math inline">\(q\)</span>点，无论旋转多少角度，<span
+class="math inline">\(q\)</span>点的位置保持不变，即 <span
+class="math display">\[
+e^{[S]\theta}*q=q
+\]</span> 因此将上式右乘关节4、5、6的共同交点<span
+class="math inline">\(q_6\)</span>，得 <span class="math display">\[
+g*q_6=e^{[S_1]\theta_1}\cdots e^{[S_{3}]\theta_{3}}*q_6=(A,B,C,1)
+\]</span> <img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201122127723.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112212739637" /></p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201122129863.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112212908790" />
+<figcaption aria-hidden="true">image-20220112212908790</figcaption>
+</figure>
+<p>可知kuka
+kr60后三轴相交于一点，符合pieper准则，具有封闭解。可知(A,B,C)为机器人相应姿态下的腕部中心坐标p，即4，5，6关节的共同交点。所以，前三轴决定机器人腕部中心的位置，后三轴决定机器人腕部中心的姿态。
+<span class="math display">\[
+q6 =[2020, 0, 960,1]
+\]</span> 首先，使用几何法求解前三个关节。</p>
+<p>通常情况下，库卡机器人前三轴具有四组逆运动学逆解，分别如图所示，左图对应的是左向位置（肘部向上和向下）,右图对应的是右向位置
+（肘部向上和向下）</p>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203051854731.png" srcset="/img/loading.gif" lazyload
+alt="image-20220305185457224" />
+<figcaption aria-hidden="true">image-20220305185457224</figcaption>
+</figure>
+<p>对于关节1，运动学逆解有两个，如图所示。</p>
+<p><img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203051856658.jpg" srcset="/img/loading.gif" lazyload
+alt="img" /> <span class="math display">\[
+\theta_{11} = atan2d(-py,px)；
+\theta_{12} = atan2d(-py,px) + 180
+\]</span> 对于关节2和3有两组解</p>
+<p>情况一、</p>
+<p><img src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203051901311.jpg" srcset="/img/loading.gif" lazyload alt="img" style="zoom:67%;" /></p>
+<figure>
+<img
+src="file:///E:\qq记录\760088941\Image\C2C\E9B35D92825145DD7A275F895DBD70F0.jpg" srcset="/img/loading.gif" lazyload
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>情况二、</p>
+<figure>
+<img
+src="file:///E:\qq记录\760088941\Image\C2C\970C64AC3887162C3074A0375214A803.jpg" srcset="/img/loading.gif" lazyload
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203051903391.jpg" srcset="/img/loading.gif" lazyload
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>由此，机器人前三关节的四组逆解就可以求出来了。</p>
+<p>接下来使用POE正运动学公式，求出后三个关节的运动学逆解。</p>
+<p>将机器人运动学模型式两边同右乘初始位姿，可得</p>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203051906784.png" srcset="/img/loading.gif" lazyload
+alt="image-20220305190640702" />
+<figcaption aria-hidden="true">image-20220305190640702</figcaption>
+</figure>
+<p>根据螺旋理论，位于转轴上的 q 点，无论旋转多少角度，q
+点的位置保持不变，即</p>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203051907522.png" srcset="/img/loading.gif" lazyload
+alt="image-20220305190718446" />
+<figcaption aria-hidden="true">image-20220305190718446</figcaption>
+</figure>
+<p>因此将式（22）两边同时右乘关节 4、5、6 的共同 交点 q6，得</p>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203051908182.png" srcset="/img/loading.gif" lazyload
+alt="image-20220305190804100" />
+<figcaption aria-hidden="true">image-20220305190804100</figcaption>
+</figure>
+<p>点P的坐标(A,B,C)即机器人腕部中心在相应姿态下的坐标，求出前三轴坐标后，带入公式</p>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203051911006.png" srcset="/img/loading.gif" lazyload
+alt="image-20220305191108924" />
+<figcaption aria-hidden="true">image-20220305191108924</figcaption>
+</figure>
+<p>然后在转轴 ω6 上取一点 <span class="math inline">\(p_6 =
+[0;0;960;1]\)</span>，并且该点不在 ω4、ω5 上， 于是得</p>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203051911170.png" srcset="/img/loading.gif" lazyload
+alt="image-20220305191147083" />
+<figcaption aria-hidden="true">image-20220305191147083</figcaption>
+</figure>
+<p>由POE正运动学公式可得</p>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203051912112.png" srcset="/img/loading.gif" lazyload
+alt="image-20220305191258029" />
+<figcaption aria-hidden="true">image-20220305191258029</figcaption>
+</figure>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203051913317.png" srcset="/img/loading.gif" lazyload
+alt="image-20220305191307219" />
+<figcaption aria-hidden="true">image-20220305191307219</figcaption>
+</figure>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203051913130.png" srcset="/img/loading.gif" lazyload
+alt="image-20220305191319051" />
+<figcaption aria-hidden="true">image-20220305191319051</figcaption>
+</figure>
+<p>T4*T5为</p>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203051915325.png" srcset="/img/loading.gif" lazyload
+alt="image-20220305191531245" />
+<figcaption aria-hidden="true">image-20220305191531245</figcaption>
+</figure>
+<p>T4XT5XP6为</p>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203051920132.png" srcset="/img/loading.gif" lazyload
+alt="image-20220305192042032" />
+<figcaption aria-hidden="true">image-20220305192042032</figcaption>
+</figure>
+<p>等式两边一一而对应，即可求出<span
+class="math display">\[\theta_4,\theta_5\]</span></p>
+<p>求得 θ4、θ5。又将 θ4、θ5代入正运动学公式并整理得</p>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203051924463.png" srcset="/img/loading.gif" lazyload
+alt="image-20220305192405383" />
+<figcaption aria-hidden="true">image-20220305192405383</figcaption>
+</figure>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203051924930.png" srcset="/img/loading.gif" lazyload
+alt="image-20220305192435842" />
+<figcaption aria-hidden="true">image-20220305192435842</figcaption>
+</figure>
+<p><span
+class="math inline">\(利用等式两边一一对应即可求出\theta_6\)</span></p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><code class="hljs matlab">clc;clear;<br>X=[     <span class="hljs-number">0.995869</span>,    <span class="hljs-number">-0.025686</span>,    <span class="hljs-number">-0.087090</span>,  <span class="hljs-number">1480.441492</span> ;<br>      <span class="hljs-number">0.024499</span>,     <span class="hljs-number">0.999592</span>,    <span class="hljs-number">-0.014667</span>,    <span class="hljs-number">60.437411</span> ;<br>      <span class="hljs-number">0.087431</span>,     <span class="hljs-number">0.012473</span>,     <span class="hljs-number">0.996092</span>,  <span class="hljs-number">2212.432130</span> ;<br>      <span class="hljs-number">0.000000</span>,     <span class="hljs-number">0.000000</span>,     <span class="hljs-number">0.000000</span>,     <span class="hljs-number">1.000000</span> ];<br><br><br><span class="hljs-comment">% X=[    -0.000000,    -0.000000,     1.000000,  1340.000000 ;</span><br><span class="hljs-comment">%      -0.000000,     1.000000,     0.000000,    -0.000000 ;</span><br><span class="hljs-comment">%      -1.000000,    -0.000000,    -0.000000,  1810.000000 ;</span><br><span class="hljs-comment">%       0.000000,     0.000000,     0.000000,     1.000000 ];</span><br><br>M=[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2190</span>;<br>   <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>;<br>  <span class="hljs-number">-1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">960</span>;<br>   <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>   ]<br><br><span class="hljs-comment">%前三轴旋转轴</span><br>s1=[<span class="hljs-number">0</span>;<span class="hljs-number">0</span>;<span class="hljs-number">-1</span>;<span class="hljs-number">0</span>;<span class="hljs-number">0</span>;<span class="hljs-number">0</span>]<br>s2=[<span class="hljs-number">0</span>;<span class="hljs-number">1</span>;<span class="hljs-number">0</span>;<span class="hljs-number">-815</span>;<span class="hljs-number">0</span>;<span class="hljs-number">350</span>]<br>s3=[<span class="hljs-number">0</span>;<span class="hljs-number">1</span>;<span class="hljs-number">0</span>;<span class="hljs-number">-815</span>;<span class="hljs-number">0</span>;<span class="hljs-number">1200</span>]<br>s4=[<span class="hljs-number">-1</span>;<span class="hljs-number">0</span>;<span class="hljs-number">0</span>;<span class="hljs-number">0</span>;<span class="hljs-number">-960</span>;<span class="hljs-number">0</span>]<br>s5=[<span class="hljs-number">0</span>;<span class="hljs-number">1</span>;<span class="hljs-number">0</span>;<span class="hljs-number">-960</span>;<span class="hljs-number">0</span>;<span class="hljs-number">2020</span>]<br>s6=[<span class="hljs-number">-1</span>;<span class="hljs-number">0</span>;<span class="hljs-number">0</span>;<span class="hljs-number">0</span>;<span class="hljs-number">-960</span>;<span class="hljs-number">0</span>]<br><br><span class="hljs-comment">%轴上任意一点</span><br>q1 = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]&#x27;<br>q2 = [<span class="hljs-number">350</span>, <span class="hljs-number">0</span>, <span class="hljs-number">815</span>]&#x27;<br>q3 =[<span class="hljs-number">1200</span>, <span class="hljs-number">0</span>, <span class="hljs-number">815</span>]&#x27;<br>q4 = [<span class="hljs-number">2020</span>, <span class="hljs-number">0</span>, <span class="hljs-number">960</span>]&#x27;<br>q5 = [<span class="hljs-number">2020</span>, <span class="hljs-number">0</span>, <span class="hljs-number">960</span>]&#x27;<br>q6 =[<span class="hljs-number">2020</span>, <span class="hljs-number">0</span>, <span class="hljs-number">960</span>]&#x27;<br>q6_1 = [q6;<span class="hljs-number">1</span>]<br>p = X  / M  *[q6;<span class="hljs-number">1</span>]<br>px =p(<span class="hljs-number">1</span>)<br>py =p(<span class="hljs-number">2</span>)<br>pz =p(<span class="hljs-number">3</span>)<br><span class="hljs-comment">% px=1399.48736528</span><br><span class="hljs-comment">% py=58.90058846400001</span><br><span class="hljs-comment">% pz=942.73081665274</span><br><span class="hljs-comment">% px=1528.692;</span><br><span class="hljs-comment">% py=133.743;</span><br><span class="hljs-comment">% pz=931.186;</span><br>o2a=<span class="hljs-number">850</span>;<br>ab=<span class="hljs-number">145</span>;<br>bp=<span class="hljs-number">820</span>;<br><br><br>theta1_1 = atan2d(-py,px)<br>theta1_2 = atan2d(-py,px) + <span class="hljs-number">180</span><br><br>ap=<span class="hljs-built_in">sqrt</span>(<span class="hljs-number">145</span>^<span class="hljs-number">2</span>+<span class="hljs-number">820</span>^<span class="hljs-number">2</span>);<br>o2w=<span class="hljs-built_in">sqrt</span>(px^<span class="hljs-number">2</span>+py^<span class="hljs-number">2</span>)<span class="hljs-number">-350</span>;<br>pw=pz<span class="hljs-number">-815</span>;<br>o2p=<span class="hljs-built_in">sqrt</span>(o2w^<span class="hljs-number">2</span>+pw^<span class="hljs-number">2</span>);<br>angle_ao2p=<span class="hljs-built_in">acosd</span>((o2a^<span class="hljs-number">2</span>+o2p^<span class="hljs-number">2</span>-ap^<span class="hljs-number">2</span>)/(<span class="hljs-number">2</span>*o2a*o2p));<br>angle_po2w=<span class="hljs-built_in">acosd</span>((o2p^<span class="hljs-number">2</span>+o2w^<span class="hljs-number">2</span>-pw^<span class="hljs-number">2</span>)/(<span class="hljs-number">2</span>*o2p*o2w));<br>theta2_1=-(angle_ao2p+angle_po2w)<br><br>angle_PO2W = <span class="hljs-built_in">acosd</span>((o2p^<span class="hljs-number">2</span>+o2w^<span class="hljs-number">2</span>-pw^<span class="hljs-number">2</span>)/(<span class="hljs-number">2</span>*o2p*o2w));<br>angle_PO2A = <span class="hljs-built_in">acosd</span>((o2p^<span class="hljs-number">2</span>+o2a^<span class="hljs-number">2</span>-ap^<span class="hljs-number">2</span>)/(<span class="hljs-number">2</span>*o2p*o2a));<br>theta2_2 = angle_PO2A - angle_PO2W<br><br><span class="hljs-comment">%</span><br>angle_bap = atan2d(bp,ab);<br>angle_o2ap=<span class="hljs-built_in">acosd</span>((o2a^<span class="hljs-number">2</span>+ap^<span class="hljs-number">2</span>-o2p^<span class="hljs-number">2</span>)/(<span class="hljs-number">2</span>*o2a*ap));<br>theta3_1 = <span class="hljs-number">270</span>- angle_bap-angle_o2ap<br><br><br>o2c = o2w/<span class="hljs-built_in">cosd</span>(-theta2_2);<br>wc = o2w*<span class="hljs-built_in">tand</span>(-theta2_2);<br>ac=o2c-o2a;<br>pc = pw-wc;<br>pw;<br>ap;<br><br>angle_PAC = <span class="hljs-built_in">acosd</span>((ap^<span class="hljs-number">2</span>+ac^<span class="hljs-number">2</span>-pc^<span class="hljs-number">2</span>)/(<span class="hljs-number">2</span>*ap*ac));<br>angle_BAP = atan2d(bp,ab);<br>theta3_2 = <span class="hljs-number">90</span>-(angle_PAC + angle_BAP)<br><br><span class="hljs-comment">%后三轴计算</span><br><br><br><span class="hljs-comment">% theta4=-0.78</span><br><span class="hljs-comment">% theta5=-54.89</span><br><span class="hljs-comment">% theta6=1.44</span><br><br>T1=trans(s1,theta1_1)<br>T2=trans(s2,theta2_1)<br>T3=trans(s3,theta3_1)<br><span class="hljs-comment">% T4=trans(s4,theta4)</span><br><span class="hljs-comment">% T5=trans(s5,theta5)</span><br><span class="hljs-comment">% T6=trans(s6,theta6)</span><br><br>T_0 = inv(T3)*inv(T2)*inv(T1)*X*inv(M)*[<span class="hljs-number">0</span>;<span class="hljs-number">0</span>;<span class="hljs-number">960</span>;<span class="hljs-number">1</span>]<br>costheta5 = <span class="hljs-number">1</span>-T_0(<span class="hljs-number">1</span>)/<span class="hljs-number">2020</span><br>theta5=atan2d(-<span class="hljs-built_in">sqrt</span>(<span class="hljs-number">1</span>-costheta5^<span class="hljs-number">2</span>),costheta5)<br>T5=trans(s5,theta5)<br><br>costheta4 = (T_0(<span class="hljs-number">3</span>) - <span class="hljs-number">960</span>)/(<span class="hljs-number">2020</span>*<span class="hljs-built_in">sind</span>(theta5))<br>theta4=atan2d(-<span class="hljs-built_in">sqrt</span>(<span class="hljs-number">1</span>-costheta4^<span class="hljs-number">2</span>),costheta4)<br>T4=trans(s4,theta4)<br><br>T_1 = inv(T5)*inv(T4)*inv(T3)*inv(T2)*inv(T1)*X*inv(M)<br>theta6=<span class="hljs-built_in">acosd</span>(T_1(<span class="hljs-number">2</span>,<span class="hljs-number">2</span>))<br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">T</span>=<span class="hljs-title">trans</span><span class="hljs-params">(s,theta)</span></span><br>    se3mat = VecTose3(s);<br>    theta = theta /180 * <span class="hljs-built_in">pi</span>;<br>    se3mat = se3mat * theta;<br>    T = MatrixExp6(se3mat);<br><span class="hljs-keyword">end</span><br><br><br></code></pre></td></tr></table></figure>
+<h5 id="pk子问题解法">6.1.2 pk子问题解法</h5>
+<p>求解分为两部，第一部分求解前三轴关节角，第二部分求解后三轴关节角。</p>
+<p>为了便于求解后三轴关节角，将机器人初始位姿定位[0,0,0,0,90,0],即第五轴旋转90度，使后三轴交于一点的同时互相正交。同时求解出来的关节角结果的第五轴需要加上90度。</p>
+<p>第五轴90度旋转后的初始形位为</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs dns">M=[    -<span class="hljs-number">1.000000</span>,    -<span class="hljs-number">0.000000</span>,     <span class="hljs-number">0.000000</span>,  <span class="hljs-number">2020</span>.<span class="hljs-number">000000</span> <span class="hljs-comment">;</span><br>     -<span class="hljs-number">0.000000</span>,     <span class="hljs-number">1.000000</span>,     <span class="hljs-number">0.000000</span>,     <span class="hljs-number">0.000000</span> <span class="hljs-comment">;</span><br>     -<span class="hljs-number">0.000000</span>,     <span class="hljs-number">0.000000</span>,    -<span class="hljs-number">1.000000</span>,   <span class="hljs-number">790</span>.<span class="hljs-number">000000</span> <span class="hljs-comment">;</span><br>      <span class="hljs-number">0.000000</span>,     <span class="hljs-number">0.000000</span>,     <span class="hljs-number">0.000000</span>,     <span class="hljs-number">1.000000</span> ]<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203101315105.png" srcset="/img/loading.gif" lazyload
+alt="image-20220310131507999" />
+<figcaption aria-hidden="true">image-20220310131507999</figcaption>
+</figure>
+<h6 id="前三轴">前三轴</h6>
+<p>因为前三轴并不相交，所以只能把前三轴分解为三个子问题1进行求解。</p>
+<p><strong>图中坐标系情况与实际情况不同</strong></p>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203101239978.png" srcset="/img/loading.gif" lazyload
+alt="image-20220310123952833" />
+<figcaption aria-hidden="true">image-20220310123952833</figcaption>
+</figure>
+<p>​
+p1为腕部中心坐标，正运动学公式两边同时乘以初始形位下机器人腕部中心坐标r4=[2020;0;960]，可以求解出来目标形位下腕部中心坐标为p1=（px,py,pz）</p>
+<p>​
+从图中可以看出o1（不一定是o点）与p1共面，同时，o1位于关节轴1上，所以o1的坐标为o1=[0;0;pz]；</p>
+<p>​ p2也与p1共面，也与o2共面，由|p1o1| = |p2o2|，即可求解出<span
+class="math inline">\(p_2=[(-)\sqrt{(px^2+py^2)},0,pz]\)</span>,p2有两种情况。</p>
+<p>​ <span
+class="math inline">\(o_2=[350;0;815],o_3=[1200;0;815]\)</span>，<span
+class="math inline">\(由|r_4o_3|=|p_3o_3|,|p_2o_2|=|p_3o_2|\)</span>，可以求出p3点的坐标。</p>
+<p>​ 将前三关节角分解为三个子问题1，前三个关节螺旋运动表示为</p>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203101301144.png" srcset="/img/loading.gif" lazyload
+alt="image-20220310130135051" />
+<figcaption aria-hidden="true">image-20220310130135051</figcaption>
+</figure>
+<p>​ <strong>pk子问题1</strong>如图所示</p>
+<figure>
+<img
+src="%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%BF%90%E5%8A%A8%E5%AD%A6%E7%AC%94%E8%AE%B0/202203101303943.png" srcset="/img/loading.gif" lazyload
+alt="image-20220310130306836" />
+<figcaption aria-hidden="true">image-20220310130306836</figcaption>
+</figure>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203101303570.png" srcset="/img/loading.gif" lazyload
+alt="image-20220310130357483" />
+<figcaption aria-hidden="true">image-20220310130357483</figcaption>
+</figure>
+<p>等价于</p>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203101304060.png" srcset="/img/loading.gif" lazyload
+alt="image-20220310130408968" />
+<figcaption aria-hidden="true">image-20220310130408968</figcaption>
+</figure>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203101304772.png" srcset="/img/loading.gif" lazyload
+alt="image-20220310130430678" />
+<figcaption aria-hidden="true">image-20220310130430678</figcaption>
+</figure>
+<p>关节角<span class="math inline">\(\theta\)</span>可以由公式求出</p>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203101305846.png" srcset="/img/loading.gif" lazyload
+alt="image-20220310130531750" />
+<figcaption aria-hidden="true">image-20220310130531750</figcaption>
+</figure>
+<p>由此，前三个关节角即可求出。</p>
+<blockquote>
+<p>注意：有些形位p3点的坐标求出来是虚数，即第二轴求解可能会有无解的情况，虽然理论上机器人前三轴有4组解，但是有些位置关节角可能无法达到，可能不足4组解。在程序中，遇到p3坐标为虚数的情况就跳出此次循环，进入下一循环。</p>
+</blockquote>
+<h6 id="后三轴">后三轴</h6>
+<p>在公式中将求解的前三个关节角右移</p>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203101316676.png" srcset="/img/loading.gif" lazyload
+alt="image-20220310131653586" />
+<figcaption aria-hidden="true">image-20220310131653586</figcaption>
+</figure>
+<p>乘以一个在轴6上但不在45轴上的点p=[2020;0;0;1]。可以消去第六轴的旋转。</p>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203101322146.png" srcset="/img/loading.gif" lazyload
+alt="image-20220310132230969" />
+<figcaption aria-hidden="true">image-20220310132230969</figcaption>
+</figure>
+<p>因为4，5轴交于一点r4，即可使用PK子问题2对关节45进行求解。</p>
+<p><strong>pk子问题2</strong></p>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203101324623.png" srcset="/img/loading.gif" lazyload
+alt="image-20220310132449524" />
+<figcaption aria-hidden="true">image-20220310132449524</figcaption>
+</figure>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203101325327.png" srcset="/img/loading.gif" lazyload
+alt="image-20220310132531218" />
+<figcaption aria-hidden="true">image-20220310132531218</figcaption>
+</figure>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203101325885.png" srcset="/img/loading.gif" lazyload
+alt="image-20220310132543800" />
+<figcaption aria-hidden="true">image-20220310132543800</figcaption>
+</figure>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203101326703.png" srcset="/img/loading.gif" lazyload
+alt="image-20220310132600617" />
+<figcaption aria-hidden="true">image-20220310132600617</figcaption>
+</figure>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203101326825.png" srcset="/img/loading.gif" lazyload
+alt="image-20220310132609735" />
+<figcaption aria-hidden="true">image-20220310132609735</figcaption>
+</figure>
+<p>令z为</p>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203101326770.png" srcset="/img/loading.gif" lazyload
+alt="image-20220310132634685" />
+<figcaption aria-hidden="true">image-20220310132634685</figcaption>
+</figure>
+<p>则</p>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203101326595.png" srcset="/img/loading.gif" lazyload
+alt="image-20220310132646514" />
+<figcaption aria-hidden="true">image-20220310132646514</figcaption>
+</figure>
+<p><span class="math inline">\(\alpha 和\beta
+即可通过公式求出\)</span></p>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203101327532.png" srcset="/img/loading.gif" lazyload
+alt="image-20220310132731429" />
+<figcaption aria-hidden="true">image-20220310132731429</figcaption>
+</figure>
+<p>同时<span class="math inline">\(\gamma
+有两组解\)</span>，对应于后三轴有两组解的情况</p>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203101328535.png" srcset="/img/loading.gif" lazyload
+alt="image-20220310132855436" />
+<figcaption aria-hidden="true">image-20220310132855436</figcaption>
+</figure>
+<p>求出z后，子问题2就转换为两个子问题1，可以使用子问题一进行求解。</p>
+<p>求解出关节45后，带入公式，两端乘以不在轴6上的一点p7=[2021;0;0]</p>
+<figure>
+<img
+src="file:///F:\SynologyDrive\nas_cloud\机器人\记录\imagebed-master\images\202203101331662.png" srcset="/img/loading.gif" lazyload
+alt="image-20220310133139562" />
+<figcaption aria-hidden="true">image-20220310133139562</figcaption>
+</figure>
+<p>同样使用子问题1进行求解出关节6</p>
+<p>求解完所有的关节后，将<strong>关节五加上90度</strong>，即为实际情况的关节角。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br></pre></td><td class="code"><pre><code class="hljs matlab">clc;clear;<br><span class="hljs-comment">%目标形位</span><br>X=[     <span class="hljs-number">0.829242</span>,    <span class="hljs-number">-0.423859</span>,     <span class="hljs-number">0.364283</span>,   <span class="hljs-number">546.623076</span> ;<br>      <span class="hljs-number">0.407748</span>,     <span class="hljs-number">0.904588</span>,     <span class="hljs-number">0.124342</span>,   <span class="hljs-number">282.228651</span> ;<br>     <span class="hljs-number">-0.382230</span>,     <span class="hljs-number">0.045426</span>,     <span class="hljs-number">0.922950</span>,  <span class="hljs-number">1798.527619</span> ;<br>      <span class="hljs-number">0.000000</span>,     <span class="hljs-number">0.000000</span>,     <span class="hljs-number">0.000000</span>,     <span class="hljs-number">1.000000</span> ];<br><br><span class="hljs-comment">% X=[    -0.000000,    -0.000000,     1.000000,  1340.000000 ;</span><br><span class="hljs-comment">%      -0.000000,     1.000000,     0.000000,    -0.000000 ;</span><br><span class="hljs-comment">%      -1.000000,    -0.000000,    -0.000000,  1810.000000 ;</span><br><span class="hljs-comment">%       0.000000,     0.000000,     0.000000,     1.000000 ];</span><br><br><span class="hljs-comment">% M=[0, 0, 1, 2190;</span><br><span class="hljs-comment">%    0, 1, 0, 0;</span><br><span class="hljs-comment">%   -1, 0, 0, 960;</span><br><span class="hljs-comment">%    0, 0, 0, 1   ]</span><br><span class="hljs-comment">%初始形位，不是所有的关节为零，第五关节旋转90°，在最后计算角度时，第五轴应减去90°</span><br>M=[    <span class="hljs-number">-1.000000</span>,    <span class="hljs-number">-0.000000</span>,     <span class="hljs-number">0.000000</span>,  <span class="hljs-number">2020.000000</span> ;<br>     <span class="hljs-number">-0.000000</span>,     <span class="hljs-number">1.000000</span>,     <span class="hljs-number">0.000000</span>,     <span class="hljs-number">0.000000</span> ;<br>     <span class="hljs-number">-0.000000</span>,     <span class="hljs-number">0.000000</span>,    <span class="hljs-number">-1.000000</span>,   <span class="hljs-number">790.000000</span> ;<br>      <span class="hljs-number">0.000000</span>,     <span class="hljs-number">0.000000</span>,     <span class="hljs-number">0.000000</span>,     <span class="hljs-number">1.000000</span> ];<br><br><span class="hljs-comment">%前三轴旋转轴</span><br>s(<span class="hljs-number">1</span>)=&#123;[<span class="hljs-number">0</span>;<span class="hljs-number">0</span>;<span class="hljs-number">-1</span>;<span class="hljs-number">0</span>;<span class="hljs-number">0</span>;<span class="hljs-number">0</span>]&#125;<br>s(<span class="hljs-number">2</span>)=&#123;[<span class="hljs-number">0</span>;<span class="hljs-number">1</span>;<span class="hljs-number">0</span>;<span class="hljs-number">-815</span>;<span class="hljs-number">0</span>;<span class="hljs-number">350</span>]&#125;<br>s(<span class="hljs-number">3</span>)=&#123;[<span class="hljs-number">0</span>;<span class="hljs-number">1</span>;<span class="hljs-number">0</span>;<span class="hljs-number">-815</span>;<span class="hljs-number">0</span>;<span class="hljs-number">1200</span>]&#125;<br>s(<span class="hljs-number">4</span>)=&#123;[<span class="hljs-number">-1</span>;<span class="hljs-number">0</span>;<span class="hljs-number">0</span>;<span class="hljs-number">0</span>;<span class="hljs-number">-960</span>;<span class="hljs-number">0</span>]&#125;<br>s(<span class="hljs-number">5</span>)=&#123;[<span class="hljs-number">0</span>;<span class="hljs-number">1</span>;<span class="hljs-number">0</span>;<span class="hljs-number">-960</span>;<span class="hljs-number">0</span>;<span class="hljs-number">2020</span>]&#125;<br><br>w1 = [<span class="hljs-number">0</span>;<span class="hljs-number">0</span>;<span class="hljs-number">-1</span>]<br>w2 = [<span class="hljs-number">0</span>;<span class="hljs-number">1</span>;<span class="hljs-number">0</span>]<br>w3 = [<span class="hljs-number">0</span>;<span class="hljs-number">1</span>;<span class="hljs-number">0</span>]<br>w4 = [<span class="hljs-number">-1</span>;<span class="hljs-number">0</span>;<span class="hljs-number">0</span>]<br>w5 = [<span class="hljs-number">0</span>;<span class="hljs-number">1</span>;<span class="hljs-number">0</span>]<br><span class="hljs-comment">%旋转90后</span><br>w6 = [<span class="hljs-number">0</span>;<span class="hljs-number">0</span>;<span class="hljs-number">1</span>]<br><span class="hljs-comment">%轴上任意一点</span><br>q(<span class="hljs-number">1</span>) = &#123;[<span class="hljs-number">0</span>;<span class="hljs-number">0</span>;<span class="hljs-number">0</span>]&#125;<br>q(<span class="hljs-number">2</span>) = &#123;[<span class="hljs-number">350</span>;<span class="hljs-number">0</span>;<span class="hljs-number">815</span>]&#125;<br>q(<span class="hljs-number">3</span>) =&#123;[<span class="hljs-number">1200</span>;<span class="hljs-number">0</span>;<span class="hljs-number">815</span>]&#125;<br>q(<span class="hljs-number">4</span>) = &#123;[<span class="hljs-number">2020</span>;<span class="hljs-number">0</span>;<span class="hljs-number">960</span>]&#125;<br>q(<span class="hljs-number">5</span>) = &#123;[<span class="hljs-number">2020</span>;<span class="hljs-number">0</span>;<span class="hljs-number">960</span>]&#125;<br>q(<span class="hljs-number">6</span>) =&#123;[<span class="hljs-number">2020</span>;<span class="hljs-number">0</span>;<span class="hljs-number">960</span>]&#125;<br><span class="hljs-comment">%腕部中心</span><br>q6_1 = [q&#123;<span class="hljs-number">6</span>&#125;;<span class="hljs-number">1</span>]<br>p0 = X  / M  *q6_1<br>px =p0(<span class="hljs-number">1</span>)<br>py =p0(<span class="hljs-number">2</span>)<br>pz =p0(<span class="hljs-number">3</span>)<br><span class="hljs-comment">%前三轴计算</span><br>o1=[<span class="hljs-number">0</span>;<span class="hljs-number">0</span>;pz]<br>o2=[<span class="hljs-number">350</span>;<span class="hljs-number">0</span>;<span class="hljs-number">815</span>]<br>o3=[<span class="hljs-number">1200</span>;<span class="hljs-number">0</span>;<span class="hljs-number">815</span>]<br>r4 = [<span class="hljs-number">2020</span>;<span class="hljs-number">0</span>;<span class="hljs-number">960</span>]<br>p1=[px;py;pz]<br>p1o1=o1 - p1<br>r4o3=o3-r4<br>anglenum=<span class="hljs-number">0</span>  <span class="hljs-comment">%关节角组数</span><br><span class="hljs-keyword">for</span> p2num = <span class="hljs-number">1</span>:<span class="hljs-number">2</span><br>    <span class="hljs-comment">%前三轴可分解为三个pk子问题1进行计算</span><br>    <span class="hljs-comment">%两种p2情况</span><br>    p2(p2num) = &#123;[(<span class="hljs-number">-1</span>)^(p2num+<span class="hljs-number">1</span>)*<span class="hljs-built_in">sqrt</span>(px^<span class="hljs-number">2</span>+py^<span class="hljs-number">2</span>);<span class="hljs-number">0</span>;pz]&#125;<br>    p2o1(p2num)=&#123;o1 - p2&#123;p2num&#125;&#125;<br>    p2o2(p2num)=&#123;o2 - p2&#123;p2num&#125;&#125;<br>     <span class="hljs-comment">%关节1</span><br>    theta1(p2num) = atan2d(w1&#x27; * (<span class="hljs-built_in">cross</span>(p2o1&#123;p2num&#125;,p1o1)), p2o1&#123;p2num&#125;&#x27;*p1o1)<br>    x(p2num)=( norm(r4o3)^<span class="hljs-number">2</span>-norm(p2o2&#123;p2num&#125;)^<span class="hljs-number">2</span><span class="hljs-number">-1200</span>^<span class="hljs-number">2</span>+<span class="hljs-number">350</span>^<span class="hljs-number">2</span> ) /(<span class="hljs-number">-1700</span>)<br>    <br>    <span class="hljs-comment">%每个p2对应两个p3</span><br>    <span class="hljs-keyword">for</span> p3num = (<span class="hljs-number">2</span>*p2num<span class="hljs-number">-1</span>):(<span class="hljs-number">2</span>*p2num)<br>        <span class="hljs-comment">%若求解出来的是虚数，说明这组关节角无解，跳出此次循环，进行下一组关节角计算</span><br>        <span class="hljs-keyword">if</span> ~<span class="hljs-built_in">isreal</span>(<span class="hljs-built_in">sqrt</span>( <span class="hljs-number">820</span>^<span class="hljs-number">2</span>+<span class="hljs-number">145</span>^<span class="hljs-number">2</span>-(x(p2num)<span class="hljs-number">-1200</span>)^<span class="hljs-number">2</span> ))<br>            <span class="hljs-keyword">continue</span><br>        <span class="hljs-keyword">end</span><br>        z(p3num) = <span class="hljs-number">815</span> + (<span class="hljs-number">-1</span>)^(p3num+<span class="hljs-number">1</span>)*<span class="hljs-built_in">sqrt</span>( <span class="hljs-number">820</span>^<span class="hljs-number">2</span>+<span class="hljs-number">145</span>^<span class="hljs-number">2</span>-(x(p2num)<span class="hljs-number">-1200</span>)^<span class="hljs-number">2</span> )<br>        <span class="hljs-comment">%求出p3点</span><br>        p3(p3num)=&#123;[x(p2num);<span class="hljs-number">0</span>;z(p3num)]&#125;<br>        p3o2(p3num) =&#123;o2 - p3&#123;p3num&#125;&#125;<br>        p3o3(p3num) = &#123;o3 - p3&#123;p3num&#125;&#125;<br>        <span class="hljs-comment">%关节2</span><br>        theta2(p3num) = atan2d(w2&#x27; * (<span class="hljs-built_in">cross</span>(p3o2&#123;p3num&#125;,p2o2&#123;p2num&#125;)), <span class="hljs-built_in">dot</span>(p3o2&#123;p3num&#125;,p2o2&#123;p2num&#125;)) <br>        <span class="hljs-comment">%关节3</span><br>        theta3(p3num) = atan2d(w3&#x27; * (<span class="hljs-built_in">cross</span>(r4o3,p3o3&#123;p3num&#125;)), <span class="hljs-built_in">dot</span>(r4o3,p3o3&#123;p3num&#125;))<br>        <br>        <span class="hljs-comment">%求后三轴</span><br>        T1=trans(s&#123;<span class="hljs-number">1</span>&#125;,theta1(p2num))<br>        T2=trans(s&#123;<span class="hljs-number">2</span>&#125;,theta2(p3num))<br>        T3=trans(s&#123;<span class="hljs-number">3</span>&#125;,theta3(p3num))<br>        <span class="hljs-comment">%将后三轴分解为一个pk子问题2和一个pk子问题1</span><br>        <span class="hljs-comment">%首先求解一个子问题2</span><br>        <span class="hljs-comment">%乘以在6轴上但是不在45轴上的一点</span><br>        T_0 = inv(T3)*inv(T2)*inv(T1)*X*inv(M)*[<span class="hljs-number">2020</span>;<span class="hljs-number">0</span>;<span class="hljs-number">0</span>;<span class="hljs-number">1</span>]<br>        q = T_0(<span class="hljs-number">1</span>:<span class="hljs-number">3</span>)<br>        p=[<span class="hljs-number">2020</span>;<span class="hljs-number">0</span>;<span class="hljs-number">0</span>]<br>        r=[<span class="hljs-number">2020</span>;<span class="hljs-number">0</span>;<span class="hljs-number">960</span>]<br>        u=p-r<br>        v=q-r<br>        u50 = u - w5*w5&#x27;*u<br>        v40=v-w4*w4&#x27;*v<br>        alpha = ((w4&#x27;*w5)*w5&#x27;*u - w4&#x27;*v)/( (w4&#x27;*w5)^<span class="hljs-number">2</span> - <span class="hljs-number">1</span>)<br>        <span class="hljs-built_in">beta</span> = ((w4&#x27;*w5)*w4&#x27;*v - w5&#x27;*u)/( (w4&#x27;*w5)^<span class="hljs-number">2</span> - <span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">for</span> znum = <span class="hljs-number">1</span>:<span class="hljs-number">2</span><br>            <span class="hljs-comment">%gama有两个解，所以z点也有两个解</span><br>            gama(znum)=(<span class="hljs-number">-1</span>)^(znum+<span class="hljs-number">1</span>)*<span class="hljs-built_in">sqrt</span>(( (norm(u))^<span class="hljs-number">2</span> - alpha^<span class="hljs-number">2</span> - <span class="hljs-built_in">beta</span>^<span class="hljs-number">2</span> <span class="hljs-number">-2</span>*alpha*<span class="hljs-built_in">beta</span>*w4&#x27;*w5 )/( norm(<span class="hljs-built_in">cross</span>(w4,w5)) )^<span class="hljs-number">2</span>)<br>            z1(znum)= &#123;alpha * w4 + <span class="hljs-built_in">beta</span> * w5 + gama(znum) * (<span class="hljs-built_in">cross</span>(w4,w5))&#125;<br>            z0(znum) = &#123;z1&#123;znum&#125; - w5*w5&#x27;*z1&#123;znum&#125;&#125;<br>            <span class="hljs-comment">%第五轴</span><br>            theta5(znum) = atan2d(w5&#x27; * (<span class="hljs-built_in">cross</span>(u50,z0&#123;znum&#125; )), <span class="hljs-built_in">dot</span>(u50,z0&#123;znum&#125;))<br>            <span class="hljs-comment">%计算第六轴</span><br>            z2(znum) = &#123;z1&#123;znum&#125; - w4*w4&#x27;*z1&#123;znum&#125;&#125;<br>            theta4(znum) = atan2d(w4&#x27; * (<span class="hljs-built_in">cross</span>(z2&#123;znum&#125;,v40 )), <span class="hljs-built_in">dot</span>(z2&#123;znum&#125;,v40))<br>            <br>            <span class="hljs-comment">%乘以不在6轴上的一点，利用子问题1求解关节6</span><br>            T4=trans(s&#123;<span class="hljs-number">4</span>&#125;,theta4(znum))<br>            T5=trans(s&#123;<span class="hljs-number">5</span>&#125;,theta5(znum))<br>            T_1 = inv(T5)*inv(T4)*inv(T3)*inv(T2)*inv(T1)*X*inv(M)*[<span class="hljs-number">2021</span>;<span class="hljs-number">0</span>;<span class="hljs-number">0</span>;<span class="hljs-number">1</span>]<br>            q7 = T_1(<span class="hljs-number">1</span>:<span class="hljs-number">3</span>)<br>            p7=[<span class="hljs-number">2021</span>;<span class="hljs-number">0</span>;<span class="hljs-number">0</span>]<br>            u6=r-p7<br>            v6=r-q7<br>            u60 = u6 - w6*w6&#x27;*u6<br>            v60 = v6 - w6*w6&#x27;*v6<br>            theta6(znum) = atan2d(w6&#x27; * (<span class="hljs-built_in">cross</span>(u60,v60)), <span class="hljs-built_in">dot</span>(u60,v60))<br>            anglenum= anglenum+<span class="hljs-number">1</span>;<br>            thetalist(anglenum)=&#123;[theta1(p2num),theta2(p3num),theta3(p3num),theta4(znum),theta5(znum),theta6(znum)]&#125;;<br>        <span class="hljs-keyword">end</span><br>    <span class="hljs-keyword">end</span><br><span class="hljs-keyword">end</span><br><br><br><span class="hljs-keyword">for</span> <span class="hljs-built_in">i</span>=<span class="hljs-number">1</span>:anglenum  <br>    theta(<span class="hljs-built_in">i</span>,:)=thetalist&#123;<span class="hljs-built_in">i</span>&#125;;   <br>    theta(<span class="hljs-built_in">i</span>,<span class="hljs-number">5</span>)=theta(<span class="hljs-built_in">i</span>,<span class="hljs-number">5</span>)+<span class="hljs-number">90</span>;<br><span class="hljs-keyword">end</span><br><br>theta<br><br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">T</span>=<span class="hljs-title">trans</span><span class="hljs-params">(s,theta)</span></span><br>    se3mat = VecTose3(s);<br>    theta = theta /180 * <span class="hljs-built_in">pi</span>;<br>    se3mat = se3mat * theta;<br>    T = MatrixExp6(se3mat);<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<h4 id="数值解">6.2数值解</h4>
+<h5 id="牛顿-拉夫森法">1.牛顿-拉夫森法</h5>
+<p>利用泰勒级数在<span
+class="math inline">\(\theta^0\)</span>处展开，截取第一项</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201122132378.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112213225300" />
+<figcaption aria-hidden="true">image-20220112213225300</figcaption>
+</figure>
+<p>保留第一阶，令<span class="math inline">\(g(\theta)=0\)</span>，得到$
+$，作为初值带入方程，重复求解得到</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201122134082.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112213423014" />
+<figcaption aria-hidden="true">image-20220112213423014</figcaption>
+</figure>
+<p>通过不断迭代，直到满足阈值</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201122134272.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112213458206" />
+<figcaption aria-hidden="true">image-20220112213458206</figcaption>
+</figure>
+<h5 id="逆运动学数值算法">2.逆运动学数值算法</h5>
+<p>令<span
+class="math inline">\(x_d\)</span>为预期得末端坐标，牛顿-拉夫森法中得<span
+class="math inline">\(g(\theta)\)</span>可以定义为<span
+class="math inline">\(g(\theta)=x_d-f(\theta)\)</span>，目标是找到关节坐标<span
+class="math inline">\(x_d\)</span>，且保证 <span class="math display">\[
+g(\theta_d)=x_d-f(\theta_d)=0
+\]</span> <img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201122140830.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112214033744" /></p>
+<p>截取泰勒级数到第一项</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201122141138.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112214102074" />
+<figcaption aria-hidden="true">image-20220112214102074</figcaption>
+</figure>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201122141482.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112214125409" />
+<figcaption aria-hidden="true">image-20220112214125409</figcaption>
+</figure>
+<p>若正向运动学是关节角的线性函数，即式的高阶项为0，这时新的估计值<span
+class="math inline">\(\theta^1=\theta^0+\Delta\theta\)</span>精确满足<span
+class="math inline">\(x_d=0\)</span>。相反，若正向运动学是关节角的非线性函数,就如通常情况,这时新的估计值<span
+class="math inline">\(\theta^1\)</span>比<span
+class="math inline">\(\theta^0\)</span>更接近真实值，迭代过程不断重复，并产生一系列的关节角值{<span
+class="math inline">\(\theta^0 \theta^1 \theta^2
+\dots\)</span>}最终在<span
+class="math inline">\(\theta_d\)</span>处收敛。</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201122146207.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112214659125" />
+<figcaption aria-hidden="true">image-20220112214659125</figcaption>
+</figure>
+<p>如果逆运动学存在多组解，迭代过程趋向于收敛到与初始值最接近的解，你可以想象到每组解都有其存在的区域，若初始估计值不在这些区域中（如初始值与真实值没有足够接近）,迭代过程可能不收敛
+。</p>
+<p>实际上，由于计算效率等原因，公式经常不采用求逆<span
+class="math inline">\(J^{-1}(\theta^0)\)</span>的方式来求解，可以找到更高效的方法求解线性方程Ax＝b中的x。例如，对于可逆阵A，基于A的LU分解可以用更少的运算得到x。</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201122150563.png" srcset="/img/loading.gif" lazyload
+alt="image-20220112215009457" />
+<figcaption aria-hidden="true">image-20220112215009457</figcaption>
+</figure>
+<p>分为两大类</p>
+<ul>
+<li><p>方程解<span class="math inline">\(y^*\)</span>精确满足<span
+class="math inline">\(Jy^*=z\)</span></p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/12/202201131007311.png" srcset="/img/loading.gif" lazyload
+alt="image-20220113100729209" />
+<figcaption aria-hidden="true">image-20220113100729209</figcaption>
+</figure></li>
+<li><p>设定<span
+class="math inline">\(\theta^{i+1}=\theta^i+J^+(\theta^i)e\)</span></p></li>
+<li><p>增加<span class="math inline">\(i\)</span></p></li>
+</ul>
+<p>为修改上述算法，使之能应用在预期末端位形为SE（3）而不是坐标向量xd的情况。可将关节坐标雅可比替换成末端物体雅可比。</p>
+<p>首先需计算相对物体坐标系得预期变形 <span class="math display">\[
+T_{bd}(\theta^i)=T_{sb}^{-1}(\theta^i)T_{sd}=T_{bs}(\theta^i)T_{sd}
+\]</span> 然后利用矩阵对数<span class="math inline">\(V_b\)</span>，即
+<span class="math display">\[
+[V_b]=logT_{bd}(\theta^i)
+\]</span> 由此给出逆运动学算法</p>
+<p>(a)初始化：已知<span
+class="math inline">\(T_{sd}\)</span>，初始化估计值$ ^0$，设定i=0;</p>
+<p>(b)设定<span
+class="math inline">\([V_b]=log(T_{sb}^{-1}(\theta^i)T_{sd})\)</span>，当<span
+class="math inline">\(||\omega_b||&gt;\varepsilon_{\omega}\)</span>或者<span
+class="math inline">\(|v_b||&gt;\varepsilon_{v}\)</span></p>
+<ul>
+<li>设定<span
+class="math inline">\(\theta^{i+1}=\theta^i+J^+(\theta^i)V_b\)</span></li>
+<li>增加<span class="math inline">\(i\)</span></li>
+</ul>
+<p>基于空间坐标系也可导出另一种形式利用空间雅可比和空间速度旋量<span
+class="math inline">\(V_s=[Ad_{T_{sb}}]V_b\)</span></p>
+<h4 id="逆向速度运动学">6.3逆向速度运动学</h4>
+<h4 id="软件">6.4软件</h4>
+<p>该函数主要是已知末端坐标系中描述的关节旋量B，末端初始位形M、预期的末端位形T，关节角的初始估计值$
+^0 <span class="math inline">\(、以及最小误差\)</span> _<span
+class="math inline">\(和\)</span>
+_v$，利用迭代牛顿-拉夫森算法来计算逆运动学，若在经过—定次数的迭代之后还无法收敛，算法失效</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs excel">［theta11st,success］＝IKinBody（B1ist,M,<span class="hljs-built_in">T</span>,theta1ist,eomg,ev）<br></code></pre></td></tr></table></figure>
+<p>该函数功能类似于lKinBody，只是关节旋量在空间坐标系下来描述，所有的误差也在空间坐标系内来表达。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs excel">［theta11st,success］＝IKinSpace（B1ist,M,<span class="hljs-built_in">T</span>,theta1ist,eomg,ev）<br></code></pre></td></tr></table></figure>
+<h2 id="改进d-h建模">2.改进D-H建模</h2>
+<h3 id="d-h参数">（1）D-H参数</h3>
+<p>机器人工具箱中中定义改进DH连杆时一定要注意DH[theta d a
+alpha]中<strong>前两个参数下表为i</strong>，即当前关节的DH值，后<strong>两个参数</strong>下表为i-1，及前一个关节的DH值参数值！</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/09/202201100011350.png" srcset="/img/loading.gif" lazyload
+alt="image-20220110001103279" />
+<figcaption aria-hidden="true">image-20220110001103279</figcaption>
+</figure>
+<p>此时对比代码中的DH参数和图中画的坐标系，得到DH定义为</p>
+<blockquote>
+<p>theta(i)：绕Zi轴，从Xi-1旋转到Xi的角度</p>
+<p>d(i)：沿Zi轴，从Xi-1移动到Xi的距离</p>
+<p>a(i)：沿Xi轴，从Zi移动到Zi+1的距离</p>
+<p>alpha(i)：绕Xi轴，从Zi旋转到Zi+1的角度</p>
+</blockquote>
+<table>
+<thead>
+<tr class="header">
+<th>杆件</th>
+<th>theta</th>
+<th>d</th>
+<th>a</th>
+<th>alpha</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>0</td>
+<td>815</td>
+<td>350</td>
+<td>-90</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>-90</td>
+<td>0</td>
+<td>850</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>145</td>
+<td>-90</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>0</td>
+<td>820</td>
+<td>0</td>
+<td>90</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>-90</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>180</td>
+<td>180</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>所以在程序中定义DH参数：</p>
+<table>
+<thead>
+<tr class="header">
+<th>杆件</th>
+<th>theta</th>
+<th>d</th>
+<th>a</th>
+<th>alpha</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+<td>815</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>-90</td>
+<td>0</td>
+<td>350</td>
+<td>-90</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>850</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>0</td>
+<td>820</td>
+<td>145</td>
+<td>-90</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>90</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>180</td>
+<td>180</td>
+<td>0</td>
+<td>-90</td>
+</tr>
+</tbody>
+</table>
+<p>上图所示为机器人处于位姿原点位置，在D-H模型中关节转角theta为[0,-90,0,0,0,180]，而实际的机器人处于原点位姿的关节转角theta'为[0,-90,90,0,0,0]，这是由于机器人关节零位和旋转方向定义与D-H模型不同造成的，实际机器人与D-H模型第一，四，六轴的旋转方向相反，第三、六轴分别差-90°和180°，需要对理论模型和实际模型的关节转角转换关系进行明确的定义：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-attribute">theta1</span>=-theta1&#x27;;<br><br><span class="hljs-attribute">theta2</span>=-theta2&#x27;;<br><br><span class="hljs-attribute">theta3</span>=theta3&#x27;-90;<br><br><span class="hljs-attribute">theta4</span>=-theta4&#x27;;<br><br><span class="hljs-attribute">theta5</span>=-theta5&#x27;<br><br><span class="hljs-attribute">theta6</span>=180-theta6&#x27;<br></code></pre></td></tr></table></figure>
+<h3 id="建模程序">（2）建模程序</h3>
+<p>使用python中的机器人工具箱进行D-H建模,程序命名为KR60.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> roboticstoolbox <span class="hljs-keyword">as</span> rtb<br><span class="hljs-keyword">from</span> spatialmath <span class="hljs-keyword">import</span> SE3<br><span class="hljs-keyword">from</span> roboticstoolbox <span class="hljs-keyword">import</span> DHRobot, RevoluteDH, RevoluteMDH<br><span class="hljs-keyword">from</span> math <span class="hljs-keyword">import</span> pi<br><span class="hljs-keyword">import</span> numpy<br><span class="hljs-keyword">from</span> numpy <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">KR60</span>(<span class="hljs-title class_ inherited__">DHRobot</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        deg = pi / <span class="hljs-number">180</span><br><br>        <span class="hljs-comment"># Updated values form ARTE git. Old values left as comments</span><br><br>        L1 = RevoluteMDH(a=<span class="hljs-number">0</span>,<br>                         d=<span class="hljs-number">0.815</span>,<br>                         alpha=<span class="hljs-number">0</span>,  <span class="hljs-comment"># alpha=pi / 2,</span><br>                         <span class="hljs-comment"># theta=0,</span><br>                         qlim=[-<span class="hljs-number">185</span> * deg, <span class="hljs-number">185</span> * deg]<br>                        )<br>        L2 = RevoluteMDH(a=<span class="hljs-number">0.35</span>,<br>                         d=<span class="hljs-number">0</span>,  <span class="hljs-comment"># d=0.135,</span><br>                         alpha=-pi/<span class="hljs-number">2</span>,  <span class="hljs-comment"># alpha=pi,</span><br>                         <span class="hljs-comment"># theta=0,</span><br>                         qlim=[-<span class="hljs-number">135</span> * deg, <span class="hljs-number">35</span> * deg]<br>                        )<br>        L3 = RevoluteMDH(a=<span class="hljs-number">0.85</span>,<br>                        d=<span class="hljs-number">0</span>,  <span class="hljs-comment"># d=0.135,</span><br>                        alpha=<span class="hljs-number">0</span>,  <span class="hljs-comment"># alpha=-pi / 2,</span><br>                        <span class="hljs-comment"># theta=-pi/2,</span><br>                        qlim=[-<span class="hljs-number">120</span> * deg, <span class="hljs-number">158</span> * deg]<br>                        )<br>        L4 = RevoluteMDH(a=<span class="hljs-number">0.145</span>,<br>                        d=<span class="hljs-number">0.82</span>,  <span class="hljs-comment"># d=0.62,</span><br>                        alpha=-pi/<span class="hljs-number">2</span>,  <span class="hljs-comment"># alpha=pi / 2,</span><br>                        <span class="hljs-comment"># theta=0,</span><br>                        qlim=[-<span class="hljs-number">350</span> * deg, <span class="hljs-number">350</span> * deg]<br>                        )<br>        L5 = RevoluteMDH(a=<span class="hljs-number">0.0</span>,<br>                        d=<span class="hljs-number">0.0</span>,<br>                        alpha=pi/<span class="hljs-number">2</span>,  <span class="hljs-comment"># alpha=-pi / 2,</span><br>                        <span class="hljs-comment"># theta=0,</span><br>                        qlim=[-<span class="hljs-number">119</span> * deg, <span class="hljs-number">119</span> * deg]<br>                        )<br>        L6 = RevoluteMDH(a=<span class="hljs-number">0</span>,<br>                        d=<span class="hljs-number">0.17</span>,<br>                        alpha=-pi/<span class="hljs-number">2</span>,<br>                        <span class="hljs-comment"># theta=-pi,</span><br>                        qlim=[-<span class="hljs-number">350</span> * deg, <span class="hljs-number">350</span> * deg]<br>                        )<br><br>        L = [L1, L2, L3, L4, L5, L6]<br><br>        <span class="hljs-comment"># Create SerialLink object</span><br>        <span class="hljs-built_in">super</span>().__init__(<br>            L,<br>            <span class="hljs-comment"># meshdir=&quot;KUKA/KR5_arc&quot;,</span><br>            name=<span class="hljs-string">&#x27;KR60&#x27;</span>,<br>            manufacturer=<span class="hljs-string">&#x27;KUKA&#x27;</span>)<br>            <span class="hljs-comment"># meshdir=&quot;meshes/KUKA/KR60_arc&quot;)</span><br><br>        self.addconfiguration(<span class="hljs-string">&quot;qz&quot;</span>, [<span class="hljs-number">0</span>, -pi/<span class="hljs-number">2</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, pi])<br>        self.addconfiguration(<br>          <span class="hljs-string">&quot;qk1&quot;</span>, [<span class="hljs-number">0</span>, -pi/<span class="hljs-number">2</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>])<br>        self.addconfiguration(<br>          <span class="hljs-string">&quot;qk2&quot;</span>, [pi / <span class="hljs-number">4</span>, pi / <span class="hljs-number">3</span>, pi / <span class="hljs-number">6</span>, pi / <span class="hljs-number">3</span>, pi / <span class="hljs-number">4</span>, pi / <span class="hljs-number">6</span>])<br>        self.addconfiguration(<br>          <span class="hljs-string">&quot;qk3&quot;</span>, [pi / <span class="hljs-number">6</span>, pi / <span class="hljs-number">3</span>, pi / <span class="hljs-number">6</span>, pi / <span class="hljs-number">3</span>, pi / <span class="hljs-number">6</span>, pi / <span class="hljs-number">3</span>])<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:   <span class="hljs-comment"># pragma nocover</span><br>    robot = KR60()<br>    <span class="hljs-built_in">print</span>(robot)<br></code></pre></td></tr></table></figure>
+<p>在主程序中调用建模程序，同时对实际角度进行相应的转换，转换为D-H模型中对应的关节角进行运算。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> roboticstoolbox <span class="hljs-keyword">as</span> rtb<br><span class="hljs-keyword">from</span> spatialmath <span class="hljs-keyword">import</span> SE3<br><span class="hljs-keyword">from</span> spatialmath.base <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">import</span> KR60<br><span class="hljs-keyword">from</span> math <span class="hljs-keyword">import</span> pi<br><span class="hljs-keyword">import</span> math<br><span class="hljs-keyword">import</span> numpy<br><span class="hljs-keyword">from</span> numpy <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">thetaTrans</span>(<span class="hljs-params">q</span>):<br>    q[<span class="hljs-number">0</span>] = -q[<span class="hljs-number">0</span>]<br>    q[<span class="hljs-number">1</span>] = q[<span class="hljs-number">1</span>]<br>    q[<span class="hljs-number">2</span>] = q[<span class="hljs-number">2</span>] - pi / <span class="hljs-number">2</span><br>    q[<span class="hljs-number">3</span>] = -q[<span class="hljs-number">3</span>]<br>    q[<span class="hljs-number">4</span>] = q[<span class="hljs-number">4</span>]<br>    q[<span class="hljs-number">5</span>] = pi - q[<span class="hljs-number">5</span>]<br>    <span class="hljs-keyword">return</span> q<br><br>q = [-<span class="hljs-number">2.410000</span> / <span class="hljs-number">180</span> * pi, -<span class="hljs-number">57.230000</span> / <span class="hljs-number">180</span> * pi, <span class="hljs-number">112.080000</span> / <span class="hljs-number">180</span> * pi, -<span class="hljs-number">0.780000</span> / <span class="hljs-number">180</span> * pi, -<span class="hljs-number">54.890000</span> / <span class="hljs-number">180</span> * pi,<br>     <span class="hljs-number">1.440000</span> / <span class="hljs-number">180</span> * pi]<br>q = thetaTrans(q)<br><span class="hljs-built_in">print</span>(q)<br><br>robot = KR60.KR60()<br>T = robot.fkine(q)  <br><span class="hljs-built_in">print</span>(T)<br>T.printline()<br></code></pre></td></tr></table></figure>
+<p>得到的结果为</p>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs subunit">[0.04206243497306334, <span class="hljs-string">-0</span>.9988519309163547, 0.38536869884034797, 0.01361356816555577, <span class="hljs-string">-0</span>.9580112264196875, 3.1164599123610746]<br>   0.001189 <span class="hljs-string">-0</span>.03091   0.9995    1.569     <br>  <span class="hljs-string">-0</span>.01727   0.9994    0.03092   0.06416   <br>  <span class="hljs-string">-0</span>.9999   <span class="hljs-string">-0</span>.01729   0.0006545  0.9428    <br>   0         0         0         1         <br><br>t = 1.57, 0.0642, 0.943; rpy/zyx = <span class="hljs-string">-87</span>.8°, 89°, <span class="hljs-string">-86</span>.1°<br></code></pre></td></tr></table></figure>
+<h3 id="spatialmath-python库">（3）<strong><a
+target="_blank" rel="noopener" href="https://github.com/petercorke/spatialmath-python">spatialmath-python</a></strong>库</h3>
+<h4 id="函数说明">1.函数说明</h4>
+<p>spatialmath-python库提供了旋转角度，旋转矩阵，四元素，变换矩阵之间的转换函数。</p>
+<p>例如，我们可以创建一个刚体变换，它是围绕 x 轴旋转 30 度：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">from</span> spatialmath.base <span class="hljs-keyword">import</span> *<br><span class="hljs-meta">&gt;&gt;&gt; </span>rotx(<span class="hljs-number">30</span>, <span class="hljs-string">&#x27;deg&#x27;</span>)<br>array([[ <span class="hljs-number">1.</span>   ,  <span class="hljs-number">0.</span>   ,  <span class="hljs-number">0.</span>   ],<br>       [ <span class="hljs-number">0.</span>   ,  <span class="hljs-number">0.866</span>, -<span class="hljs-number">0.5</span>  ],<br>       [ <span class="hljs-number">0.</span>   ,  <span class="hljs-number">0.5</span>  ,  <span class="hljs-number">0.866</span>]])<br></code></pre></td></tr></table></figure>
+<p>这将导致一个
+NumPy（4x4）数组，该数组属于组（SE3）。我们还可以创建一个类实例：</p>
+<figure class="highlight python-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python-repl"><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python"><span class="hljs-keyword">from</span> spatialmath <span class="hljs-keyword">import</span> *</span><br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">T = SE3.Rx(<span class="hljs-number">30</span>, <span class="hljs-string">&#x27;deg&#x27;</span>)</span><br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python"><span class="hljs-built_in">type</span>(T)</span><br>&lt;class &#x27;spatialmath.pose3d.SE3&#x27;&gt;<br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python"><span class="hljs-built_in">print</span>(T)</span><br>   1         0         0         0         <br>   0         0.866    -0.5       0         <br>   0         0.5       0.866     0         <br>   0         0         0         1  <br></code></pre></td></tr></table></figure>
+<p>它在内部表示为4*4 NumPy 数组。</p>
+<p>虽然函数和类可以提供类似的功能，但该类具有以下优点：</p>
+<ul>
+<li>类型安全，不可能将3D旋转矩阵与2D刚体运动混合，即使两者都由3*3矩阵表示</li>
+<li>运算符重载允许方便和可读的算法表达</li>
+<li>表示的不仅仅是单个值，而是一系列值，这些值由运算符通过隐式广播值进行处理</li>
+</ul>
+<h4 id="spatial-math-类">2.Spatial math 类</h4>
+<p>如上述所表示的SO3类R,可以计算出相应的欧拉角</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">&gt;&gt; R.eul()<br></code></pre></td></tr></table></figure>
+<p>在机器人技术中，我们经常需要一个序列，一个轨迹，旋转矩阵或姿势。这些姿势类从类继承功能<code>list</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>R = SO3()   <span class="hljs-comment"># the identity</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>R.append(R1)<br><span class="hljs-meta">&gt;&gt;&gt; </span>R.append(R2)<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">len</span>(R)<br> <span class="hljs-number">3</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>R[<span class="hljs-number">1</span>]<br>   <span class="hljs-number">1</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>          <br>   <span class="hljs-number">0</span>         <span class="hljs-number">0.955336</span> -<span class="hljs-number">0.29552</span>    <br>   <span class="hljs-number">0</span>         <span class="hljs-number">0.29552</span>   <span class="hljs-number">0.955336</span>             <br></code></pre></td></tr></table></figure>
+<p>这可以在循环和列表理解中使用<code>for</code></p>
+<p>构造它的另一种方法是（在上面定义的<code>R1 R2</code>）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>R = SO3( [ SO3(), R1, R2 ] )       <br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">len</span>(R)<br> <span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
+<p>许多构造函数支持矢量化，例如 <code>.Rx</code>, <code>.Ry</code> and
+<code>.Rz</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>R = SO3.Rx( np.arange(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>*np.pi, <span class="hljs-number">0.2</span>))<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">len</span>(R)<br> <span class="hljs-number">32</span><br></code></pre></td></tr></table></figure>
+<p>它在一行中创建了旋转矩阵列表。</p>
+<p>矢量化也适用于运算符，例如</p>
+<figure class="highlight python-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python-repl"><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">A = R * SO3.Ry(<span class="hljs-number">0.5</span>)</span><br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python"><span class="hljs-built_in">len</span>(R)</span><br> 32<br></code></pre></td></tr></table></figure>
+<p>将产生一个结果，其中每个元素都是左侧与右侧的每个元素的乘积，即。
+<code>R[i] * SO3.Ry(0.5)</code>.</p>
+<p>同样地</p>
+<figure class="highlight python-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python-repl"><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">A = SO3.Ry(<span class="hljs-number">0.5</span>) * R </span><br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python"><span class="hljs-built_in">len</span>(R)</span><br> 32<br></code></pre></td></tr></table></figure>
+<p>将产生一个结果，其中每个元素都是左侧的乘积，即右侧的每个元素。.<code>SO3.Ry(0.5) * R[i]</code></p>
+<p>最后</p>
+<figure class="highlight python-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python-repl"><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">A = R * R </span><br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python"><span class="hljs-built_in">len</span>(R)</span><br> 32<br></code></pre></td></tr></table></figure>
+<p>将产生一个结果，其中每个元素是左侧每个元素与右侧每个元素的乘积，即。.<code>R[i] * R[i]</code></p>
+<p>这些类的基础表示是一个 numpy
+矩阵，但该类确保该矩阵的结构对于所表示的特定类有效：SO（2）、SE（2）、SO（3）、SE（3）。任何对类无效的操作都将返回矩阵而不是
+pose 类，例如</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs lua">&gt;&gt;&gt; SO3.Rx(<span class="hljs-number">0.3</span>) * <span class="hljs-number">2</span><br>array(<span class="hljs-string">[[ 2.        ,  0.        ,  0.        ],</span><br><span class="hljs-string">       [ 0.        ,  1.91067298, -0.59104041],</span><br><span class="hljs-string">       [ 0.        ,  0.59104041,  1.91067298]]</span>)<br><br>&gt;&gt;&gt; SO3.Rx(<span class="hljs-number">0.3</span>) - <span class="hljs-number">1</span><br>array(<span class="hljs-string">[[ 0.        , -1.        , -1.        ],</span><br><span class="hljs-string">       [-1.        , -0.04466351, -1.29552021],</span><br><span class="hljs-string">       [-1.        , -0.70447979, -0.04466351]]</span>)<br></code></pre></td></tr></table></figure>
+<p>我们也可以打印和打印这些对象</p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs tap">&gt;&gt;&gt; T = SE3(1,2,3) * SE3.Rx(30, &#x27;deg&#x27;)<br>&gt;&gt;&gt; T.print()<br>  <span class="hljs-number"> 1 </span>       <span class="hljs-number"> 0 </span>       <span class="hljs-number"> 0 </span>       <span class="hljs-number"> 1 </span>         <br>  <span class="hljs-number"> 0 </span>        0.866025 -0.5      <span class="hljs-number"> 2 </span>         <br>  <span class="hljs-number"> 0 </span>        0.5       0.866025 <span class="hljs-number"> 3 </span>         <br>  <span class="hljs-number"> 0 </span>       <span class="hljs-number"> 0 </span>       <span class="hljs-number"> 0 </span>       <span class="hljs-number"> 1 </span>         <br><br>&gt;&gt;&gt; T.printline()<br>t =        1,        2,        3; rpy/zyx =       30,        0,       <span class="hljs-number"> 0 </span>deg<br><br>&gt;&gt;&gt; T.plot()<br></code></pre></td></tr></table></figure>
+<h1 id="二vrep与python">二、VREP与PYTHON</h1>
+<h2 id="建立urdf模型">1.建立URDF模型</h2>
+<p>准备工作：下载solidworks导出urdf文件的插件：http://wiki.ros.org/sw_urdf_exporter
+，下载直接安装即可。</p>
+<ol type="1">
+<li><p>去库卡官网下载KR60-3的STL模型</p></li>
+<li><p>按照面重合-轴线重合的方式，装配好机器人模型。</p></li>
+<li><p>在装配体中编辑零件，提取关节基准轴，以第六轴为例，命名为axis_6</p></li>
+</ol>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/07/202201071702007.png" srcset="/img/loading.gif" lazyload
+alt="https://img-blog.csdnimg.cn/20201128145226408.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2d1Y2hhb25vMQ==,size_16,color_FFFFFF,t_70" />
+<figcaption
+aria-hidden="true">https://img-blog.csdnimg.cn/20201128145226408.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2d1Y2hhb25vMQ==,size_16,color_FFFFFF,t_70</figcaption>
+</figure>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/07/202201071702019.png" srcset="/img/loading.gif" lazyload
+alt="https://img-blog.csdnimg.cn/20201128142831325.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2d1Y2hhb25vMQ==,size_16,color_FFFFFF,t_70" />
+<figcaption
+aria-hidden="true">https://img-blog.csdnimg.cn/20201128142831325.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2d1Y2hhb25vMQ==,size_16,color_FFFFFF,t_70</figcaption>
+</figure>
+<ol start="4" type="1">
+<li>对各关节建立起相应的轴线之后，退出零件编辑，返回装配体设置，对基座、关节以及刀具建立坐标系，注意所建立的坐标系不能在零件的内部，必须在装配体的树形目录下，坐标系的Z轴指向关节旋转方向。</li>
+</ol>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/07/202201071702024.png" srcset="/img/loading.gif" lazyload
+alt="https://img-blog.csdnimg.cn/20201129062407480.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2d1Y2hhb25vMQ==,size_16,color_FFFFFF,t_70" />
+<figcaption
+aria-hidden="true">https://img-blog.csdnimg.cn/20201129062407480.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2d1Y2hhb25vMQ==,size_16,color_FFFFFF,t_70</figcaption>
+</figure>
+<ol start="5" type="1">
+<li>点击工具-tool-export as
+URDF,轴和坐标系之前建立的关节轴线和坐标轴，零件选择相应的杆件，轴的类型都选择旋转副。</li>
+</ol>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/07/202201071702027.png" srcset="/img/loading.gif" lazyload
+alt="https://img-blog.csdnimg.cn/20201129185009562.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2d1Y2hhb25vMQ==,size_16,color_FFFFFF,t_70" />
+<figcaption
+aria-hidden="true">https://img-blog.csdnimg.cn/20201129185009562.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2d1Y2hhb25vMQ==,size_16,color_FFFFFF,t_70</figcaption>
+</figure>
+<ol start="6" type="1">
+<li>导出URDF文件，在最后的配置文件中可以调整杆件的颜色</li>
+</ol>
+<h2 id="导入vrep">2.导入VREP</h2>
+<ol type="1">
+<li>在Vrep中，Plugins-URDF
+export导入模型文件，注意导入路径不能有中文，否则导入会失败。</li>
+</ol>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/07/202201071708425.png" srcset="/img/loading.gif" lazyload
+alt="image-20220107170851338" />
+<figcaption aria-hidden="true">image-20220107170851338</figcaption>
+</figure>
+<ol start="2" type="1">
+<li>将基座设置为固定，调整相应的杆件关节极限,运动模式修改为Torque/force
+mode。进一步修改杆件的动力学信息，使能电动机，将电动机的最大力矩调整为合适的大小，打开control
+position
+enable，修改关节速度极限，这样就可以在脚本中修改关节数据，使机器人按我们设定的轨迹运动。</li>
+</ol>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/07/202201071702052.jpg" srcset="/img/loading.gif" lazyload
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<ol start="3" type="1">
+<li><p>添加运动脚本，ADD-Associated child scripts-no thread
+scripts。</p>
+<p>API解释见：<a
+target="_blank" rel="noopener" href="https://coppeliarobotics.com/helpFiles/en/apiFunctions.htm">regular
+API reference (coppeliarobotics.com)</a></p>
+<p>Lua脚本分为4部分，包含由系统适当调用的回调函数集合。除了初始化回调之外，所有其他回调都是可选的。默认主脚本通常分为4个回调函数：</p>
+<p>初始化函数：sysCall_init（）。此回调函数不是可选的。它将在模拟开始时执行一次。代码负责准备模拟等。通过sim.getObjectHandle函数初始化各关节的句柄</p>
+<p>驱动函数：sysCall_actuation()。此回调函数将在每次模拟过程中执行。代码负责处理模拟的所有驱动功能。有一个函数特别有趣：sim.HandleChildScript，它调用子脚本的系统调用回调函数。如果没有这些命令，子脚本将无法执行或无法执行其驱动功能，特定的模型功能或行为也无法按预期运行。</p>
+<p>传感函数：sysCall_sensing()。此回调函数将在每次模拟过程中执行。代码负责以通用方式处理模拟的所有传感功能（接近传感器等）。同样也有sim.HandleChildScript，它调用子脚本的系统调用回调函数。</p>
+<p>恢复函数：sysCall_cleanup()。此函数将在模拟结束前执行一次。该代码负责恢复对象的初始配置、清除传感器状态等。</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><code class="hljs lua"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sysCall_init</span><span class="hljs-params">()</span></span><br>    <span class="hljs-comment">-- do some initialization here</span><br>    axis_1_handle = sim.getObjectHandle(<span class="hljs-string">&#x27;axis_1&#x27;</span>)<br>    axis_2_handle = sim.getObjectHandle(<span class="hljs-string">&#x27;axis_2&#x27;</span>)<br>    axis_3_handle = sim.getObjectHandle(<span class="hljs-string">&#x27;axis_3&#x27;</span>)<br>    axis_4_handle = sim.getObjectHandle(<span class="hljs-string">&#x27;axis_4&#x27;</span>)<br>    axis_5_handle = sim.getObjectHandle(<span class="hljs-string">&#x27;axis_5&#x27;</span>)<br>    axis_6_handle = sim.getObjectHandle(<span class="hljs-string">&#x27;axis_6&#x27;</span>)<br>    t = <span class="hljs-number">0</span><br>    <br>    <span class="hljs-comment">--graph</span><br>    graph=sim.getObjectHandle(<span class="hljs-string">&#x27;Graph&#x27;</span>)<br>    JointPos=sim.getObjectHandle(<span class="hljs-string">&#x27;JointPos&#x27;</span>)<br>    <br>    objectPosX=sim.addGraphStream(graph,<span class="hljs-string">&#x27;object pos x&#x27;</span>,<span class="hljs-string">&#x27;m&#x27;</span>,<span class="hljs-number">1</span>)<br>    objectPosY=sim.addGraphStream(graph,<span class="hljs-string">&#x27;object pos y&#x27;</span>,<span class="hljs-string">&#x27;m&#x27;</span>,<span class="hljs-number">1</span>)<br>    objectPosZ=sim.addGraphStream(graph,<span class="hljs-string">&#x27;object pos Z&#x27;</span>,<span class="hljs-string">&#x27;m&#x27;</span>,<span class="hljs-number">1</span>)<br>    <br>    objectJoint1=sim.addGraphStream(JointPos,<span class="hljs-string">&#x27;Joint1&#x27;</span>,<span class="hljs-string">&#x27;deg/s&#x27;</span>,<span class="hljs-number">0</span>,&#123;<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>&#125;)<br>    objectJoint2=sim.addGraphStream(JointPos,<span class="hljs-string">&#x27;Joint2&#x27;</span>,<span class="hljs-string">&#x27;deg/s&#x27;</span>,<span class="hljs-number">0</span>,&#123;<span class="hljs-number">1</span>,<span class="hljs-number">0.5</span>,<span class="hljs-number">0</span>&#125;)<br>    objectJoint3=sim.addGraphStream(JointPos,<span class="hljs-string">&#x27;Joint3&#x27;</span>,<span class="hljs-string">&#x27;deg/s&#x27;</span>,<span class="hljs-number">0</span>,&#123;<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>&#125;)<br>    objectJoint4=sim.addGraphStream(JointPos,<span class="hljs-string">&#x27;Joint4&#x27;</span>,<span class="hljs-string">&#x27;deg/s&#x27;</span>,<span class="hljs-number">0</span>,&#123;<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0.5</span>&#125;)<br>    objectJoint5=sim.addGraphStream(JointPos,<span class="hljs-string">&#x27;Joint5&#x27;</span>,<span class="hljs-string">&#x27;deg/s&#x27;</span>,<span class="hljs-number">0</span>,&#123;<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>&#125;)<br>    objectJoint6=sim.addGraphStream(JointPos,<span class="hljs-string">&#x27;Joint6&#x27;</span>,<span class="hljs-string">&#x27;deg/s&#x27;</span>,<span class="hljs-number">0</span>,&#123;<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>&#125;)<br>    <br>    objectTime=sim.addGraphStream(JointPos,<span class="hljs-string">&#x27;Time&#x27;</span>,<span class="hljs-string">&#x27;m&#x27;</span>,<span class="hljs-number">1</span>)<br>    <br>    sim.addGraphCurve(graph,<span class="hljs-string">&#x27;object pos x/y/z&#x27;</span>,<span class="hljs-number">3</span>,&#123;objectPosX,objectPosY,objectPosZ&#125;,&#123;<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>&#125;,<span class="hljs-string">&#x27;m by m&#x27;</span>)<br>    sim.addGraphCurve(JointPos,<span class="hljs-string">&#x27;Joint1&#x27;</span>,<span class="hljs-number">2</span>,&#123;objectJoint1,objectTime&#125;,&#123;<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>&#125;,<span class="hljs-string">&#x27;m by m&#x27;</span>)<br>    <br>    <span class="hljs-comment">--base frame</span><br>    base_frame = sim.getObjectHandle(<span class="hljs-string">&#x27;baseframe&#x27;</span>)<br><span class="hljs-keyword">end</span><br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sysCall_actuation</span><span class="hljs-params">()</span></span><br>    <span class="hljs-comment">-- put your actuation code here</span><br>    <br>    t = t + <span class="hljs-number">0.01</span><br>    <span class="hljs-comment">--print(t)</span><br>    <br>    axis_1_angle = sim.getJointPosition(axis_1_handle)<br>    axis_2_angle = sim.getJointPosition(axis_2_handle)<br>    axis_3_angle = sim.getJointPosition(axis_3_handle)<br>    axis_4_angle = sim.getJointPosition(axis_4_handle)<br>    axis_5_angle = sim.getJointPosition(axis_5_handle)<br>    axis_6_angle = sim.getJointPosition(axis_6_handle)<br>   <br>    axis_1_targetAngle = <span class="hljs-built_in">math</span>.<span class="hljs-built_in">pi</span> / <span class="hljs-number">3</span> * <span class="hljs-built_in">math</span>.<span class="hljs-built_in">sin</span>(t)<br>    axis_2_targetAngle = -<span class="hljs-built_in">math</span>.<span class="hljs-built_in">pi</span>/<span class="hljs-number">2</span> * <span class="hljs-built_in">math</span>.<span class="hljs-built_in">sin</span>(t)<br>    axis_3_targetAngle = <span class="hljs-built_in">math</span>.<span class="hljs-built_in">pi</span>/<span class="hljs-number">2</span> * <span class="hljs-built_in">math</span>.<span class="hljs-built_in">sin</span>(t)<br>    axis_4_targetAngle = <span class="hljs-built_in">math</span>.<span class="hljs-built_in">pi</span>/<span class="hljs-number">4</span> * <span class="hljs-built_in">math</span>.<span class="hljs-built_in">sin</span>(t)<br>    axis_5_targetAngle = <span class="hljs-built_in">math</span>.<span class="hljs-built_in">pi</span>/<span class="hljs-number">6</span> * <span class="hljs-built_in">math</span>.<span class="hljs-built_in">sin</span>(t)<br>    axis_6_targetAngle = <span class="hljs-built_in">math</span>.<span class="hljs-built_in">pi</span>/<span class="hljs-number">5</span> * <span class="hljs-built_in">math</span>.<span class="hljs-built_in">sin</span>(t)<br>    <br>    <span class="hljs-comment">--print(180*sim.getJointPosition(axis_6_handle)/math.pi)</span><br>    <br>    <span class="hljs-comment">--print(180*sim.getJointPosition(axis_1_handle)/math.pi)</span><br>    <span class="hljs-comment">--print(axis_1_targetAngle)</span><br>    sim.setJointTargetPosition(axis_1_handle,axis_1_targetAngle)<br>    sim.setJointTargetPosition(axis_2_handle,axis_2_targetAngle)<br>    sim.setJointTargetPosition(axis_3_handle,axis_3_targetAngle)<br>    sim.setJointTargetPosition(axis_4_handle,axis_4_targetAngle)<br>    sim.setJointTargetPosition(axis_5_handle,axis_5_targetAngle)<br>    sim.setJointTargetPosition(axis_6_handle,axis_6_targetAngle)<br>    <span class="hljs-comment">--print(axis_1_angle)</span><br>    <span class="hljs-comment">--print(axis_2_angle)</span><br>    <span class="hljs-comment">--print(axis_2_targetAngle)</span><br>    <br>    <br><span class="hljs-keyword">end</span><br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sysCall_sensing</span><span class="hljs-params">()</span></span><br>    <span class="hljs-comment">-- put your sensing code here</span><br>    <span class="hljs-keyword">local</span> pos=sim.getObjectPosition(graph,<span class="hljs-number">-1</span>)<br>    <span class="hljs-comment">--print(pos)</span><br>    <br>    sim.setGraphStreamValue(graph,objectPosX,pos[<span class="hljs-number">1</span>])<br>    sim.setGraphStreamValue(graph,objectPosY,pos[<span class="hljs-number">2</span>])<br>    sim.setGraphStreamValue(graph,objectPosZ,pos[<span class="hljs-number">3</span>])<br>    <br>    sim.setGraphStreamValue(JointPos,objectJoint1,<span class="hljs-number">180</span>*sim.getJointPosition(axis_1_handle)/<span class="hljs-built_in">math</span>.<span class="hljs-built_in">pi</span>)<br>    sim.setGraphStreamValue(JointPos,objectJoint2,<span class="hljs-number">180</span>*sim.getJointPosition(axis_2_handle)/<span class="hljs-built_in">math</span>.<span class="hljs-built_in">pi</span>)<br>    sim.setGraphStreamValue(JointPos,objectJoint3,<span class="hljs-number">180</span>*sim.getJointPosition(axis_3_handle)/<span class="hljs-built_in">math</span>.<span class="hljs-built_in">pi</span>)<br>    sim.setGraphStreamValue(JointPos,objectJoint4,<span class="hljs-number">180</span>*sim.getJointPosition(axis_4_handle)/<span class="hljs-built_in">math</span>.<span class="hljs-built_in">pi</span>)<br>    sim.setGraphStreamValue(JointPos,objectJoint5,<span class="hljs-number">180</span>*sim.getJointPosition(axis_5_handle)/<span class="hljs-built_in">math</span>.<span class="hljs-built_in">pi</span>)<br>    sim.setGraphStreamValue(JointPos,objectJoint6,<span class="hljs-number">180</span>*sim.getJointPosition(axis_6_handle)/<span class="hljs-built_in">math</span>.<span class="hljs-built_in">pi</span>)<br>    <br>    <span class="hljs-comment">--Joint1=&#123;&#125;</span><br>    <span class="hljs-comment">--table.insert(Joint1,axis_1_angle)</span><br>    <span class="hljs-comment">--sim.setGraphStreamValue(JointPos,objectJoint1,Joint1)</span><br><span class="hljs-keyword">end</span><br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sysCall_cleanup</span><span class="hljs-params">()</span></span><br>    <span class="hljs-comment">-- do some clean-up here</span><br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment">-- See the user manual or the available code snippets for additional callback functions and details</span><br><br></code></pre></td></tr></table></figure>
+<ol start="4" type="1">
+<li><p>点击仿真进行按钮，机器人就按着脚本中关节设置的轨迹进行移动，同时在空间中绘制出末端的运行轨迹，在弹出的框中也可以看到末端在XY平面的轨迹。</p>
+<p><img
+src="http://pic.leiting2020.top:5050/images/2022/01/07/202201071709842.png" srcset="/img/loading.gif" lazyload /></p></li>
+</ol></li>
+</ol>
+<h2 id="联合仿真">3.联合仿真</h2>
+<p>Vrep提供了三种远程api，远程API是应用程序与CoppeliaSim连接的几种方式之一。它允许CoppeliaSim和外部应用程序（即在不同进程或不同机器上运行的应用程序）之间的通信，是跨平台的，支持服务调用（即阻塞调用），还支持双向数据流。它有三种不同的版本/框架：</p>
+<p><a
+target="_blank" rel="noopener" href="https://coppeliarobotics.com/helpFiles/en/zmqRemoteApiOverview.htm">The
+ZeroMQ-based remote
+API</a>：它轻量级且易于使用，提供了通过CoppeliaSim脚本也可用的所有API函数，目前支持Python客户端。</p>
+<p><a
+target="_blank" rel="noopener" href="https://coppeliarobotics.com/helpFiles/en/legacyRemoteApiOverview.htm">The
+legacy remote API</a> (or simply <em>remote
+API</em>)：它相对轻量级，并且比基于B0的远程API具有更少的依赖性。它提供了API函数的子集，并支持以下客户端：C/C++、Java、Python、Matlab、Octave和Lua。</p>
+<p><a
+target="_blank" rel="noopener" href="https://coppeliarobotics.com/helpFiles/en/b0RemoteApiOverview.htm">The
+B0-based remote
+API</a>：它基于BlueZero中间件及其与CoppeliaSim的接口插件。它提供了API函数的子集，可以很容易地扩展和支持以下客户端：C++、java、python、Matlab和Lua。</p>
+<h3 id="vrep与matlab联合仿真">1.Vrep与matlab联合仿真</h3>
+<h4 id="legacy-remote-api"><a
+target="_blank" rel="noopener" href="https://coppeliarobotics.com/helpFiles/en/legacyRemoteApiOverview.htm">Legacy
+remote API</a></h4>
+<p>要在Matlab程序中使用远程API功能，需要以下3项：</p>
+<ul>
+<li><p>remoteApiProto.m</p></li>
+<li><p>remApi.m</p></li>
+<li><p>remoteApi.dll</p>
+<ul>
+<li><p>新建一个matlab项目文件夹</p></li>
+<li><p>将C:Files。</p></li>
+</ul>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/07/202201071719638.png" srcset="/img/loading.gif" lazyload
+alt="image-20220107171940476" />
+<figcaption aria-hidden="true">image-20220107171940476</figcaption>
+</figure>
+<ul>
+<li>转到C:Files，调整类型只显示应用程序拓展，全选所有的DLL文件，拷贝到matlab文件夹。</li>
+</ul>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/07/202201071720241.png" srcset="/img/loading.gif" lazyload
+alt="image-20220107172027085" />
+<figcaption aria-hidden="true">image-20220107172027085</figcaption>
+</figure>
+<ul>
+<li>remoteapi.dll在C:Files，同样拷贝到项目文件夹</li>
+</ul>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/07/202201071728609.png" srcset="/img/loading.gif" lazyload
+alt="image-20220107172844548" />
+<figcaption aria-hidden="true">image-20220107172844548</figcaption>
+</figure>
+<ul>
+<li>打开matlab，将项目文件夹包含到预定路径中，使程序在运行中能调用相应的函数和dll文件。</li>
+</ul></li>
+</ul>
+<p>在Matlab的当前文件夹中包含上述文件后，调用sim=remApi（'remoteApi'）来构建对象并加载库。要在客户端（即您的应用程序）启用远程API，请调用sim.simxStart。请参阅simpleTest。以编程/remoteApiBindings/matlab目录中的m程序为例。本页列出并描述所有支持的Matlab远程API函数。CoppeliaSim远程API函数可以很容易地从它们的“simx”前缀中识别出来。
+确保您的Matlab使用与remoteApi库相同的位体系结构：64位Matlab和32位remoteApi库将无法工作，反之亦然！</p>
+<p>关键的语句</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs lua">V-REP端：<br>simExtRemoteApiStart(<span class="hljs-number">19999</span>)<br></code></pre></td></tr></table></figure>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs matlab">MATLAB端：<br>vrep=remApi(<span class="hljs-string">&#x27;remoteApi&#x27;</span>); <span class="hljs-comment">% using the prototype file (remoteApiProto.m)</span><br>vrep.simxFinish(<span class="hljs-number">-1</span>); <span class="hljs-comment">% just in case, close all opened connections</span><br>clientID=vrep.simxStart(<span class="hljs-string">&#x27;127.0.0.1&#x27;</span>,<span class="hljs-number">19999</span>,<span class="hljs-built_in">true</span>,<span class="hljs-built_in">true</span>,<span class="hljs-number">5000</span>,<span class="hljs-number">5</span>);<br></code></pre></td></tr></table></figure>
+<h4 id="b0-based-remote-api"><a
+target="_blank" rel="noopener" href="https://coppeliarobotics.com/helpFiles/en/b0RemoteApiOverview.htm">B0-based
+remote API</a></h4>
+<h5 id="python">python</h5>
+<ol type="1">
+<li><h6
+id="要在python脚本中使用基于b0的远程api功能您需要以下内容">要在Python脚本中使用基于B0的远程API功能，您需要以下内容：</h6></li>
+</ol>
+<ul>
+<li>安装用于Python的MessagePack:<code>pip install msgpack</code></li>
+<li><em>C:FilesRemoteApiBindingsRemoteApi.py</em></li>
+<li>C:FilesRemoteApiBindings.py。</li>
+<li>blueZero库（例如b0.dll），不要忘记blueZero库本身有依赖项（例如<em>libzmq</em>,
+<em>boost_chrono</em>, <em>boost_system</em>,
+<em>boost_thread</em>等）。</li>
+</ul>
+<ol start="2" type="1">
+<li><h6 id="创建anaconda虚拟环境">创建anaconda虚拟环境</h6>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs routeros">1、用conda创建Python虚拟环境（在conda prompt环境下完成）<br>conda create -n Vrep <span class="hljs-attribute">python</span>=3.7<br><br>2、激活虚拟环境（在conda prompt环境下完成）<br>activate Vrep<br><br>3、给虚拟环境安装外部包<br>conda install -n Vrep [package]<br>例如: conda install -n tensorflow pandas<br><br>4、查看已有的环境(当前已激活的环境会显示一个星号)<br>conda <span class="hljs-built_in">info</span> -e<br><br>5、删除一个已有的虚拟环境<br>conda <span class="hljs-built_in">remove</span> --name your_env_name --all<br><br>6、查看pip的安装目录<br>pip list<br><br>7、删除已经安装的模块<br>pip uninstall **<br>(例如：pip uninstall numpy)<br></code></pre></td></tr></table></figure>
+<p>创建anaconda的虚拟环境后，会生成E:，在Pycharm中选择创建的虚拟环境。</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/07/202201072028121.png" srcset="/img/loading.gif" lazyload
+alt="image-20220107202802960" />
+<figcaption aria-hidden="true">image-20220107202802960</figcaption>
+</figure>
+<ol start="3" type="1">
+<li><p>和matlab操作一样，打开C:Files，调整类型只显示应用程序拓展，全选所有的DLL文件，拷贝到anaconda创建的虚拟环境的文件夹中。b0RemoteApi.py，b0.py拷贝到项目文件夹中，在pycharm控制台中使用，<code>conda install msgpack</code>下载msgpack包</p></li>
+<li><p>打开Vrep端的服务器，直接在model browser中打开tools文件夹，将B0
+Remote API Server拖动到场景中，就打开了Vrep端的服务器</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/07/202201072033467.png" srcset="/img/loading.gif" lazyload
+alt="image-20220107203322062" />
+<figcaption aria-hidden="true">image-20220107203322062</figcaption>
+</figure></li>
+<li><p>打开python端的服务器</p></li>
+</ol></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> b0RemoteApi<br><span class="hljs-keyword">import</span> time<br><br><span class="hljs-keyword">with</span> b0RemoteApi.RemoteApiClient(<span class="hljs-string">&#x27;b0RemoteApi_pythonClient&#x27;</span>,<span class="hljs-string">&#x27;b0RemoteApi&#x27;</span>) <span class="hljs-keyword">as</span> client:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">getJointPos</span>(<span class="hljs-params">num</span>):<br>        jointname = <span class="hljs-string">&quot;axis_&quot;</span> + <span class="hljs-built_in">str</span>(num)<br>        [<span class="hljs-built_in">bool</span>, jointhandle] = client.simxGetObjectHandle(jointname, client.simxServiceCall())<br>        [<span class="hljs-built_in">bool</span>, joint] = client.simxGetJointPosition(jointhandle, client.simxServiceCall())<br>        <span class="hljs-built_in">print</span>(joint)<br>        <span class="hljs-keyword">return</span> joint<br>    client.simxStartSimulation(client.simxServiceCall()) <span class="hljs-comment">#开始仿真</span><br>    startTime = time.time()<br>    getJointPos(<span class="hljs-number">1</span>)<br>    <span class="hljs-keyword">while</span> time.time() &lt; startTime + <span class="hljs-number">5</span>:<br>        <span class="hljs-keyword">continue</span><br>    client.simxStopSimulation(client.simxServiceCall()) <span class="hljs-comment">#停止仿真</span><br></code></pre></td></tr></table></figure>
+<h5 id="基于b0的远程api操作方法">基于B0的远程API操作方法</h5>
+<p>大多数基于B0的远程API函数需要一个附加参数：用于执行函数调用的主题或通信通道。</p>
+<p>主题可以是以下5个函数之一的返回值：
+<strong>simxServiceCall：</strong>本主题允许在阻塞模式下执行功能，即命令将传输到服务器（即CoppeLisim），在那里执行，并向客户端返回响应。仅当<strong>作为一次性操作</strong>从服务器获取命令响应时（例如，simxGetObjectHandle通常使用服务调用来执行）才使用此主题。
+<strong>simxDefaultPublisher</strong>：本主题允许在非阻塞模式下执行函数，即函数被发送到服务器（即CoppeliaSim），控制权立即返回到客户端（即客户端不会等待服务器的回复）。<strong>仅在向服务器发送命令时使用此主题，您不希望/不需要服务器响应</strong>（例如，simxSetJointPosition通常使用默认发布服务器执行）。
+<strong>simxDefaultSubscriber</strong>：本主题通知服务器<strong>持续执行该函数，并持续将响应流式传输到客户端</strong>。客户端将在回调函数中接收响应。仅当您希望从服务器端连续执行的同一命令接收响应时，才使用此主题。（例如，simxGetJointForce通常使用默认订阅服务器执行）。定义的回调函数通过simxSpinOnce函数调用（当输入缓冲区中有响应可用时）。
+<strong>simxCreatePublisher</strong>：这与simxDefaultPublisher非常相似，不同之处在于创建了一个<strong>专用的发布者主题</strong>，即创建了一个专用的发布频道。将特定功能/命令分配给专用发布服务器非常有用，特别是在数据量大的情况下（例如，simxSetVisionSensorImage通常使用专用发布服务器执行）。
+<strong>simxCreateSubscriber</strong>：这与simxDefaultSubscriber非常相似，不同之处在于创建了专用订户主题，即创建了<strong>专用订户频道</strong>。将特定功能/命令分配给专用订阅者可能很有用，特别是在数据量大的情况下（例如，simxGetVisionSensorImage通常使用专用订阅者来执行）。
+默认情况下，基于B0的远程API客户端和服务器（即CoppeliaSim）将异步运行。但是，为了实现同步操作，可以让客户端单独触发每个模拟步骤。以下是同步模式的Python示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> b0RemoteApi<br><span class="hljs-keyword">import</span> time<br><br><span class="hljs-keyword">with</span> b0RemoteApi.RemoteApiClient(<span class="hljs-string">&#x27;b0RemoteApi_pythonClient&#x27;</span>,<span class="hljs-string">&#x27;b0RemoteApi&#x27;</span>) <span class="hljs-keyword">as</span> client:    <br>    doNextStep=<span class="hljs-literal">True</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">simulationStepStarted</span>(<span class="hljs-params">msg</span>):<br>        simTime=msg[<span class="hljs-number">1</span>][<span class="hljs-string">b&#x27;simulationTime&#x27;</span>];<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Simulation step started. Simulation time: &#x27;</span>,simTime)<br>        <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">simulationStepDone</span>(<span class="hljs-params">msg</span>):<br>        simTime=msg[<span class="hljs-number">1</span>][<span class="hljs-string">b&#x27;simulationTime&#x27;</span>];<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Simulation step done. Simulation time: &#x27;</span>,simTime);<br>        <span class="hljs-keyword">global</span> doNextStep<br>        doNextStep=<span class="hljs-literal">True</span><br>        <br>    client.simxSynchronous(<span class="hljs-literal">True</span>)<br>    client.simxGetSimulationStepStarted(client.simxDefaultSubscriber(simulationStepStarted));<br>    client.simxGetSimulationStepDone(client.simxDefaultSubscriber(simulationStepDone));<br>    client.simxStartSimulation(client.simxDefaultPublisher())<br>    <br>    startTime=time.time()<br>    <span class="hljs-keyword">while</span> time.time()&lt;startTime+<span class="hljs-number">5</span>: <br>        <span class="hljs-keyword">if</span> doNextStep:<br>            doNextStep=<span class="hljs-literal">False</span><br>            client.simxSynchronousTrigger()<br>        client.simxSpinOnce()<br>    client.simxStopSimulation(client.simxDefaultPublisher())<br></code></pre></td></tr></table></figure>
+<h1 id="三仿真">三、仿真</h1>
+<h1 id="四python小知识">四、python小知识</h1>
+<h2 id="创建anaconda虚拟环境-1">1.创建anaconda虚拟环境</h2>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs routeros">1、用conda创建Python虚拟环境（在conda prompt环境下完成）<br>conda create -n Vrep <span class="hljs-attribute">python</span>=3.7<br><br>2、激活虚拟环境（在conda prompt环境下完成）<br>activate Vrep<br><br>3、给虚拟环境安装外部包<br>conda install -n Vrep [package]<br>例如: conda install -n tensorflow pandas<br><br>4、查看已有的环境(当前已激活的环境会显示一个星号)<br>conda <span class="hljs-built_in">info</span> -e<br><br>5、删除一个已有的虚拟环境<br>conda <span class="hljs-built_in">remove</span> --name your_env_name --all<br><br>6、查看pip的安装目录<br>pip list<br><br>7、删除已经安装的模块<br>pip uninstall **<br>(例如：pip uninstall numpy)<br></code></pre></td></tr></table></figure>
+<p>创建anaconda的虚拟环境后，会生成E:，在Pycharm中选择创建的虚拟环境。</p>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/07/202201072028121.png" srcset="/img/loading.gif" lazyload
+alt="image-20220107202802960" />
+<figcaption aria-hidden="true">image-20220107202802960</figcaption>
+</figure>
+<h2 id="pip换镜像源">2.pip换镜像源</h2>
+<p>在 python 里经常要安装各种这样的包，安装各种包时最常用的就是 pip，pip
+默认从官网下载文件，官网位于国外，下载速度时快时慢，还经常断线，国内的体验并不太好。</p>
+<p>解决办法是把 pip
+源换成国内的，最常用的并且可信赖的源包括清华大学源、豆瓣源、阿里源：</p>
+<blockquote>
+<p>pypi 清华大学源：<a
+href="https://link.zhihu.com/?target=https%3A//pypi.tuna.tsinghua.edu.cn/simple">https://pypi.tuna.tsinghua.edu.cn/simple</a>
+pypi 豆瓣源 ：<a
+href="https://link.zhihu.com/?target=http%3A//pypi.douban.com/simple/">http://pypi.douban.com/simple/</a>
+pypi 腾讯源：<a
+href="https://link.zhihu.com/?target=http%3A//mirrors.cloud.tencent.com/pypi/simple">http://mirrors.cloud.tencent.com/pypi/simple</a>
+pypi 阿里源：<a
+href="https://link.zhihu.com/?target=https%3A//mirrors.aliyun.com/pypi/simple/">https://mirrors.aliyun.com/pypi</a></p>
+</blockquote>
+<p>pip 源具体修改方式是，我们以安装 python
+的robotics-toolbox-python模块为例，通常的方式是直接在命令行运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pip install robotics-toolbox-python<br></code></pre></td></tr></table></figure>
+<p>这样会从国外官网下载robotics-toolbox-python模块并安装。</p>
+<p>若要把 pip
+源换成国内的，只需要把上面的代码改成下图这样（下图以清华大学源为例）：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmd">pip install robotics-toolbox-python -i https://pypi.tuna.tsinghua.edu.cn/simple<br></code></pre></td></tr></table></figure>
+<figure>
+<img
+src="http://pic.leiting2020.top:5050/images/2022/01/09/202201091353451.png" srcset="/img/loading.gif" lazyload
+alt="image-20220109135351365" />
+<figcaption aria-hidden="true">image-20220109135351365</figcaption>
+</figure>
+<p>这样我们就从清华大学源成功安装了机器人工具箱，速度会比过pip默认的国外源快很多。</p>
+<p>上述做法是临时改成国内源，如果不想每次用 pip 都加上
+<code>-i https://pypi.tuna.tsinghua.edu.cn/simple</code>，那么可以把国内源设为默认，做法是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 清华源</span><br>pip config <span class="hljs-built_in">set</span> global.index-url https://pypi.tuna.tsinghua.edu.cn/simple<br><span class="hljs-comment"># 阿里源</span><br>pip config <span class="hljs-built_in">set</span> global.index-url https://mirrors.aliyun.com/pypi/simple/<br><span class="hljs-comment"># 腾讯源</span><br>pip config <span class="hljs-built_in">set</span> global.index-url http://mirrors.cloud.tencent.com/pypi/simple<br><span class="hljs-comment"># 豆瓣源</span><br>pip config <span class="hljs-built_in">set</span> global.index-url http://pypi.douban.com/simple/<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" class="category-chain-item">学习记录</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/" class="category-chain-item">机器人</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA/" class="print-no-link">#机器人</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>机器人运动学笔记</div>
+      <div>http://example.com/2020/04/23/note/学习记录/机器人/机器人运动学笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Lei Ting</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年4月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E6%9C%BA%E5%99%A8%E4%BA%BA/%E5%86%97%E4%BD%99%E3%80%81%E5%B7%A5%E4%BB%B6%E4%BC%98%E5%8C%96/" title="冗余、工件优化">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">冗余、工件优化</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/04/23/note/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/QT/QT/" title="PyQt5">
+                        <span class="hidden-mobile">PyQt5</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
